@@ -1,0 +1,59 @@
+<!doctype html>
+<html lang="pt-br">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Draft Copa 13</title>
+    <link rel="stylesheet" href="styles.css" />
+  </head>
+  <body>
+    <div class="background">
+      <div class="flag usa"></div>
+      <div class="flag mexico"></div>
+      <div class="flag canada"></div>
+    </div>
+
+    <div class="content">
+      <h1>Bem-vindo ao Draft Copa 13!</h1>
+      <div class="logo-container">
+        <img src="img/Logo.jpg" alt="Logo do Campeonato" />
+      </div>
+      <h2 id="status">Sortear Pote 1</h2>
+      <div class="controls">
+        <button id="sortear-pote-button">Sortear Pote 1</button>
+        <button id="next-pote-button" disabled>Próximo Pote</button>
+      </div>
+
+      <div class="container">
+        <div class="box">
+          <h3>Times</h3>
+          <p id="vez">Vez do time 1</p>
+          <!-- Lista de times será preenchida aqui -->
+          <ul id="times-list"></ul>
+        </div>
+        <div class="box">
+          <h3>Jogadores Disponíveis</h3>
+          <ul id="jogadores-list"></ul>
+        </div>
+      </div>
+      <div id="team-selection">
+        <h3 id="current-player">Aguardando sorteio...</h3>
+
+        <label for="team-select">Selecione um time:</label>
+        <select id="team-select"></select>
+
+        <button id="select-team-button">Confirmar escolha</button>
+      </div>
+
+      <hr />
+
+      <h3>Escolhas realizadas</h3>
+      <ul id="result"></ul>
+
+      <button id="reset-draft">Resetar Draft</button>
+
+
+    </div>
+    <script src="script.js"></script>
+  </body>
+</html>
