@@ -85,10 +85,10 @@ document.addEventListener("DOMContentLoaded", () => {
 
   /* ---------- INFORMAÇÕES DO TIME ---------- */
   const nomeTimeElement = document.getElementById("nome-time");
-  const donoTimeElement = document.getElementById("dono-time");
+  const capitaoTimeElement = document.getElementById("capitão-time");
 
   if (nomeTimeElement) nomeTimeElement.innerText = nomeTime;
-  if (donoTimeElement) donoTimeElement.innerText = `Dono: ${time.dono || "Sem dono"}`;
+  if (capitaoTimeElement) capitaoTimeElement.innerText = `Capitão: ${time.capitao || "Sem capitão"}`;
 
   /* ---------- LISTA DE JOGADORES (ELENCO) ---------- */
  /* ---------- LISTA DE JOGADORES (ELENCO) ---------- */

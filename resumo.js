@@ -7,7 +7,7 @@ if (times) {
     div.className = "box"; // Adicionado para manter o estilo do styles.css
     div.innerHTML = `
       <h2>${time.nome}</h2>
-      <strong>Dono:</strong> ${time.dono || "Não selecionado"}<br>
+      <strong>Capitão:</strong> ${time.capitao || "Não selecionado"}<br>
       <ul>${time.jogadores.map(j => `<li>${j}</li>`).join("")}</ul>
     `;
     container.appendChild(div);

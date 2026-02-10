@@ -1,14 +1,14 @@
 /* ================= DADOS ================= */
 
 const times = [
-  { nome: "Brasil", dono: null, jogadores: [] },
-  { nome: "Argentina", dono: null, jogadores: [] },
-  { nome: "Estados Unidos", dono: null, jogadores: [] },
-  { nome: "Portugal", dono: null, jogadores: [] },
-  { nome: "Espanha", dono: null, jogadores: [] },
-  { nome: "Austrália", dono: null, jogadores: [] },
-  { nome: "Japão", dono: null, jogadores: [] },
-  { nome: "Senegal", dono: null, jogadores: [] },
+  { nome: "Brasil", capitao: null, jogadores: [] },
+  { nome: "Argentina", capitao: null, jogadores: [] },
+  { nome: "Estados Unidos", capitao: null, jogadores: [] },
+  { nome: "Portugal", capitao: null, jogadores: [] },
+  { nome: "Espanha", capitao: null, jogadores: [] },
+  { nome: "Austrália", capitao: null, jogadores: [] },
+  { nome: "Japão", capitao: null, jogadores: [] },
+  { nome: "Senegal", capitao: null, jogadores: [] },
 ];
 
 const potes = {
@@ -108,12 +108,12 @@ function iniciarPote() {
   }
   else if (poteAtual === "goleiro") {
     modo = "sorteio";
-    ordem = times.map(t => t.dono).sort(() => Math.random() - 0.5);
+    ordem = times.map(t => t.capitao).sort(() => Math.random() - 0.5);
   }
   else {
     if (poteAtual % 2 === 0) {
       modo = "sorteio";
-      ordem = times.map(t => t.dono).sort(() => Math.random() - 0.5);
+      ordem = times.map(t => t.capitao).sort(() => Math.random() - 0.5);
     } else {
       modo = "espelhamento";
       ordem = [...ordem].reverse();
@@ -138,41 +138,71 @@ function atualizarTela() {
 
 /* ================= RENDERIZAÇÃO ================= */
 
+function corDoTimeDaVez() {
+  const donoAtual = ordem[indiceVez];
+  if (!donoAtual) return "#444";
+
+  // O time é identificado pelo capitão
+  const timeDaVez = times.find(time => time.capitao === donoAtual);
+  if (!timeDaVez) return "#444";
+
+  return coresTimes[timeDaVez.nome] || "#444";
+}
+
+
+
 function renderTimes() {
   const ul = document.getElementById("times-list");
   ul.innerHTML = "";
 
   times.forEach((time, index) => {
     const li = document.createElement("li");
-    const cor = coresTimes[time.nome] || "#333";
-    li.style.setProperty('--cor-selecao', cor);
-    
-    // Criamos o HTML dos jogadores separadamente para aplicar a cor em cada um
-    const jogadoresHTML = time.jogadores.map(jog => 
-      `<span class="badge-jogador" style="background-color: ${cor}">${jog}</span>`
-    ).join("");
 
-    const ext = (time.nome === "Estados Unidos") ? "jpg" : "png";
-    
+    // fallback total de segurança
+    const cor =
+      typeof coresTimes !== "undefined" && coresTimes[time.nome]
+        ? coresTimes[time.nome]
+        : "#333";
+
+    li.style.setProperty("--cor-selecao", cor);
+
+    const jogadoresHTML = time.jogadores
+      .map(
+        jog =>
+          `<span class="badge-jogador" style="background-color:${cor}">
+            ${jog}
+          </span>`
+      )
+      .join("");
+
     li.innerHTML = `
       <div class="time-header">
-        <img src="img/logos/${time.nome}.${ext}" class="mini-logo" onerror="this.style.opacity='0'">
+        <img 
+          src="img/logos/${time.nome}.png"
+          class="mini-logo"
+          onerror="this.src='img/logos/${time.nome}.jpg'; this.onerror=null;"
+        >
         <strong>${time.nome}</strong>
       </div>
-      <small>Dono: ${time.dono ?? "—"}</small>
+
+      <small>Capitão: ${time.capitao ?? "—"}</small>
+
       <div class="jogadores-container">
         ${jogadoresHTML}
       </div>
     `;
-    
+
     li.onclick = () => window.open(`time.html?id=${index}`, "_blank");
+
     ul.appendChild(li);
   });
 }
 
+
+
 function renderTimesSelect() {
   const containerSelect = document.getElementById("team-selection");
-  const selectArea = document.getElementById("team-select-buttons"); // Novo ID para os botões
+  const selectArea = document.getElementById("team-select-buttons");
 
   if (poteAtual !== 1 || draftFinalizado) {
     containerSelect.style.display = "none";
@@ -180,21 +210,20 @@ function renderTimesSelect() {
   }
 
   containerSelect.style.display = "block";
-  selectArea.innerHTML = ""; // Limpa a área de escolha
+  selectArea.innerHTML = ""; 
 
-  // Filtra times que ainda não têm dono
-  times.filter(t => !t.dono).forEach(time => {
+  times.filter(t => !t.capitao).forEach(time => {
     const btn = document.createElement("button");
     const cor = coresTimes[time.nome] || "#333";
     
     btn.className = "btn-escolha-time";
     btn.style.setProperty('--cor-selecao', cor);
     
-    // Identifica a extensão da imagem conforme sua pasta de logos
-    const ext = (time.nome === "Estados Unidos") ? "jpg" : "png";
-    
+    // Lógica idêntica de recuperação de imagem
     btn.innerHTML = `
-      <img src="img/logos/${time.nome}.${ext}" class="mini-logo">
+      <img src="img/logos/${time.nome}.png" 
+           class="mini-logo" 
+           onerror="this.src='img/logos/${time.nome}.jpg'; this.onerror=null;">
       <span>${time.nome}</span>
     `;
     
@@ -204,10 +233,10 @@ function renderTimesSelect() {
 }
 
 function realizarEscolhaManual(nomeTime) {
-  const donoAtual = ordem[indiceVez];
+  const capitaoAtual = ordem[indiceVez];
   const time = times.find(t => t.nome === nomeTime);
   
-  time.dono = donoAtual;
+  time.capitao = capitaoAtual;
   indiceVez++;
 
   if (indiceVez === ordem.length) {
@@ -219,16 +248,39 @@ function realizarEscolhaManual(nomeTime) {
 
 function renderJogadores() {
   const ul = document.getElementById("jogadores-list");
+
+  // Segurança: se o container não existir, não faz nada
+  if (!ul) return;
+
   ul.innerHTML = "";
-  if (poteAtual === 1 || !potes[poteAtual]) return;
+
+  // Não renderiza no pote 1 (escolha de times)
+  if (!poteAtual || poteAtual === 1) return;
+
+  // Se o pote atual não existir ou estiver vazio
+  if (!potes[poteAtual] || potes[poteAtual].length === 0) {
+    ul.innerHTML = "<p style='opacity:0.6'>Nenhum jogador disponível</p>";
+    return;
+  }
+
+  // Cor do time que está escolhendo agora
+  const cor = corDoTimeDaVez();
 
   potes[poteAtual].forEach(jogador => {
     const btn = document.createElement("button");
+
+    btn.className = "card-jogador";
     btn.textContent = jogador;
-    btn.onclick = () => escolherJogador(jogador);
+
+    // Passa a cor dinamicamente para o CSS
+    btn.style.setProperty("--cor-time", cor);
+
+    btn.addEventListener("click", () => escolherJogador(jogador));
+
     ul.appendChild(btn);
   });
 }
+
 
 /* ================= ESCOLHAS ================= */
 
@@ -236,9 +288,9 @@ function escolherTime() {
   const select = document.getElementById("team-select");
   if (!select.value || poteAtual !== 1) return;
 
-  const donoAtual = ordem[indiceVez];
+  const capitaoAtual = ordem[indiceVez];
   const time = times.find(t => t.nome === select.value);
-  time.dono = donoAtual;
+  time.capitao = capitaoAtual;
   indiceVez++;
 
   if (indiceVez === ordem.length) {
@@ -248,8 +300,8 @@ function escolherTime() {
 }
 
 function escolherJogador(jogador) {
-  const donoAtual = ordem[indiceVez];
-  const time = times.find(t => t.dono === donoAtual);
+  const capitaoAtual = ordem[indiceVez];
+  const time = times.find(t => t.capitao === capitaoAtual);
   time.jogadores.push(jogador);
   potes[poteAtual] = potes[poteAtual].filter(j => j !== jogador);
   indiceVez++;

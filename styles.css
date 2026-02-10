@@ -25,6 +25,7 @@ body {
   animation: moveFlags 30s linear infinite;
 }
 
+
 .flag {
   flex: 1;
   background-size: cover;
@@ -462,6 +463,76 @@ body.modo-telao {
   transform: translateY(20px);
   animation: entradaJogador 0.5s ease forwards;
   animation-delay: var(--delay); /* Usa o tempo calculado no JS */
+}
+
+/* Container dos jogadores para ficarem organizados em grelha ou lista */
+/* Container da lista de jogadores */
+/* ================= BOTÕES DE JOGADORES ================= */
+
+#jogadores-list {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+
+.btn-jogador {
+  padding: 14px;
+  border: none;
+  border-radius: 12px;
+  background: #f1f1f1;
+  font-weight: 600;
+  font-size: 14px;
+  cursor: pointer;
+  transition: all 0.25s ease;
+  box-shadow: 0 4px 10px rgba(0,0,0,0.15);
+}
+
+.btn-jogador:hover {
+  background: var(--hover-color);
+  color: #fff;
+  transform: translateY(-3px) scale(1.02);
+  box-shadow: 0 10px 25px rgba(0,0,0,0.35);
+}
+
+.btn-jogador:active {
+  transform: scale(0.98);
+}
+
+/* Estilo da "Box" que envolve as listas no HTML */
+.box-players {
+  background: rgba(30, 30, 30, 0.8) !important;
+  border-radius: 15px;
+  padding: 20px;
+  border: 1px solid rgba(255, 255, 255, 0.1);
+}
+
+.box-players h3 {
+  color: white !important;
+  margin-bottom: 15px;
+  text-transform: uppercase;
+  font-size: 1.1rem;
+}
+
+.card-jogador {
+  background-color: #f3f3f3;
+  color: #111;
+  border: none;
+  border-radius: 12px;
+  padding: 12px;
+  cursor: pointer;
+
+  transition: 
+    background-color 0.25s ease,
+    transform 0.15s ease,
+    box-shadow 0.15s ease,
+    color 0.2s ease;
+}
+
+.card-jogador:hover {
+  background-color: var(--cor-time);
+  color: #fff;
+  transform: scale(1.05);
+  box-shadow: 0 8px 20px rgba(0,0,0,0.35);
 }
 
 /* Keyframes da Animação */
