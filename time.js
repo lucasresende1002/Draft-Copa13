@@ -91,13 +91,26 @@ document.addEventListener("DOMContentLoaded", () => {
   if (donoTimeElement) donoTimeElement.innerText = `Dono: ${time.dono || "Sem dono"}`;
 
   /* ---------- LISTA DE JOGADORES (ELENCO) ---------- */
+ /* ---------- LISTA DE JOGADORES (ELENCO) ---------- */
   const ul = document.getElementById("lista-jogadores");
   if (ul) {
     ul.innerHTML = ""; 
-    time.jogadores.forEach(jogador => {
+    
+    const corSelecao = coresBordas[nomeTime] || "#333";
+
+    time.jogadores.forEach((jogador, index) => {
       const li = document.createElement("li");
       li.innerText = jogador;
+      
+      // Aplicamos a classe para o CSS controlar a animação
+      li.className = "jogador-item";
+      
+      // Variáveis dinâmicas para o CSS usar
+      li.style.setProperty('--cor-time', corSelecao);
+      li.style.setProperty('--delay', `${index * 0.1}s`); // Cada um demora 0.1s a mais que o anterior
+      
       ul.appendChild(li);
     });
   }
+
 });

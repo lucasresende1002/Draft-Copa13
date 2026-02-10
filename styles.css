@@ -90,6 +90,164 @@ h1, h2 {
   text-shadow: 0 2px 6px rgba(0,0,0,0.7);
 }
 
+#times-list li {
+  list-style: none;
+  background-color: #2a2a2a; /* Fundo padrão escuro */
+  margin-bottom: 10px;
+  padding: 12px;
+  border-radius: 8px;
+  border-left: 5px solid var(--cor-selecao); /* Borda lateral com a cor do time */
+  transition: all 0.3s ease;
+  cursor: pointer;
+  display: flex;
+  flex-direction: column;
+  color: white;
+}
+
+#times-list li:hover {
+  background-color: var(--cor-selecao); /* O fundo vira a cor da seleção */
+  transform: scale(1.02); /* Dá um leve aumento */
+  box-shadow: 0 4px 15px rgba(0, 0, 0, 0.5);
+}
+
+/* Garante que o texto continue legível no hover */
+#times-list li:hover strong, 
+#times-list li:hover small,
+#times-list li:hover .jogadores-time {
+  color: #fff;
+  text-shadow: 1px 1px 2px rgba(0,0,0,0.8);
+}
+
+.time-info {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+
+.mini-logo {
+  width: 30px;
+  height: 30px;
+  object-fit: contain;
+  border-radius: 4px;
+  background: white;
+  padding: 2px;
+}
+
+.jogadores-time {
+  margin-top: 8px;
+  font-size: 0.85em;
+  opacity: 0.9;
+}
+
+#sortear-pote-button, #next-pote-button, #select-team-button {
+  background: linear-gradient(135deg, #1e90ff 0%, #1c1c1c 100%); /* Degradê azul para preto */
+  color: white;
+  padding: 16px 32px;
+  font-size: 1.2rem;
+  font-weight: bold;
+  text-transform: uppercase;
+  letter-spacing: 1px;
+  border: 2px solid #3a3a3a;
+  border-radius: 50px; /* Estilo pílula */
+  cursor: pointer;
+  box-shadow: 0 4px 15px rgba(0, 0, 0, 0.4);
+  transition: all 0.3s ease;
+  outline: none;
+  margin: 10px;
+}
+
+/* Efeito de brilho e aumento ao passar o mouse */
+#sortear-pote-button:hover:not(:disabled), #next-pote-button:hover:not(:disabled), #select-team-button:hover:not(:disabled) {
+  background: linear-gradient(135deg, #00bfff 0%, #333333 100%);
+  transform: translateY(-3px) scale(1.05);
+  box-shadow: 0 6px 20px rgba(30, 144, 255, 0.5);
+  border-color: #00bfff;
+}
+
+/* Efeito de clique */
+#sortear-pote-button:active:not(:disabled), #next-pote-button:active:not(:disabled), #select-team-button:active:not(:disabled) {
+  transform: translateY(1px);
+}
+
+/* Estilo para quando o botão estiver desativado (após o sorteio) */
+#sortear-pote-button:disabled, #next-pote-button:disabled, #select-team-button:disabled, #reset-draft {
+  background: #444;
+  color: #888;
+  border-color: #555;
+  cursor: not-allowed;
+  box-shadow: none;
+  transform: none;
+}
+
+/* Container que organiza os botões de escolha */
+.grid-escolha {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(220px, 1fr));
+  gap: 15px;
+  justify-content: center;
+  margin-top: 20px;
+}
+
+/* Estilo do botão que substitui o SELECT */
+.btn-escolha-time {
+  background: #222;
+  color: white;
+  border: none;
+  border-left: 6px solid var(--cor-selecao);
+  padding: 15px 20px;
+  border-radius: 10px;
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  font-size: 1rem;
+  font-weight: bold;
+  text-transform: uppercase;
+  width: 100%; /* Para preencher o grid corretamente */
+}
+
+.btn-escolha-time:hover {
+  background: var(--cor-selecao);
+  transform: translateY(-5px);
+  box-shadow: 0 5px 15px rgba(0, 0, 0, 0.4);
+  color: white;
+}
+
+.btn-escolha-time img {
+  width: 25px;
+  height: 25px;
+  object-fit: contain;
+  background: white;
+  padding: 2px;
+  border-radius: 4px;
+}
+
+.jogadores-container {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 5px;
+  margin-top: 10px;
+}
+
+.badge-jogador {
+  font-size: 0.7rem;
+  padding: 2px 8px;
+  border-radius: 4px;
+  color: white; /* Cor do texto dentro da etiqueta */
+  font-weight: bold;
+  text-shadow: 1px 1px 1px rgba(0,0,0,0.5);
+  border: 1px solid rgba(255,255,255,0.2);
+}
+
+/* Quando passar o mouse no card, as etiquetas podem brilhar */
+#times-list li:hover .badge-jogador {
+  background-color: white !important;
+  color: var(--cor-selecao);
+  text-shadow: none;
+}
+
+
 .logo-container {
   display: flex;
   justify-content: center;
@@ -107,8 +265,10 @@ h1, h2 {
 
 
 .controls {
-  text-align: center;
-  margin-bottom: 15px;
+  display: flex;
+  justify-content: center;
+  gap: 20px; /* Espaço entre os botões */
+  margin: 20px 0;
 }
 
 .container {
@@ -274,3 +434,40 @@ body.modo-telao {
   }
 }
 
+/* Container da lista */
+#lista-jogadores {
+  padding: 0;
+  list-style: none;
+  perspective: 1000px; /* Para um efeito leve 3D na animação */
+}
+
+#lista-jogadores li {
+    display: block;
+    margin-bottom: 8px;
+    box-shadow: 2px 2px 5px rgba(0,0,0,0.2); /* Dá um leve relevo */
+}
+
+.jogador-item {
+  background-color: white;
+  color: var(--cor-time);
+  font-weight: bold;
+  margin-bottom: 10px;
+  padding: 12px 20px;
+  border-radius: 6px;
+  border-left: 6px solid var(--cor-time);
+  box-shadow: 0 4px 6px rgba(0,0,0,0.1);
+  
+  /* Configuração da Animação */
+  opacity: 0;
+  transform: translateY(20px);
+  animation: entradaJogador 0.5s ease forwards;
+  animation-delay: var(--delay); /* Usa o tempo calculado no JS */
+}
+
+/* Keyframes da Animação */
+@keyframes entradaJogador {
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}

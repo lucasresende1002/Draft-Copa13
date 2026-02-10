@@ -36,22 +36,18 @@
           <ul id="jogadores-list"></ul>
         </div>
       </div>
-      <div id="team-selection">
+      <div id="team-selection" style="display: none">
         <h3 id="current-player">Aguardando sorteio...</h3>
+        <p style="color: #fffdfd; margin-bottom: 30px">
+          Clique na seleção para escolher:
+        </p>
 
-        <label for="team-select">Selecione um time:</label>
-        <select id="team-select"></select>
-
-        <button id="select-team-button">Confirmar escolha</button>
+        <div id="team-select-buttons" class="grid-escolha"></div>
       </div>
 
       <hr />
 
-      <h3>Escolhas realizadas</h3>
       <ul id="result"></ul>
-
-      <button id="reset-draft">Resetar Draft</button>
-
 
     </div>
     <script src="script.js"></script>

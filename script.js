@@ -25,6 +25,17 @@ const potes = {
   goleiro:["Goleiro 1","Goleiro 2","Goleiro 3","Goleiro 4","Goleiro 5","Goleiro 6","Goleiro 7","Goleiro 8"]
 };
 
+const coresTimes = {
+  "Brasil": "#009c3b",
+  "Argentina": "#74acdf",
+  "Estados Unidos": "#bf0a30",
+  "Portugal": "#ff0000",
+  "Espanha": "#f1bf00",
+  "Austrália": "#000031",
+  "Japão": "#bc002d",
+  "Senegal": "#00853f"
+};
+
 /* ================= ESTADO ================= */
 
 let poteNumero = 0;
@@ -37,32 +48,59 @@ let draftFinalizado = false;
 
 /* ================= CONTROLE ================= */
 
-document.getElementById("sortear-pote-button").addEventListener("click", sortearPote);
+// O botão de sorteio agora lida com o Pote 1, Potes Pares e Goleiro
+document.getElementById("sortear-pote-button").addEventListener("click", () => {
+    if (!draftIniciado) {
+        sortearPote1();
+    } else {
+        iniciarPote(); // Sorteia ordem para potes pares ou goleiro
+    }
+});
+
+document.getElementById("next-pote-button").addEventListener("click", avancarPote);
 document.getElementById("select-team-button").addEventListener("click", escolherTime);
 
-/* ================= FUNÇÕES ================= */
+/* ================= FUNÇÕES DE NAVEGAÇÃO ================= */
 
-function sortearPote() {
-  if (draftFinalizado) return;
+function sortearPote1() {
+  if (draftIniciado) return;
 
+  poteNumero = 1;
+  poteAtual = 1;
+  draftIniciado = true;
   document.getElementById("sortear-pote-button").disabled = true;
+  
+  iniciarPote();
+}
 
-  if (!draftIniciado) {
-    poteNumero = 1;
-    poteAtual = 1;
-    draftIniciado = true;
-  } else if (potes[poteNumero + 1]) {
+function avancarPote() {
+  if (!draftIniciado || draftFinalizado) return;
+
+  document.getElementById("next-pote-button").disabled = true;
+
+  if (poteNumero < 10) {
     poteNumero++;
     poteAtual = poteNumero;
-  } else {
+  } else if (poteNumero === 10) {
+    poteNumero++; 
     poteAtual = "goleiro";
   }
 
-  iniciarPote();
+  // REGRA: Potes ímpares espelham. Pares e Goleiro sorteiam.
+  if (poteAtual !== "goleiro" && poteAtual % 2 !== 0) {
+    iniciarPote(); // Inicia automático para ímpares (3, 5, 7, 9)
+  } else {
+    // Para e pede sorteio manual
+    document.getElementById("status").innerText = `Aguardando sorteio do Pote ${poteAtual === "goleiro" ? "Goleiro" : poteAtual}`;
+    document.getElementById("sortear-pote-button").disabled = false;
+    document.getElementById("sortear-pote-button").innerText = "Sortear Ordem";
+  }
 }
 
 function iniciarPote() {
   indiceVez = 0;
+  document.getElementById("sortear-pote-button").disabled = true;
+  document.getElementById("sortear-pote-button").innerText = "Sorteio Realizado";
 
   if (poteAtual === 1) {
     modo = "sorteio";
@@ -73,71 +111,116 @@ function iniciarPote() {
     ordem = times.map(t => t.dono).sort(() => Math.random() - 0.5);
   }
   else {
-    modo = poteNumero % 2 === 0 ? "sorteio" : "espelhamento";
-    ordem = modo === "sorteio"
-      ? times.map(t => t.dono).sort(() => Math.random() - 0.5)
-      : [...ordem].reverse();
+    if (poteAtual % 2 === 0) {
+      modo = "sorteio";
+      ordem = times.map(t => t.dono).sort(() => Math.random() - 0.5);
+    } else {
+      modo = "espelhamento";
+      ordem = [...ordem].reverse();
+    }
   }
 
-  document.getElementById("status").innerText =
+  document.getElementById("status").innerText = 
     `Pote ${poteAtual === "goleiro" ? "Goleiro" : poteAtual} (${modo})`;
 
   atualizarTela();
 }
 
 function atualizarTela() {
-  document.getElementById("vez").innerText =
-    ordem[indiceVez] ? `Vez de: ${ordem[indiceVez]}` : "";
-
-  document.getElementById("current-player").innerText =
-    ordem[indiceVez] ? `Jogador: ${ordem[indiceVez]}` : "Pote finalizado";
+  const vezDe = ordem[indiceVez];
+  document.getElementById("vez").innerText = vezDe ? `Vez de: ${vezDe}` : "";
+  document.getElementById("current-player").innerText = vezDe ? `Jogador: ${vezDe}` : "Pote finalizado";
 
   renderTimes();
   renderTimesSelect();
   renderJogadores();
 }
 
-/* ================= RENDER ================= */
+/* ================= RENDERIZAÇÃO ================= */
 
 function renderTimes() {
   const ul = document.getElementById("times-list");
   ul.innerHTML = "";
 
-  times.forEach(time => {
+  times.forEach((time, index) => {
     const li = document.createElement("li");
+    const cor = coresTimes[time.nome] || "#333";
+    li.style.setProperty('--cor-selecao', cor);
+    
+    // Criamos o HTML dos jogadores separadamente para aplicar a cor em cada um
+    const jogadoresHTML = time.jogadores.map(jog => 
+      `<span class="badge-jogador" style="background-color: ${cor}">${jog}</span>`
+    ).join("");
+
+    const ext = (time.nome === "Estados Unidos") ? "jpg" : "png";
+    
     li.innerHTML = `
-      <strong>${time.nome}</strong><br>
-      Dono: ${time.dono ?? "—"}<br>
-      ${time.jogadores.join(", ")}
+      <div class="time-header">
+        <img src="img/logos/${time.nome}.${ext}" class="mini-logo" onerror="this.style.opacity='0'">
+        <strong>${time.nome}</strong>
+      </div>
+      <small>Dono: ${time.dono ?? "—"}</small>
+      <div class="jogadores-container">
+        ${jogadoresHTML}
+      </div>
     `;
+    
+    li.onclick = () => window.open(`time.html?id=${index}`, "_blank");
     ul.appendChild(li);
   });
 }
 
 function renderTimesSelect() {
-  const select = document.getElementById("team-select");
-  select.innerHTML = "";
+  const containerSelect = document.getElementById("team-selection");
+  const selectArea = document.getElementById("team-select-buttons"); // Novo ID para os botões
 
-  if (poteAtual !== 1) {
-    select.disabled = true;
+  if (poteAtual !== 1 || draftFinalizado) {
+    containerSelect.style.display = "none";
     return;
   }
 
-  select.disabled = false;
+  containerSelect.style.display = "block";
+  selectArea.innerHTML = ""; // Limpa a área de escolha
 
+  // Filtra times que ainda não têm dono
   times.filter(t => !t.dono).forEach(time => {
-    const opt = document.createElement("option");
-    opt.value = time.nome;
-    opt.textContent = time.nome;
-    select.appendChild(opt);
+    const btn = document.createElement("button");
+    const cor = coresTimes[time.nome] || "#333";
+    
+    btn.className = "btn-escolha-time";
+    btn.style.setProperty('--cor-selecao', cor);
+    
+    // Identifica a extensão da imagem conforme sua pasta de logos
+    const ext = (time.nome === "Estados Unidos") ? "jpg" : "png";
+    
+    btn.innerHTML = `
+      <img src="img/logos/${time.nome}.${ext}" class="mini-logo">
+      <span>${time.nome}</span>
+    `;
+    
+    btn.onclick = () => realizarEscolhaManual(time.nome);
+    selectArea.appendChild(btn);
   });
+}
+
+function realizarEscolhaManual(nomeTime) {
+  const donoAtual = ordem[indiceVez];
+  const time = times.find(t => t.nome === nomeTime);
+  
+  time.dono = donoAtual;
+  indiceVez++;
+
+  if (indiceVez === ordem.length) {
+    document.getElementById("next-pote-button").disabled = false;
+  }
+  
+  atualizarTela();
 }
 
 function renderJogadores() {
   const ul = document.getElementById("jogadores-list");
   ul.innerHTML = "";
-
-  if (poteAtual === 1) return;
+  if (poteAtual === 1 || !potes[poteAtual]) return;
 
   potes[poteAtual].forEach(jogador => {
     const btn = document.createElement("button");
@@ -150,44 +233,34 @@ function renderJogadores() {
 /* ================= ESCOLHAS ================= */
 
 function escolherTime() {
-  if (poteAtual !== 1) return;
-
   const select = document.getElementById("team-select");
-  if (!select.value) return;
+  if (!select.value || poteAtual !== 1) return;
 
-  const jogador = ordem[indiceVez];
+  const donoAtual = ordem[indiceVez];
   const time = times.find(t => t.nome === select.value);
-
-  time.dono = jogador;
+  time.dono = donoAtual;
   indiceVez++;
 
   if (indiceVez === ordem.length) {
-    document.getElementById("sortear-pote-button").disabled = false;
-    atualizarTela();
-    return;
+    document.getElementById("next-pote-button").disabled = false;
   }
-
   atualizarTela();
 }
 
 function escolherJogador(jogador) {
-  const dono = ordem[indiceVez];
-  const time = times.find(t => t.dono === dono);
-
+  const donoAtual = ordem[indiceVez];
+  const time = times.find(t => t.dono === donoAtual);
   time.jogadores.push(jogador);
   potes[poteAtual] = potes[poteAtual].filter(j => j !== jogador);
-
   indiceVez++;
 
   if (indiceVez === ordem.length) {
-    if (poteAtual === "goleiro" && potes.goleiro.length === 0) {
+    if (poteAtual === "goleiro") {
       finalizarDraft();
-      return;
+    } else {
+      document.getElementById("next-pote-button").disabled = false;
     }
-
-    document.getElementById("sortear-pote-button").disabled = false;
   }
-
   atualizarTela();
 }
 
@@ -195,30 +268,35 @@ function escolherJogador(jogador) {
 
 function finalizarDraft() {
   draftFinalizado = true;
-  document.getElementById("status").innerText = "Draft finalizado!";
-
-  // SALVA OS DADOS COM A CHAVE CORRETA
+  document.getElementById("status").innerText = "DRAFT FINALIZADO!";
   localStorage.setItem("times", JSON.stringify(times));
 
-  const container = document.querySelector(".content");
+  const contentDiv = document.querySelector(".content");
 
-  // Botão resumo
-  const btnResumo = document.createElement("button");
-  btnResumo.innerText = "Ver resumo do campeonato";
-  btnResumo.className = "btn-pdf"; // Reaproveitando estilo
-  btnResumo.onclick = () => window.open("resumo.html", "_blank");
-  container.appendChild(btnResumo);
+  // Container para organizar os botões finais
+  const finalButtonsContainer = document.createElement("div");
+  finalButtonsContainer.className = "grid-escolha"; // Reutiliza o grid que criamos
+  finalButtonsContainer.style.marginTop = "30px";
+  contentDiv.appendChild(finalButtonsContainer);
 
-  // Botões individuais dos times
   times.forEach((time, index) => {
     const btn = document.createElement("button");
-    btn.innerText = `Ver ${time.nome}`;
+    const cor = coresTimes[time.nome] || "#333";
+    
+    // Aplicando a mesma lógica de estilo dos cards
+    btn.className = "btn-escolha-time"; 
+    btn.style.setProperty('--cor-selecao', cor);
+    
+    const ext = (time.nome === "Estados Unidos") ? "jpg" : "png";
+    
+    btn.innerHTML = `
+      <img src="img/logos/${time.nome}.${ext}" class="mini-logo" onerror="this.style.opacity='0'">
+      <span>Ver ${time.nome}</span>
+    `;
+    
     btn.onclick = () => window.open(`time.html?id=${index}`, "_blank");
-    container.appendChild(btn);
+    finalButtonsContainer.appendChild(btn);
   });
 }
 
-/* ================= INICIAL ================= */
-
 renderTimes();
-// Removida a chave extra que causava erro aqui
