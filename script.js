@@ -45,6 +45,7 @@ let indiceVez = 0;
 let modo = "";
 let draftIniciado = false;
 let draftFinalizado = false;
+let potesAltosDisponiveis = {}; // Rastreia quantos jogadores ainda precisam ser escolhidos de potes superiores
 
 /* ================= CONTROLE ================= */
 
@@ -120,6 +121,11 @@ function iniciarPote() {
     }
   }
 
+  // Inicializa o contador de jogadores que precisam ser escolhidos neste pote
+  if (poteAtual !== 1) {
+    potesAltosDisponiveis = {};
+  }
+
   document.getElementById("status").innerText = 
     `Pote ${poteAtual === "goleiro" ? "Goleiro" : poteAtual} (${modo})`;
 
@@ -130,6 +136,14 @@ function atualizarTela() {
   const vezDe = ordem[indiceVez];
   document.getElementById("vez").innerText = vezDe ? `Vez de: ${vezDe}` : "";
   document.getElementById("current-player").innerText = vezDe ? `Jogador: ${vezDe}` : "Pote finalizado";
+
+  // Mostra/esconde aviso de potes superiores
+  const infoPotesAltos = document.getElementById("info-potes-altos");
+  if (poteAtual && poteAtual !== 1 && poteAtual !== "goleiro" && poteAtual < 10) {
+    infoPotesAltos.style.display = "block";
+  } else {
+    infoPotesAltos.style.display = "none";
+  }
 
   renderTimes();
   renderTimesSelect();
@@ -266,18 +280,50 @@ function renderJogadores() {
   // Cor do time que está escolhendo agora
   const cor = corDoTimeDaVez();
 
-  potes[poteAtual].forEach(jogador => {
-    const btn = document.createElement("button");
+  // Primeiro renderiza jogadores do pote atual
+  const potesParaMostrar = [poteAtual];
+  
+  // Se for um pote de seleção (não goleiro), adiciona potes superiores
+  if (poteAtual !== "goleiro" && poteAtual < 10) {
+    for (let poteSuperior = poteAtual + 1; poteSuperior <= 10; poteSuperior++) {
+      potesParaMostrar.push(poteSuperior);
+    }
+  }
 
-    btn.className = "card-jogador";
-    btn.textContent = jogador;
+  // Renderiza cada pote
+  potesParaMostrar.forEach((numPote, index) => {
+    if (!potes[numPote] || potes[numPote].length === 0) return;
 
-    // Passa a cor dinamicamente para o CSS
-    btn.style.setProperty("--cor-time", cor);
+    // Adiciona divisor para potes superiores
+    if (index > 0) {
+      const divisor = document.createElement("div");
+      divisor.style.cssText = "width: 100%; height: 2px; background: rgba(255,255,255,0.3); margin: 15px 0; grid-column: 1/-1;";
+      ul.appendChild(divisor);
 
-    btn.addEventListener("click", () => escolherJogador(jogador));
+      const label = document.createElement("div");
+      label.style.cssText = "grid-column: 1/-1; color: rgba(255,255,255,0.7); font-size: 12px; font-weight: bold; margin-bottom: 10px;";
+      label.textContent = `Pote ${numPote} (Opcional - Selecione se preferir)`;
+      ul.appendChild(label);
+    }
 
-    ul.appendChild(btn);
+    potes[numPote].forEach(jogador => {
+      const btn = document.createElement("button");
+
+      btn.className = "card-jogador";
+      btn.textContent = jogador;
+
+      // Cores diferentes para potes superiores
+      if (numPote !== poteAtual) {
+        btn.style.opacity = "0.7";
+        btn.style.setProperty("--cor-time", "rgba(255,255,255,0.3)");
+      } else {
+        btn.style.setProperty("--cor-time", cor);
+      }
+
+      btn.addEventListener("click", () => escolherJogador(jogador, numPote));
+
+      ul.appendChild(btn);
+    });
   });
 }
 
@@ -299,14 +345,19 @@ function escolherTime() {
   atualizarTela();
 }
 
-function escolherJogador(jogador) {
+function escolherJogador(jogador, poteDe = poteAtual) {
   const capitaoAtual = ordem[indiceVez];
   const time = times.find(t => t.capitao === capitaoAtual);
   time.jogadores.push(jogador);
-  potes[poteAtual] = potes[poteAtual].filter(j => j !== jogador);
+  potes[poteDe] = potes[poteDe].filter(j => j !== jogador);
   indiceVez++;
 
   if (indiceVez === ordem.length) {
+    // Chegou ao final deste pote, redistribui os não escolhidos
+    if (poteAtual !== "goleiro" && poteAtual < 10) {
+      redistribuirNaoEscolhidos();
+    }
+    
     if (poteAtual === "goleiro") {
       finalizarDraft();
     } else {
@@ -314,6 +365,29 @@ function escolherJogador(jogador) {
     }
   }
   atualizarTela();
+}
+
+function redistribuirNaoEscolhidos() {
+  // Pega os jogadores que restaram no pote atual
+  const jogadoresRestantes = potes[poteAtual] || [];
+
+  if (poteAtual !== 1 && poteAtual !== "goleiro" && poteAtual < 10) {
+    // Move jogadores não escolhidos para o próximo pote
+    const proximoPote = poteAtual + 1;
+    
+    if (!potes[proximoPote]) {
+      potes[proximoPote] = [];
+    }
+
+    // Adiciona os restantes no INÍCIO do próximo pote (prioridade)
+    potes[proximoPote] = [...jogadoresRestantes, ...potes[proximoPote]];
+
+    // Limpa o pote atual
+    potes[poteAtual] = [];
+
+    // Log para debug
+    console.log(`Redistribuição: ${jogadoresRestantes.length} jogadores do Pote ${poteAtual} → Pote ${proximoPote}`);
+  }
 }
 
 /* ================= FINALIZAÇÃO ================= */
