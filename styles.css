@@ -248,6 +248,31 @@ h1, h2 {
   text-shadow: none;
 }
 
+/* estilo para bandeira dentro do botão de jogador */
+.card-jogador .card-flag {
+  width: 24px;
+  height: 24px;
+  object-fit: contain;
+  margin-right: 8px;
+  vertical-align: middle;
+  border-radius: 4px;
+  opacity: 0;
+  transform: scale(0.8);
+  transition: opacity 0.25s ease, transform 0.25s ease;
+}
+
+.card-jogador {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  position: relative;
+}
+
+.card-jogador:hover .card-flag {
+  opacity: 1;
+  transform: scale(1.1);
+}
+
 
 .logo-container {
   display: flex;
@@ -295,6 +320,13 @@ button:disabled {
   background: #ccc;
   cursor: not-allowed;
 }
+
+@media print {
+  button {
+    display: none;
+  }
+}
+
 
 @media print {
   button {

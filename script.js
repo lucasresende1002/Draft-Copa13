@@ -134,7 +134,7 @@ function iniciarPote() {
 
 function atualizarTela() {
   const vezDe = ordem[indiceVez];
-  document.getElementById("vez").innerText = vezDe ? `Vez de: ${vezDe}` : "";
+  document.getElementById("vez").innerText = vezDe ? `⏳ Hora do capitão: ${vezDe}` : "";
   document.getElementById("current-player").innerText = vezDe ? `Jogador: ${vezDe}` : "Pote finalizado";
 
   // Mostra/esconde aviso de potes superiores
@@ -291,6 +291,10 @@ function renderJogadores() {
   }
 
   // Renderiza cada pote
+  // determina nome do time da vez para mostrar bandeira
+  const timeDaVez = times.find(t => t.capitao === ordem[indiceVez]);
+  const nomeTimeDaVez = timeDaVez ? timeDaVez.nome : null;
+
   potesParaMostrar.forEach((numPote, index) => {
     if (!potes[numPote] || potes[numPote].length === 0) return;
 
@@ -308,9 +312,20 @@ function renderJogadores() {
 
     potes[numPote].forEach(jogador => {
       const btn = document.createElement("button");
-
       btn.className = "card-jogador";
-      btn.textContent = jogador;
+
+      // adiciona bandeira/logo se conhecemos o time atual
+      if (nomeTimeDaVez) {
+        const img = document.createElement("img");
+        img.src = `img/logos/${nomeTimeDaVez}.png`;
+        img.className = "card-flag";
+        img.onerror = function() { this.src = `img/logos/${nomeTimeDaVez}.jpg`; this.onerror=null; };
+        btn.appendChild(img);
+      }
+
+      const span = document.createElement("span");
+      span.textContent = jogador;
+      btn.appendChild(span);
 
       // Cores diferentes para potes superiores
       if (numPote !== poteAtual) {
@@ -423,6 +438,39 @@ function finalizarDraft() {
     btn.onclick = () => window.open(`time.html?id=${index}`, "_blank");
     finalButtonsContainer.appendChild(btn);
   });
+
+  // ao finalizar, gerar arquivo para download com os times
+  exportarTimesParaCsv();
 }
+
+
+/* ================ IMPORTAÇÃO CSV ================ */
+
+
+// função para gerar e baixar CSV dos times atuais
+function exportarTimesParaCsv() {
+  if (!times || times.length === 0) {
+    alert("Não há times para exportar.");
+    return;
+  }
+  const linhas = ["nome,capitao,jogadores"];
+  times.forEach(t => {
+    const jogadores = (t.jogadores || []).join(";");
+    // escapando valores simples (não suportamos vírgulas internas)
+    linhas.push(`${t.nome || ""},${t.capitao || ""},${jogadores}`);
+  });
+  const csv = linhas.join("\r\n");
+  const blob = new Blob([csv], { type: "text/csv;charset=utf-8;" });
+  const url = URL.createObjectURL(blob);
+  const a = document.createElement("a");
+  a.href = url;
+  a.download = "times_export.csv";
+  document.body.appendChild(a);
+  a.click();
+  document.body.removeChild(a);
+  URL.revokeObjectURL(url);
+}
+
+
 
 renderTimes();
