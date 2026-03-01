@@ -1,5 +1,11 @@
 /* ================= UTILITÁRIOS ================= */
 
+// normaliza texto removendo acentos/diacríticos
+function sanitizedName(str) {
+  if (!str) return "";
+  return str.normalize('NFD').replace(/\p{Diacritic}/gu, '');
+}
+
 // Busca os dados salvos no localStorage
 function getTimes() {
   return JSON.parse(localStorage.getItem("times")) || [];
@@ -53,8 +59,8 @@ document.addEventListener("DOMContentLoaded", () => {
   
   // NOVOS CAMINHOS DAS PASTAS
   // As bandeiras agora estão em img/bandeiras/ e as logos em img/logos/
-  const caminhoBandeira = `img/bandeiras/bandeira-${nomeTime.toLowerCase()}.${ext}`;
-  const caminhoLogo = `img/logos/${nomeTime}.${ext}`;
+  const caminhoBandeira = `img/bandeiras/bandeira-${sanitizedName(nomeTime).toLowerCase()}.${ext}`;
+  const caminhoLogo = `img/logos/${sanitizedName(nomeTime)}.${ext}`;
 
   /* ---------- TÍTULO DA PÁGINA ---------- */
   document.title = "Draft - " + nomeTime;

@@ -9,20 +9,22 @@ const times = [
   { nome: "Austrália", capitao: null, jogadores: [] },
   { nome: "Japão", capitao: null, jogadores: [] },
   { nome: "Senegal", capitao: null, jogadores: [] },
+  { nome: "Marrocos", capitao: null, jogadores: [] },
+  { nome: "Panamá", capitao: null, jogadores: [] },
 ];
 
 const potes = {
-  1: ["Léo Tavares","Geraldo","Júlio César","Júlio Feitosa","Toninho","Celso","PPMIX","Brenno"],
-  2: ["Jogador 9","Jogador 10","Jogador 11","Jogador 12","Jogador 13","Jogador 14","Jogador 15","Jogador 16"],
-  3: ["Jogador 17","Jogador 18","Jogador 19","Jogador 20","Jogador 21","Jogador 22","Jogador 23","Jogador 24"],
-  4: ["Jogador 25","Jogador 26","Jogador 27","Jogador 28","Jogador 29","Jogador 30","Jogador 31","Jogador 32"],
-  5: ["Jogador 33","Jogador 34","Jogador 35","Jogador 36","Jogador 37","Jogador 38","Jogador 39","Jogador 40"],
-  6: ["Jogador 41","Jogador 42","Jogador 43","Jogador 44","Jogador 45","Jogador 46","Jogador 47","Jogador 48"],
-  7: ["Jogador 49","Jogador 50","Jogador 51","Jogador 52","Jogador 53","Jogador 54","Jogador 55","Jogador 56"],
-  8: ["Jogador 57","Jogador 58","Jogador 59","Jogador 60","Jogador 61","Jogador 62","Jogador 63","Jogador 64"],
-  9: ["Jogador 65","Jogador 66","Jogador 67","Jogador 68","Jogador 69","Jogador 70","Jogador 71","Jogador 72"],
-  10:["Jogador 73","Jogador 74","Jogador 75","Jogador 76","Jogador 77","Jogador 78","Jogador 79","Jogador 80"],
-  goleiro:["Goleiro 1","Goleiro 2","Goleiro 3","Goleiro 4","Goleiro 5","Goleiro 6","Goleiro 7","Goleiro 8"]
+  1: ["Léo Tavares","Geraldo","Júlio César","Júlio Feitosa","Toninho","Celso","PPMIX","Brenno","Jogador A1","Jogador A2"],
+  2: ["Jogador 9","Jogador 10","Jogador 11","Jogador 12","Jogador 13","Jogador 14","Jogador 15","Jogador 16","Jogador 81","Jogador 82"],
+  3: ["Jogador 17","Jogador 18","Jogador 19","Jogador 20","Jogador 21","Jogador 22","Jogador 23","Jogador 24","Jogador 83","Jogador 84"],
+  4: ["Jogador 25","Jogador 26","Jogador 27","Jogador 28","Jogador 29","Jogador 30","Jogador 31","Jogador 32","Jogador 85","Jogador 86"],
+  5: ["Jogador 33","Jogador 34","Jogador 35","Jogador 36","Jogador 37","Jogador 38","Jogador 39","Jogador 40","Jogador 87","Jogador 88"],
+  6: ["Jogador 41","Jogador 42","Jogador 43","Jogador 44","Jogador 45","Jogador 46","Jogador 47","Jogador 48","Jogador 89","Jogador 90"],
+  7: ["Jogador 49","Jogador 50","Jogador 51","Jogador 52","Jogador 53","Jogador 54","Jogador 55","Jogador 56","Jogador 91","Jogador 92"],
+  8: ["Jogador 57","Jogador 58","Jogador 59","Jogador 60","Jogador 61","Jogador 62","Jogador 63","Jogador 64","Jogador 93","Jogador 94"],
+  9: ["Jogador 65","Jogador 66","Jogador 67","Jogador 68","Jogador 69","Jogador 70","Jogador 71","Jogador 72","Jogador 95","Jogador 96"],
+  10:["Jogador 73","Jogador 74","Jogador 75","Jogador 76","Jogador 77","Jogador 78","Jogador 79","Jogador 80","Jogador 97","Jogador 98"],
+  goleiro:["Goleiro 1","Goleiro 2","Goleiro 3","Goleiro 4","Goleiro 5","Goleiro 6","Goleiro 7","Goleiro 8","Goleiro 9","Goleiro 10"]
 };
 
 const coresTimes = {
@@ -33,7 +35,9 @@ const coresTimes = {
   "Espanha": "#f1bf00",
   "Austrália": "#000031",
   "Japão": "#bc002d",
-  "Senegal": "#00853f"
+  "Senegal": "#00853f",
+  "Marrocos": "#c1272d",
+  "Panamá": "#006d5b"
 };
 
 /* ================= ESTADO ================= */
@@ -163,6 +167,13 @@ function corDoTimeDaVez() {
   return coresTimes[timeDaVez.nome] || "#444";
 }
 
+// remove acentos e outros diacríticos para formar nomes de arquivos
+function sanitizedName(str) {
+  if (!str) return "";
+  // NFD decomposes combined letters into letter + diacritic
+  return str.normalize('NFD').replace(/\p{Diacritic}/gu, '');
+}
+
 
 
 function renderTimes() {
@@ -192,9 +203,9 @@ function renderTimes() {
     li.innerHTML = `
       <div class="time-header">
         <img 
-          src="img/logos/${time.nome}.png"
+          src="img/logos/${sanitizedName(time.nome)}.png"
           class="mini-logo"
-          onerror="this.src='img/logos/${time.nome}.jpg'; this.onerror=null;"
+          onerror="this.src='img/logos/${sanitizedName(time.nome)}.jpg'; this.onerror=null;"
         >
         <strong>${time.nome}</strong>
       </div>
@@ -235,9 +246,9 @@ function renderTimesSelect() {
     
     // Lógica idêntica de recuperação de imagem
     btn.innerHTML = `
-      <img src="img/logos/${time.nome}.png" 
+      <img src="img/logos/${sanitizedName(time.nome)}.png" 
            class="mini-logo" 
-           onerror="this.src='img/logos/${time.nome}.jpg'; this.onerror=null;">
+           onerror="this.src='img/logos/${sanitizedName(time.nome)}.jpg'; this.onerror=null;">
       <span>${time.nome}</span>
     `;
     
@@ -317,9 +328,9 @@ function renderJogadores() {
       // adiciona bandeira/logo se conhecemos o time atual
       if (nomeTimeDaVez) {
         const img = document.createElement("img");
-        img.src = `img/logos/${nomeTimeDaVez}.png`;
+        img.src = `img/logos/${sanitizedName(nomeTimeDaVez)}.png`;
         img.className = "card-flag";
-        img.onerror = function() { this.src = `img/logos/${nomeTimeDaVez}.jpg`; this.onerror=null; };
+        img.onerror = function() { this.src = `img/logos/${sanitizedName(nomeTimeDaVez)}.jpg`; this.onerror=null; };
         btn.appendChild(img);
       }
 
@@ -431,7 +442,7 @@ function finalizarDraft() {
     const ext = (time.nome === "Estados Unidos") ? "jpg" : "png";
     
     btn.innerHTML = `
-      <img src="img/logos/${time.nome}.${ext}" class="mini-logo" onerror="this.style.opacity='0'">
+      <img src="img/logos/${sanitizedName(time.nome)}.${ext}" class="mini-logo" onerror="this.style.opacity='0'">
       <span>Ver ${time.nome}</span>
     `;
     
