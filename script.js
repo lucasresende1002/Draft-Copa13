@@ -1,20 +1,19 @@
 /* ================= DADOS ================= */
 
 const times = [
-  { nome: "Brasil", capitao: null, jogadores: [] },
-  { nome: "Argentina", capitao: null, jogadores: [] },
-  { nome: "Estados Unidos", capitao: null, jogadores: [] },
-  { nome: "Portugal", capitao: null, jogadores: [] },
-  { nome: "Espanha", capitao: null, jogadores: [] },
-  { nome: "Austrália", capitao: null, jogadores: [] },
-  { nome: "Japão", capitao: null, jogadores: [] },
-  { nome: "Senegal", capitao: null, jogadores: [] },
-  { nome: "Marrocos", capitao: null, jogadores: [] },
-  { nome: "Panamá", capitao: null, jogadores: [] },
+  { nome: "Brasil", capitao:"Júlio Feitosa" , jogadores: [] },
+  { nome: "Argentina", capitao: "GH", jogadores: [] },
+  { nome: "Estados Unidos", capitao: "Magno", jogadores: [] },
+  { nome: "Portugal", capitao: "Eng. Juan", jogadores: [] },
+  { nome: "Espanha", capitao: "Kayam", jogadores: [] },
+  { nome: "Austrália", capitao: "Jopa", jogadores: [] },
+  { nome: "Japão", capitao: "PPMIX", jogadores: [] },
+  { nome: "Senegal", capitao: "Alexandre", jogadores: [] },
+  { nome: "Marrocos", capitao: "PH", jogadores: [] },
+  { nome: "Panamá", capitao: "Enrico", jogadores: [] },
 ];
 
 const potes = {
-  1: ["Léo Tavares","Geraldo","Júlio César","Júlio Feitosa","Toninho","Celso","PPMIX","Brenno","Jogador A1","Jogador A2"],
   2: ["Jogador 9","Jogador 10","Jogador 11","Jogador 12","Jogador 13","Jogador 14","Jogador 15","Jogador 16","Jogador 81","Jogador 82"],
   3: ["Jogador 17","Jogador 18","Jogador 19","Jogador 20","Jogador 21","Jogador 22","Jogador 23","Jogador 24","Jogador 83","Jogador 84"],
   4: ["Jogador 25","Jogador 26","Jogador 27","Jogador 28","Jogador 29","Jogador 30","Jogador 31","Jogador 32","Jogador 85","Jogador 86"],
@@ -70,11 +69,23 @@ document.getElementById("select-team-button").addEventListener("click", escolher
 function sortearPote1() {
   if (draftIniciado) return;
 
+  // Se todos os times já têm capitão, não precisamos do Pote 1
+  // (escolha manual/aleatória de times). Começamos diretamente pelo Pote 2.
+  const todosComCapitao = times.every(t => t.capitao);
+  if (todosComCapitao) {
+    poteNumero = 2;
+    poteAtual = 2;
+    draftIniciado = true;
+    document.getElementById("sortear-pote-button").disabled = true;
+    iniciarPote();
+    return;
+  }
+
   poteNumero = 1;
   poteAtual = 1;
   draftIniciado = true;
   document.getElementById("sortear-pote-button").disabled = true;
-  
+
   iniciarPote();
 }
 
@@ -108,8 +119,20 @@ function iniciarPote() {
   document.getElementById("sortear-pote-button").innerText = "Sorteio Realizado";
 
   if (poteAtual === 1) {
-    modo = "sorteio";
-    ordem = [...potes[1]].sort(() => Math.random() - 0.5);
+    // Se todos os times já têm capitão, respeitamos essa ordem definida.
+    const todosComCapitao = times.every(t => t.capitao);
+    if (todosComCapitao) {
+      modo = "predefinido";
+      ordem = times.map(t => t.capitao);
+    } else if (potes[1] && potes[1].length) {
+      modo = "sorteio";
+      ordem = [...potes[1]].sort(() => Math.random() - 0.5);
+    } else {
+      // Fallback: usar os capitães já definidos onde existirem,
+      // e embaralhar entre os demais nomes/time como último recurso.
+      modo = "sorteio";
+      ordem = times.map(t => t.capitao || t.nome).sort(() => Math.random() - 0.5);
+    }
   }
   else if (poteAtual === "goleiro") {
     modo = "sorteio";
@@ -234,10 +257,17 @@ function renderTimesSelect() {
     return;
   }
 
-  containerSelect.style.display = "block";
-  selectArea.innerHTML = ""; 
+  // Se não houver times pendentes (todos já têm capitão), não mostra o seletor
+  const pendentes = times.filter(t => !t.capitao);
+  if (pendentes.length === 0) {
+    containerSelect.style.display = "none";
+    return;
+  }
 
-  times.filter(t => !t.capitao).forEach(time => {
+  containerSelect.style.display = "block";
+  selectArea.innerHTML = "";
+
+  pendentes.forEach(time => {
     const btn = document.createElement("button");
     const cor = coresTimes[time.nome] || "#333";
     
