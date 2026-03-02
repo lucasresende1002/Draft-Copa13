@@ -502,9 +502,10 @@ body.modo-telao {
 /* ================= BOTÕES DE JOGADORES ================= */
 
 #jogadores-list {
-  display: flex;
-  flex-direction: column;
-  gap: 12px;
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(140px, 1fr));
+  gap: 16px;
+  padding: 10px 0;
 }
 
 .btn-jogador {
