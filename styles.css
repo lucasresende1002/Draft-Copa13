@@ -266,13 +266,26 @@ h1, h2 {
   align-items: center;
   justify-content: center;
   position: relative;
+
+  background-color: #f3f3f3;
+  color: #111;
+  border: none;
+  border-radius: 12px;
+  padding: 12px;
+  cursor: pointer;
+
+  transition: 
+    background-color 0.25s ease,
+    transform 0.15s ease,
+    box-shadow 0.15s ease,
+    color 0.2s ease;
+
 }
 
 .card-jogador:hover .card-flag {
   opacity: 1;
   transform: scale(1.1);
 }
-
 
 .logo-container {
   display: flex;
@@ -546,21 +559,6 @@ body.modo-telao {
   font-size: 1.1rem;
 }
 
-.card-jogador {
-  background-color: #f3f3f3;
-  color: #111;
-  border: none;
-  border-radius: 12px;
-  padding: 12px;
-  cursor: pointer;
-
-  transition: 
-    background-color 0.25s ease,
-    transform 0.15s ease,
-    box-shadow 0.15s ease,
-    color 0.2s ease;
-}
-
 .card-jogador:hover {
   background-color: var(--cor-time);
   color: #fff;
@@ -637,10 +635,28 @@ body.modo-telao {
 .player-card-bg {
   position: absolute;
   inset: 0;
-  background-size: cover;
+  background-repeat: no-repeat;
   background-position: center;
-  opacity: 0.08;
+  background-size: 65%;
+  opacity: 0.05;
+  filter: grayscale(100%) contrast(120%);
+  mix-blend-mode: overlay;
   z-index: 0;
+  transition: all 0.5s ease;
+}
+
+.player-card:hover .player-card-bg {
+  opacity: 0.12;
+  transform: scale(1.1);
+}
+
+.player-card::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background: radial-gradient(circle at center, rgba(255,255,255,0.04), transparent 70%);
+  z-index: 1;
+  pointer-events: none;
 }
 
 .player-image-container {

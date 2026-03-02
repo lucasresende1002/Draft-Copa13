@@ -201,8 +201,18 @@ document.addEventListener("DOMContentLoaded", async () => {
             <h3 class="player-name">${nomeJogador}</h3>
             <p class="player-role">${posicaoNome}</p>
             <div class="player-pote">
-              <span class="pote-label">Pote</span>
-              <span class="pote-number">${dadosJogador.pote}</span>
+              ${dadosJogador.pote == "goleiro" ? `
+    <div class="player-pote">
+      <span class="pote-label">Goleiro</span>
+    </div>
+  `
+  : `
+    <div class="player-pote">
+      <span class="pote-label">Pote</span>
+      <span class="pote-number">${dadosJogador.pote}</span>
+    </div>
+  `
+}
             </div>
           </div>
         `;

@@ -1,7 +1,7 @@
 /* ================= DADOS ================= */
 
 const times = [
-  { nome: "Brasil", capitao:"Júlio Feitosa" , jogadores: [] },
+  { nome: "Brasil", capitao: "Júlio Feitosa", jogadores: [] },
   { nome: "Argentina", capitao: "GH", jogadores: [] },
   { nome: "Estados Unidos", capitao: "Magno", jogadores: [] },
   { nome: "Portugal", capitao: "Eng. Juan", jogadores: [] },
@@ -14,36 +14,135 @@ const times = [
 ];
 
 const potes = {
-  2: ["José Macias","Ismael","Isaac Barbosa","Igão","Gabriel Tavares","Davi Pontes","Alcides","Manaus","Mateus Mendonça","Marcos Antonio"],
-  3: ["Pedro Torres","Saulo","Léo Tavares","Delano","Gustavo Dória","Rery","JP Caldas","Ian Veganinho","Anselmo","Anthony Pinheiro"],
-  4: ["Icaro Gabigol","Fernando Ferreira","Keven Teles","Augusto Bahia","Pedim","Filipe Preguiça","Paulo Lyra","Rommel","Cauã Soares","Marcel"],
-  5: ["Marqson","Vitor Souza","Vilela","Vitor Mendes","Heitor Santana","Kevin Europa","Eduardo Rouver","Gabriel Xavier","Iago Matheus","Diogo Barbosa"],
-  6: ["Douglas França","Edgard","JV","Dr. Tancredo","Matheus Barbosa","Thiago Rouver","Cristiano","Igor Sávio","Deco","Caio Mendes"],
-  7: ["Felipe Feichas","Lucas Tavares","Leitinho","Gabriel Castro","Paulo Sena","Sávio","Joma","L.G","Matheus Rouver","Mago"],
-  8: ["JP Xerife","Beto Salada","Italo","JP Machado","Álvaro Xavier","Luan Matos","André CDC","Bahia","Luiz Paulo","José Alberto"],
-  9: ["Antonio Gustavo","Romão","Gabriel Rolemberg","Marcelo Lemos","Flávio Farias","Marcelo Augusto","André Gustavo","JP Sampaio","Jean","Japa"],
-  goleiro: ["Tico","Pedral","João Pedro","Igor","Pedro Vieira","Rodrigo","Diogo Ribeiro","Neymar","Matheus de Melo","Fernando Barbosa"]
+  2: [
+    "José Macias",
+    "Ismael",
+    "Isaac Barbosa",
+    "Igão",
+    "Gabriel Tavares",
+    "Davi Pontes",
+    "Alcides",
+    "Manaus",
+    "Mateus Mendonça",
+    "Marcos Antonio",
+  ],
+  3: [
+    "Pedro Torres",
+    "Saulo",
+    "Léo Tavares",
+    "Delano",
+    "Gustavo Dória",
+    "Rery",
+    "JP Caldas",
+    "Ian Veganinho",
+    "Anselmo",
+    "Anthony Pinheiro",
+  ],
+  4: [
+    "Icaro Gabigol",
+    "Fernando Ferreira",
+    "Keven Teles",
+    "Augusto Bahia",
+    "Pedim",
+    "Filipe Preguiça",
+    "Paulo Lyra",
+    "Rommel",
+    "Cauã Soares",
+    "Marcel",
+  ],
+  5: [
+    "Marqson",
+    "Vitor Souza",
+    "Vilela",
+    "Vitor Mendes",
+    "Heitor Santana",
+    "Kevin Europa",
+    "Eduardo Rouver",
+    "Gabriel Xavier",
+    "Iago Matheus",
+    "Diogo Barbosa",
+  ],
+  6: [
+    "Douglas França",
+    "Edgard",
+    "JV",
+    "Dr. Tancredo",
+    "Matheus Barbosa",
+    "Thiago Rouver",
+    "Cristiano",
+    "Igor Sávio",
+    "Deco",
+    "Caio Mendes",
+  ],
+  7: [
+    "Felipe Feichas",
+    "Lucas Tavares",
+    "Leitinho",
+    "Gabriel Castro",
+    "Paulo Sena",
+    "Sávio",
+    "Joma",
+    "L.G",
+    "Matheus Rouver",
+    "Mago",
+  ],
+  8: [
+    "JP Xerife",
+    "Beto Salada",
+    "Italo",
+    "JP Machado",
+    "Álvaro Xavier",
+    "Luan Matos",
+    "André CDC",
+    "Bahia",
+    "Luiz Paulo",
+    "José Alberto",
+  ],
+  9: [
+    "Antonio Gustavo",
+    "Romão",
+    "Gabriel Rolemberg",
+    "Marcelo Lemos",
+    "Flávio Farias",
+    "Marcelo Augusto",
+    "André Gustavo",
+    "JP Sampaio",
+    "Jean",
+    "Japa",
+  ],
+  goleiro: [
+    "Tico",
+    "Pedral",
+    "João Pedro",
+    "Igor",
+    "Pedro Vieira",
+    "Rodrigo",
+    "Diogo Ribeiro",
+    "Neymar",
+    "Matheus de Melo",
+    "Fernando Barbosa",
+  ],
 };
 
 const coresTimes = {
-  "Brasil": "#009c3b",
-  "Argentina": "#74acdf",
+  Brasil: "#009c3b",
+  Argentina: "#74acdf",
   "Estados Unidos": "#bf0a30",
-  "Portugal": "#ff0000",
-  "Espanha": "#f1bf00",
-  "Austrália": "#000031",
-  "Japão": "#bc002d",
-  "Senegal": "#00853f",
-  "Marrocos": "#c1272d",
-  "Panamá": "#006d5b"
+  Portugal: "#ff0000",
+  Espanha: "#f1bf00",
+  Austrália: "#000031",
+  Japão: "#bc002d",
+  Senegal: "#00853f",
+  Marrocos: "#c1272d",
+  Panamá: "#006d5b",
 };
 
 // Cores das posições
 const coresPosicoes = {
-  "GK": "#15ff00",  // Azul para goleiro
-  "DEF": "#0099ff", // Azul para defesa
-  "MID": "#ffdd00", // Amarelo para meio-campo
-  "ATT": "#ff3333"  // Vermelho para atacante
+  GK: "#15ff00", // Azul para goleiro
+  DEF: "#0099ff", // Azul para defesa
+  MID: "#ffdd00", // Amarelo para meio-campo
+  ATT: "#ff3333", // Vermelho para atacante
 };
 
 // Mapa de jogadores com suas posições
@@ -51,37 +150,109 @@ let jogadoresDB = {};
 
 // Dados dos jogadores embutidos como fallback
 const dadosJogadores = {
-  "José Macias": "DEF", "Ismael": "MID", "Isaac Barbosa": "ATT", "Igão": "DEF", "Gabriel Tavares": "MID",
-  "Davi Pontes": "ATT", "Alcides": "DEF", "Manaus": "MID", "Mateus Mendonça": "DEF", "Marcos Antonio": "ATT",
-  "Pedro Torres": "MID", "Saulo": "DEF", "Léo Tavares": "ATT", "Delano": "MID", "Gustavo Doria": "DEF",
-  "Rery": "ATT", "JP Caldas": "DEF", "Ian Veganinho": "MID", "Anselmo": "ATT", "Anthony Pinheiro": "DEF",
-  "Icaro Gabigol": "ATT", "Fernando Ferreira": "DEF", "Keven Teles": "MID", "Augusto Bahia": "ATT", "Pedim": "DEF",
-  "Filipe Preguiça": "MID", "Paulo Lyra": "ATT", "Rommel": "DEF", "Cauã Soares": "MID", "Marcel": "ATT",
-  "Marqson": "DEF", "Vitor Souza": "MID", "Vilela": "ATT", "Vitor Mendes": "DEF", "Heitor Santana": "MID",
-  "Kevin Europa": "ATT", "Eduardo Rouver": "DEF", "Gabriel Xavier": "MID", "Iago Matheus": "ATT", "Diogo Barbosa": "DEF",
-  "Douglas França": "MID", "Edgard": "ATT", "JV": "DEF", "Dr. Tancredo": "MID", "Matheus Barbosa": "ATT",
-  "Thiago Rouver": "DEF", "Cristiano": "MID", "Igor Sávio": "ATT", "Deco": "DEF", "Caio Mendes": "MID",
-  "Felipe Feichas": "ATT", "Lucas Tavares": "DEF", "Leitinho": "MID", "Gabriel Castro": "ATT", "Paulo Sena": "DEF",
-  "Sávio": "MID", "Joma": "ATT", "L.G": "DEF", "Matheus Rouver": "MID", "Mago": "ATT",
-  "JP Xerife": "DEF", "Beto Salada": "MID", "Italo": "ATT", "JP Machado": "DEF", "Álvaro Xavier": "MID",
-  "Luan Matos": "ATT", "André CDC": "DEF", "Bahia": "MID", "Luiz Paulo": "ATT", "José Alberto": "DEF",
-  "Antonio Gustavo": "MID", "Romão": "ATT", "Gabriel Rolemberg": "DEF", "Marcelo Lemos": "MID", "Flávio Farias": "ATT",
-  "Marcelo Augusto": "DEF", "André Gustavo": "MID", "JP Sampaio": "ATT", "Jean": "DEF", "Japa": "MID",
-  "Tico": "GK", "Pedral": "GK", "João Pedro": "GK", "Igor": "GK", "Pedro Vieira": "GK",
-  "Rodrigo": "GK", "Diogo Ribeiro": "GK", "Neymar": "GK", "Matheus de Melo": "GK", "Fernando Barbosa": "GK"
+  "José Macias": "DEF",
+  Ismael: "MID",
+  "Isaac Barbosa": "ATT",
+  Igão: "DEF",
+  "Gabriel Tavares": "MID",
+  "Davi Pontes": "ATT",
+  Alcides: "DEF",
+  Manaus: "MID",
+  "Mateus Mendonça": "DEF",
+  "Marcos Antonio": "ATT",
+  "Pedro Torres": "MID",
+  Saulo: "DEF",
+  "Léo Tavares": "ATT",
+  Delano: "MID",
+  "Gustavo Doria": "DEF",
+  Rery: "ATT",
+  "JP Caldas": "DEF",
+  "Ian Veganinho": "MID",
+  Anselmo: "ATT",
+  "Anthony Pinheiro": "DEF",
+  "Icaro Gabigol": "ATT",
+  "Fernando Ferreira": "DEF",
+  "Keven Teles": "MID",
+  "Augusto Bahia": "ATT",
+  Pedim: "DEF",
+  "Filipe Preguiça": "MID",
+  "Paulo Lyra": "ATT",
+  Rommel: "DEF",
+  "Cauã Soares": "MID",
+  Marcel: "ATT",
+  Marqson: "DEF",
+  "Vitor Souza": "MID",
+  Vilela: "ATT",
+  "Vitor Mendes": "DEF",
+  "Heitor Santana": "MID",
+  "Kevin Europa": "ATT",
+  "Eduardo Rouver": "DEF",
+  "Gabriel Xavier": "MID",
+  "Iago Matheus": "ATT",
+  "Diogo Barbosa": "DEF",
+  "Douglas França": "MID",
+  Edgard: "ATT",
+  JV: "DEF",
+  "Dr. Tancredo": "MID",
+  "Matheus Barbosa": "ATT",
+  "Thiago Rouver": "DEF",
+  Cristiano: "MID",
+  "Igor Sávio": "ATT",
+  Deco: "DEF",
+  "Caio Mendes": "MID",
+  "Felipe Feichas": "ATT",
+  "Lucas Tavares": "DEF",
+  Leitinho: "MID",
+  "Gabriel Castro": "ATT",
+  "Paulo Sena": "DEF",
+  Sávio: "MID",
+  Joma: "ATT",
+  "L.G": "DEF",
+  "Matheus Rouver": "MID",
+  Mago: "ATT",
+  "JP Xerife": "DEF",
+  "Beto Salada": "MID",
+  Italo: "ATT",
+  "JP Machado": "DEF",
+  "Álvaro Xavier": "MID",
+  "Luan Matos": "ATT",
+  "André CDC": "DEF",
+  Bahia: "MID",
+  "Luiz Paulo": "ATT",
+  "José Alberto": "DEF",
+  "Antonio Gustavo": "MID",
+  Romão: "ATT",
+  "Gabriel Rolemberg": "DEF",
+  "Marcelo Lemos": "MID",
+  "Flávio Farias": "ATT",
+  "Marcelo Augusto": "DEF",
+  "André Gustavo": "MID",
+  "JP Sampaio": "ATT",
+  Jean: "DEF",
+  Japa: "MID",
+  Tico: "GK",
+  Pedral: "GK",
+  "João Pedro": "GK",
+  Igor: "GK",
+  "Pedro Vieira": "GK",
+  Rodrigo: "GK",
+  "Diogo Ribeiro": "GK",
+  Neymar: "GK",
+  "Matheus de Melo": "GK",
+  "Fernando Barbosa": "GK",
 };
 
 // Carrega dados dos jogadores com posições
 async function carregarJogadores() {
   try {
-    const response = await fetch('jogadores.json');
+    const response = await fetch("jogadores.json");
     const data = await response.json();
-    data.jogadores.forEach(j => {
+    data.jogadores.forEach((j) => {
       jogadoresDB[j.nome] = j.posicao;
     });
-    console.log('Dados de jogadores carregados do JSON');
+    console.log("Dados de jogadores carregados do JSON");
   } catch (e) {
-    console.log('Usando dados embutidos de jogadores');
+    console.log("Usando dados embutidos de jogadores");
     jogadoresDB = { ...dadosJogadores };
   }
 }
@@ -95,10 +266,10 @@ function getPosicaoJogador(nome) {
 // Função helper para pegar nome da posição
 function getNomePosicao(posicao) {
   const nomes = {
-    "GK": "Goleiro",
-    "DEF": "Defesa",
-    "MID": "Meio-campo",
-    "ATT": "Atacante"
+    GK: "Goleiro",
+    DEF: "Defesa",
+    MID: "Meio-campo",
+    ATT: "Atacante",
   };
   return nomes[posicao] || "Jogador";
 }
@@ -118,15 +289,19 @@ let potesAltosDisponiveis = {}; // Rastreia quantos jogadores ainda precisam ser
 
 // O botão de sorteio agora lida com o Pote 1, Potes Pares e Goleiro
 document.getElementById("sortear-pote-button").addEventListener("click", () => {
-    if (!draftIniciado) {
-        sortearPote1();
-    } else {
-        iniciarPote(); // Sorteia ordem para potes pares ou goleiro
-    }
+  if (!draftIniciado) {
+    sortearPote1();
+  } else {
+    iniciarPote(); // Sorteia ordem para potes pares ou goleiro
+  }
 });
 
-document.getElementById("next-pote-button").addEventListener("click", avancarPote);
-document.getElementById("select-team-button").addEventListener("click", escolherTime);
+document
+  .getElementById("next-pote-button")
+  .addEventListener("click", avancarPote);
+document
+  .getElementById("select-team-button")
+  .addEventListener("click", escolherTime);
 
 /* ================= FUNÇÕES DE NAVEGAÇÃO ================= */
 
@@ -135,7 +310,7 @@ function sortearPote1() {
 
   // Se todos os times já têm capitão, não precisamos do Pote 1
   // (escolha manual/aleatória de times). Começamos diretamente pelo Pote 2.
-  const todosComCapitao = times.every(t => t.capitao);
+  const todosComCapitao = times.every((t) => t.capitao);
   if (todosComCapitao) {
     poteNumero = 2;
     poteAtual = 2;
@@ -162,7 +337,7 @@ function avancarPote() {
     poteNumero++;
     poteAtual = poteNumero;
   } else if (poteNumero === 9) {
-    poteNumero++; 
+    poteNumero++;
     poteAtual = "goleiro";
   }
 
@@ -171,7 +346,8 @@ function avancarPote() {
     iniciarPote(); // Inicia automático para ímpares (3, 5, 7, 9)
   } else {
     // Para e pede sorteio manual
-    document.getElementById("status").innerText = `Aguardando sorteio do Pote ${poteAtual === "goleiro" ? "Goleiro" : poteAtual}`;
+    document.getElementById("status").innerText =
+      `Aguardando sorteio do Pote ${poteAtual === "goleiro" ? "Goleiro" : poteAtual}`;
     document.getElementById("sortear-pote-button").disabled = false;
     document.getElementById("sortear-pote-button").innerText = "Sortear Ordem";
   }
@@ -180,14 +356,15 @@ function avancarPote() {
 function iniciarPote() {
   indiceVez = 0;
   document.getElementById("sortear-pote-button").disabled = true;
-  document.getElementById("sortear-pote-button").innerText = "Sorteio Realizado";
+  document.getElementById("sortear-pote-button").innerText =
+    "Sorteio Realizado";
 
   if (poteAtual === 1) {
     // Se todos os times já têm capitão, respeitamos essa ordem definida.
-    const todosComCapitao = times.every(t => t.capitao);
+    const todosComCapitao = times.every((t) => t.capitao);
     if (todosComCapitao) {
       modo = "predefinido";
-      ordem = times.map(t => t.capitao);
+      ordem = times.map((t) => t.capitao);
     } else if (potes[1] && potes[1].length) {
       modo = "sorteio";
       ordem = [...potes[1]].sort(() => Math.random() - 0.5);
@@ -195,17 +372,17 @@ function iniciarPote() {
       // Fallback: usar os capitães já definidos onde existirem,
       // e embaralhar entre os demais nomes/time como último recurso.
       modo = "sorteio";
-      ordem = times.map(t => t.capitao || t.nome).sort(() => Math.random() - 0.5);
+      ordem = times
+        .map((t) => t.capitao || t.nome)
+        .sort(() => Math.random() - 0.5);
     }
-  }
-  else if (poteAtual === "goleiro") {
+  } else if (poteAtual === "goleiro") {
     modo = "sorteio";
-    ordem = times.map(t => t.capitao).sort(() => Math.random() - 0.5);
-  }
-  else {
+    ordem = times.map((t) => t.capitao).sort(() => Math.random() - 0.5);
+  } else {
     if (poteAtual % 2 === 0) {
       modo = "sorteio";
-      ordem = times.map(t => t.capitao).sort(() => Math.random() - 0.5);
+      ordem = times.map((t) => t.capitao).sort(() => Math.random() - 0.5);
     } else {
       modo = "espelhamento";
       ordem = [...ordem].reverse();
@@ -217,20 +394,29 @@ function iniciarPote() {
     potesAltosDisponiveis = {};
   }
 
-  document.getElementById("status").innerText = 
-    `Pote ${poteAtual === "goleiro" ? "Goleiro" : poteAtual} (${modo})`;
+  document.getElementById("status").innerText =
+    poteAtual === "goleiro" ? "Goleiro" : `Pote ${poteAtual}`;
 
   atualizarTela();
 }
 
 function atualizarTela() {
   const vezDe = ordem[indiceVez];
-  document.getElementById("vez").innerText = vezDe ? `⏳ Hora do capitão: ${vezDe}` : "";
-  document.getElementById("current-player").innerText = vezDe ? `Jogador: ${vezDe}` : "Pote finalizado";
+  document.getElementById("vez").innerText = vezDe
+    ? `⏳ Hora do capitão: ${vezDe}`
+    : "";
+  document.getElementById("current-player").innerText = vezDe
+    ? `Jogador: ${vezDe}`
+    : "Pote finalizado";
 
   // Mostra/esconde aviso de potes superiores
   const infoPotesAltos = document.getElementById("info-potes-altos");
-  if (poteAtual && poteAtual !== 1 && poteAtual !== "goleiro" && poteAtual < 9) {
+  if (
+    poteAtual &&
+    poteAtual !== 1 &&
+    poteAtual !== "goleiro" &&
+    poteAtual < 9
+  ) {
     infoPotesAltos.style.display = "block";
   } else {
     infoPotesAltos.style.display = "none";
@@ -248,7 +434,7 @@ function corDoTimeDaVez() {
   if (!donoAtual) return "#444";
 
   // O time é identificado pelo capitão
-  const timeDaVez = times.find(time => time.capitao === donoAtual);
+  const timeDaVez = times.find((time) => time.capitao === donoAtual);
   if (!timeDaVez) return "#444";
 
   return coresTimes[timeDaVez.nome] || "#444";
@@ -258,10 +444,8 @@ function corDoTimeDaVez() {
 function sanitizedName(str) {
   if (!str) return "";
   // NFD decomposes combined letters into letter + diacritic
-  return str.normalize('NFD').replace(/\p{Diacritic}/gu, '');
+  return str.normalize("NFD").replace(/\p{Diacritic}/gu, "");
 }
-
-
 
 function renderTimes() {
   const ul = document.getElementById("times-list");
@@ -280,10 +464,10 @@ function renderTimes() {
 
     const jogadoresHTML = time.jogadores
       .map(
-        jog =>
+        (jog) =>
           `<span class="badge-jogador" style="background-color:${cor}">
             ${jog}
-          </span>`
+          </span>`,
       )
       .join("");
 
@@ -310,8 +494,6 @@ function renderTimes() {
   });
 }
 
-
-
 function renderTimesSelect() {
   const containerSelect = document.getElementById("team-selection");
   const selectArea = document.getElementById("team-select-buttons");
@@ -322,7 +504,7 @@ function renderTimesSelect() {
   }
 
   // Se não houver times pendentes (todos já têm capitão), não mostra o seletor
-  const pendentes = times.filter(t => !t.capitao);
+  const pendentes = times.filter((t) => !t.capitao);
   if (pendentes.length === 0) {
     containerSelect.style.display = "none";
     return;
@@ -331,13 +513,13 @@ function renderTimesSelect() {
   containerSelect.style.display = "block";
   selectArea.innerHTML = "";
 
-  pendentes.forEach(time => {
+  pendentes.forEach((time) => {
     const btn = document.createElement("button");
     const cor = coresTimes[time.nome] || "#333";
-    
+
     btn.className = "btn-escolha-time";
-    btn.style.setProperty('--cor-selecao', cor);
-    
+    btn.style.setProperty("--cor-selecao", cor);
+
     // Lógica idêntica de recuperação de imagem
     btn.innerHTML = `
       <img src="img/logos/${sanitizedName(time.nome)}.png" 
@@ -345,7 +527,7 @@ function renderTimesSelect() {
            onerror="this.src='img/logos/${sanitizedName(time.nome)}.jpg'; this.onerror=null;">
       <span>${time.nome}</span>
     `;
-    
+
     btn.onclick = () => realizarEscolhaManual(time.nome);
     selectArea.appendChild(btn);
   });
@@ -353,15 +535,15 @@ function renderTimesSelect() {
 
 function realizarEscolhaManual(nomeTime) {
   const capitaoAtual = ordem[indiceVez];
-  const time = times.find(t => t.nome === nomeTime);
-  
+  const time = times.find((t) => t.nome === nomeTime);
+
   time.capitao = capitaoAtual;
   indiceVez++;
 
   if (indiceVez === ordem.length) {
     document.getElementById("next-pote-button").disabled = false;
   }
-  
+
   atualizarTela();
 }
 
@@ -385,14 +567,14 @@ function renderJogadores() {
 
   // Cor do time que está escolhendo agora (para fundo do card)
   const corFundo = corDoTimeDaVez();
-  
+
   // Pega o time da vez para mostrar o escudo
-  const timeDaVez = times.find(t => t.capitao === ordem[indiceVez]);
+  const timeDaVez = times.find((t) => t.capitao === ordem[indiceVez]);
   const nomeTimeDaVez = timeDaVez ? timeDaVez.nome : null;
 
   // Primeiro renderiza jogadores do pote atual
   const potesParaMostrar = [poteAtual];
-  
+
   // Se for um pote de seleção (não goleiro), adiciona potes superiores
   if (poteAtual !== "goleiro" && poteAtual < 9) {
     for (let poteSuperior = poteAtual + 1; poteSuperior <= 9; poteSuperior++) {
@@ -408,23 +590,30 @@ function renderJogadores() {
     // Adiciona divisor para potes superiores
     if (index > 0) {
       const divisor = document.createElement("div");
-      divisor.style.cssText = "width: 100%; height: 2px; background: rgba(255,255,255,0.3); margin: 15px 0; grid-column: 1/-1;";
+      divisor.style.cssText =
+        "width: 100%; height: 2px; background: rgba(255,255,255,0.3); margin: 15px 0; grid-column: 1/-1;";
       ul.appendChild(divisor);
 
       const label = document.createElement("div");
-      label.style.cssText = "grid-column: 1/-1; color: rgba(255,255,255,0.7); font-size: 12px; font-weight: bold; margin-bottom: 10px;";
-      label.textContent = numPote === "goleiro" ? `Pote Goleiro (Selecione o goleiro)` : `Pote ${numPote} (Opcional - Selecione se preferir)`;
+      label.style.cssText =
+        "grid-column: 1/-1; color: rgba(255,255,255,0.7); font-size: 12px; font-weight: bold; margin-bottom: 10px;";
+      label.textContent =
+        numPote === "goleiro"
+          ? `Goleiro (Selecione o goleiro)`
+          : `Pote ${numPote} (Opcional - Selecione se preferir)`;
       ul.appendChild(label);
     }
 
-    potes[chavePote].forEach(jogador => {
+    potes[chavePote].forEach((jogador) => {
       const posicao = getPosicaoJogador(jogador);
       const corPosicao = coresPosicoes[posicao];
       const nomePosicao = getNomePosicao(posicao);
-      
+
       // Caminho do logo do time (para usar no background do card)
-      const caminhoLogo = nomeTimeDaVez ? `img/logos/${sanitizedName(nomeTimeDaVez)}.png` : '';
-      
+      const caminhoLogo = nomeTimeDaVez
+        ? `img/logos/${sanitizedName(nomeTimeDaVez)}.png`
+        : "";
+
       // Criar container do card
       const card = document.createElement("div");
       card.style.cssText = `
@@ -447,22 +636,22 @@ function renderJogadores() {
       card.onmouseover = () => {
         if (caminhoLogo) {
           card.style.backgroundImage = `url('${caminhoLogo}')`;
-          card.style.backgroundSize = 'auto 180%';
-          card.style.backgroundPosition = 'center';
-          card.style.backgroundBlendMode = 'overlay';
+          card.style.backgroundSize = "auto 180%";
+          card.style.backgroundPosition = "center";
+          card.style.backgroundBlendMode = "overlay";
         }
         card.style.backgroundColor = `${corFundo}88`;
         card.style.border = `2px solid ${corFundo}`;
-        card.style.transform = 'scale(1.05)';
+        card.style.transform = "scale(1.05)";
         card.style.boxShadow = `0 8px 20px ${corFundo}66`;
       };
 
       card.onmouseout = () => {
-        card.style.backgroundImage = 'none';
-        card.style.backgroundColor = 'rgba(30, 30, 30, 0.6)';
-        card.style.border = '2px solid rgba(255,255,255,0.2)';
-        card.style.transform = 'scale(1)';
-        card.style.boxShadow = 'none';
+        card.style.backgroundImage = "none";
+        card.style.backgroundColor = "rgba(30, 30, 30, 0.6)";
+        card.style.border = "2px solid rgba(255,255,255,0.2)";
+        card.style.transform = "scale(1)";
+        card.style.boxShadow = "none";
       };
 
       // Container para conteúdo do card (para ficar acima do background da imagem)
@@ -512,15 +701,15 @@ function renderJogadores() {
         const variants = new Set();
 
         // insere formas básicas
-        [trimmed, sanitary].forEach(n => {
+        [trimmed, sanitary].forEach((n) => {
           if (n) variants.add(n);
-          variants.add(n.replace(/\s+/g, ''));
-          variants.add(n.replace(/\s+/g, '_'));
-          variants.add(n.replace(/\s+/g, '-'));
-          variants.add(n + ' '); // tentativa degrau com espaço final, útil quando o arquivo o contém
+          variants.add(n.replace(/\s+/g, ""));
+          variants.add(n.replace(/\s+/g, "_"));
+          variants.add(n.replace(/\s+/g, "-"));
+          variants.add(n + " "); // tentativa degrau com espaço final, útil quando o arquivo o contém
         });
 
-        variants.forEach(n => {
+        variants.forEach((n) => {
           if (!n) return;
           list.push(`${base}${n}.jpeg`);
           list.push(`${base}${n}.jpg`);
@@ -537,14 +726,14 @@ function renderJogadores() {
       const tryNext = () => {
         if (tryIndex >= paths.length) {
           imgContainer.style.background = `linear-gradient(135deg, ${corPosicao}88, rgba(0,0,0,0.4))`;
-          img.style.display = 'none';
+          img.style.display = "none";
           return;
         }
         img.src = paths[tryIndex++];
       };
 
       /* --------- redimensionamento de imagens grandes --------- */
-      img.onload = function() {
+      img.onload = function () {
         if (img.dataset.resized) return;
         const maxDim = 400;
         const w = img.naturalWidth;
@@ -553,13 +742,13 @@ function renderJogadores() {
           const ratio = Math.min(maxDim / w, maxDim / h);
           const cw = Math.floor(w * ratio);
           const ch = Math.floor(h * ratio);
-          const canvas = document.createElement('canvas');
+          const canvas = document.createElement("canvas");
           canvas.width = cw;
           canvas.height = ch;
-          const ctx = canvas.getContext('2d');
+          const ctx = canvas.getContext("2d");
           ctx.drawImage(img, 0, 0, cw, ch);
-          img.dataset.resized = 'true';
-          img.src = canvas.toDataURL('image/jpeg', 0.8);
+          img.dataset.resized = "true";
+          img.src = canvas.toDataURL("image/jpeg", 0.8);
         }
       };
       /* --------------------------------------------------------- */
@@ -609,7 +798,6 @@ function renderJogadores() {
   });
 }
 
-
 /* ================= ESCOLHAS ================= */
 
 function escolherTime() {
@@ -617,7 +805,7 @@ function escolherTime() {
   if (!select.value || poteAtual !== 1) return;
 
   const capitaoAtual = ordem[indiceVez];
-  const time = times.find(t => t.nome === select.value);
+  const time = times.find((t) => t.nome === select.value);
   time.capitao = capitaoAtual;
   indiceVez++;
 
@@ -629,9 +817,9 @@ function escolherTime() {
 
 function escolherJogador(jogador, poteDe = poteAtual) {
   const capitaoAtual = ordem[indiceVez];
-  const time = times.find(t => t.capitao === capitaoAtual);
+  const time = times.find((t) => t.capitao === capitaoAtual);
   time.jogadores.push(jogador);
-  potes[poteDe] = potes[poteDe].filter(j => j !== jogador);
+  potes[poteDe] = potes[poteDe].filter((j) => j !== jogador);
   indiceVez++;
 
   if (indiceVez === ordem.length) {
@@ -639,7 +827,7 @@ function escolherJogador(jogador, poteDe = poteAtual) {
     if (poteAtual !== "goleiro" && poteAtual < 9) {
       redistribuirNaoEscolhidos();
     }
-    
+
     if (poteAtual === "goleiro") {
       finalizarDraft();
     } else {
@@ -656,7 +844,7 @@ function redistribuirNaoEscolhidos() {
   if (poteAtual !== 1 && poteAtual !== "goleiro" && poteAtual < 9) {
     // Move jogadores não escolhidos para o próximo pote
     const proximoPote = poteAtual + 1;
-    
+
     if (!potes[proximoPote]) {
       potes[proximoPote] = [];
     }
@@ -668,7 +856,9 @@ function redistribuirNaoEscolhidos() {
     potes[poteAtual] = [];
 
     // Log para debug
-    console.log(`Redistribuição: ${jogadoresRestantes.length} jogadores do Pote ${poteAtual} → Pote ${proximoPote}`);
+    console.log(
+      `Redistribuição: ${jogadoresRestantes.length} jogadores do Pote ${poteAtual} → Pote ${proximoPote}`,
+    );
   }
 }
 
@@ -690,18 +880,18 @@ function finalizarDraft() {
   times.forEach((time, index) => {
     const btn = document.createElement("button");
     const cor = coresTimes[time.nome] || "#333";
-    
+
     // Aplicando a mesma lógica de estilo dos cards
-    btn.className = "btn-escolha-time"; 
-    btn.style.setProperty('--cor-selecao', cor);
-    
-    const ext = (time.nome === "Estados Unidos") ? "jpg" : "png";
-    
+    btn.className = "btn-escolha-time";
+    btn.style.setProperty("--cor-selecao", cor);
+
+    const ext = time.nome === "Estados Unidos" ? "jpg" : "png";
+
     btn.innerHTML = `
       <img src="img/logos/${sanitizedName(time.nome)}.${ext}" class="mini-logo" onerror="this.style.opacity='0'">
       <span>Ver ${time.nome}</span>
     `;
-    
+
     btn.onclick = () => window.open(`time.html?id=${index}`, "_blank");
     finalButtonsContainer.appendChild(btn);
   });
@@ -710,9 +900,7 @@ function finalizarDraft() {
   exportarTimesParaCsv();
 }
 
-
 /* ================ IMPORTAÇÃO CSV ================ */
-
 
 // função para gerar e baixar CSV dos times atuais
 function exportarTimesParaCsv() {
@@ -721,7 +909,7 @@ function exportarTimesParaCsv() {
     return;
   }
   const linhas = ["nome,capitao,jogadores"];
-  times.forEach(t => {
+  times.forEach((t) => {
     const jogadores = (t.jogadores || []).join(";");
     // escapando valores simples (não suportamos vírgulas internas)
     linhas.push(`${t.nome || ""},${t.capitao || ""},${jogadores}`);
