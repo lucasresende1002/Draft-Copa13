@@ -1,5 +1,15 @@
 {
   "jogadores": [
+    { "nome": "Júlio Feitosa", "posicao": "MID", "pote": 1 },
+    { "nome": "Eng. Juan", "posicao": "MID", "pote": 1 },
+    { "nome": "GH", "posicao": "MID", "pote": 1 },
+    { "nome": "PH", "posicao": "ATT", "pote": 1 },
+    { "nome": "Magno", "posicao": "ATT", "pote": 1 },
+    { "nome": "PPMIX", "posicao": "ATT", "pote": 1 },
+    { "nome": "Enrico", "posicao": "MID", "pote": 1 },
+    { "nome": "Alexandre", "posicao": "ATT", "pote": 1 },
+    { "nome": "Jopa", "posicao": "MID", "pote": 1 },
+    { "nome": "Kayam", "posicao": "ATT", "pote": 1 },
     { "nome": "José Macias", "posicao": "DEF", "pote": 2 },
     { "nome": "Ismael", "posicao": "MID", "pote": 2 },
     { "nome": "Isaac Barbosa", "posicao": "ATT", "pote": 2 },

@@ -6,6 +6,21 @@ function sanitizedName(str) {
   return str.normalize('NFD').replace(/\p{Diacritic}/gu, '');
 }
 
+// Mapa de posições
+const coresPosicoes = {
+  "GK": "#15ff00",
+  "DEF": "#0099ff",
+  "MID": "#ffdd00",
+  "ATT": "#ff3333"
+};
+
+const nomesPosicoes = {
+  "GK": "Goleiro",
+  "DEF": "Defesa",
+  "MID": "Meio-campo",
+  "ATT": "Atacante"
+};
+
 // Busca os dados salvos no localStorage
 function getTimes() {
   return JSON.parse(localStorage.getItem("times")) || [];
@@ -17,9 +32,21 @@ function getTimeId() {
   return parseInt(params.get("id"), 10);
 }
 
+// Carrega todos os jogadores do JSON
+async function carregarTodosJogadores() {
+  try {
+    const response = await fetch('jogadores.json');
+    const data = await response.json();
+    return data.jogadores;
+  } catch (e) {
+    console.error('Erro ao carregar jogadores:', e);
+    return [];
+  }
+}
+
 /* ================= PRINCIPAL ================= */
 
-document.addEventListener("DOMContentLoaded", () => {
+document.addEventListener("DOMContentLoaded", async () => {
   const times = getTimes();
   const id = getTimeId();
 
@@ -66,14 +93,14 @@ document.addEventListener("DOMContentLoaded", () => {
   document.title = "Draft - " + nomeTime;
 
   /* ---------- FUNDO (BANDEIRA COM MOVIMENTO) ---------- */
-  const flagBg = document.getElementById("flag-bg"); // Corrigido para buscar o ID do HTML
+  const flagBg = document.getElementById("flag-bg");
   if (flagBg) {
     flagBg.style.backgroundImage = `url("${caminhoBandeira}")`;
     flagBg.style.display = "block"; 
   }
 
   /* ---------- LOGO CENTRAL COM BORDA COLORIDA ---------- */
-  const logo = document.getElementById("logo"); // ID do time.html
+  const logo = document.getElementById("logo");
   if (logo) {
     logo.src = caminhoLogo;
     logo.alt = `Escudo de ${nomeTime}`;
@@ -96,27 +123,92 @@ document.addEventListener("DOMContentLoaded", () => {
   if (nomeTimeElement) nomeTimeElement.innerText = nomeTime;
   if (capitaoTimeElement) capitaoTimeElement.innerText = `Capitão: ${time.capitao || "Sem capitão"}`;
 
-  /* ---------- LISTA DE JOGADORES (ELENCO) ---------- */
- /* ---------- LISTA DE JOGADORES (ELENCO) ---------- */
-  const ul = document.getElementById("lista-jogadores");
-  if (ul) {
-    ul.innerHTML = ""; 
+  /* ---------- LISTA DE JOGADORES (ELENCO) - CARDS ---------- */
+  const todosJogadores = await carregarTodosJogadores();
+  const containerJogadores = document.getElementById("lista-jogadores");
+  
+  if (containerJogadores) {
+    containerJogadores.innerHTML = "";
     
-    const corSelecao = coresBordas[nomeTime] || "#333";
-
-    time.jogadores.forEach((jogador, index) => {
-      const li = document.createElement("li");
-      li.innerText = jogador;
+    // Detecta se o jogador é capitão
+    const isCapitao = (nomeJogador) => {
+      return nomeJogador === time.capitao;
+    };
+    
+    // Função auxiliar para normalizar nomes de arquivo
+    const normalizarNomeArquivo = (nome) => {
+      return nome.replace(/\s+/g, '');
+    };
+    
+    // Array para renderizar: com capitão no início
+    const jogadoresParaRender = [];
+    
+    // Adiciona capitão no início se existir
+    if (time.capitao) {
+      jogadoresParaRender.push({ nome: time.capitao, isCaptain: true });
+    }
+    
+    // Adiciona outros jogadores
+    if (time.jogadores && time.jogadores.length > 0) {
+      time.jogadores.forEach(jogador => {
+        jogadoresParaRender.push({ nome: jogador, isCaptain: false });
+      });
+    }
+    
+    // Renderiza cada jogador
+    jogadoresParaRender.forEach((jogadorObj, index) => {
+      const nomeJogador = jogadorObj.nome;
+      const isCaptain = jogadorObj.isCaptain;
       
-      // Aplicamos a classe para o CSS controlar a animação
-      li.className = "jogador-item";
+      // Busca dados completos do jogador
+      const dadosJogador = todosJogadores.find(j => j.nome === nomeJogador);
       
-      // Variáveis dinâmicas para o CSS usar
-      li.style.setProperty('--cor-time', corSelecao);
-      li.style.setProperty('--delay', `${index * 0.1}s`); // Cada um demora 0.1s a mais que o anterior
-      
-      ul.appendChild(li);
+      if (dadosJogador) {
+        const card = document.createElement("div");
+        card.className = "player-card" + (isCaptain ? " captain" : "");
+        card.style.setProperty('--delay', `${index * 0.05}s`);
+        
+        const posicaoColor = coresPosicoes[dadosJogador.posicao] || "#999";
+        const posicaoNome = nomesPosicoes[dadosJogador.posicao] || "Jogador";
+        
+        // Tenta encontrar a foto do jogador (com ou sem espaços)
+        const nomeNormalizado = normalizarNomeArquivo(nomeJogador);
+        const fotoBuscas = [
+          `img/Jogadores/${nomeJogador}.jpg`,
+          `img/Jogadores/${nomeJogador}.jpeg`,
+          `img/Jogadores/${nomeNormalizado}.jpg`,
+          `img/Jogadores/${nomeNormalizado}.jpeg`
+        ];
+        
+        // Escudo do time (background)
+        const escudoTime = `img/logos/${sanitizedName(nomeTime)}.png`;
+        
+        let badgeCapitao = '';
+        if (isCaptain) {
+          badgeCapitao = '<div class="captain-badge">©️ Capitão</div>';
+        }
+        
+        card.innerHTML = `
+          <div class="player-card-bg" style="background-image: url('${escudoTime}')"></div>
+          <div class="player-image-container">
+            <img src="${fotoBuscas[0]}" alt="${nomeJogador}" class="player-image" onerror="this.src='${fotoBuscas[1]}'; this.onerror=() => this.src=''">
+          </div>
+          <div class="player-card-content">
+            ${badgeCapitao}
+            <div class="player-position" style="background-color: ${posicaoColor}">
+              ${dadosJogador.posicao}
+            </div>
+            <h3 class="player-name">${nomeJogador}</h3>
+            <p class="player-role">${posicaoNome}</p>
+            <div class="player-pote">
+              <span class="pote-label">Pote</span>
+              <span class="pote-number">${dadosJogador.pote}</span>
+            </div>
+          </div>
+        `;
+        
+        containerJogadores.appendChild(card);
+      }
     });
   }
-
 });

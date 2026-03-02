@@ -68,7 +68,7 @@ const dadosJogadores = {
   "Antonio Gustavo": "MID", "Romão": "ATT", "Gabriel Rolemberg": "DEF", "Marcelo Lemos": "MID", "Flávio Farias": "ATT",
   "Marcelo Augusto": "DEF", "André Gustavo": "MID", "JP Sampaio": "ATT", "Jean": "DEF", "Japa": "MID",
   "Tico": "GK", "Pedral": "GK", "João Pedro": "GK", "Igor": "GK", "Pedro Vieira": "GK",
-  "Rodrigo": "GK", "Diogo": "GK", "Neymar": "GK", "Matheus de Melo": "GK", "Fernando Barbosa": "GK"
+  "Rodrigo": "GK", "Diogo Ribeiro": "GK", "Neymar": "GK", "Matheus de Melo": "GK", "Fernando Barbosa": "GK"
 };
 
 // Carrega dados dos jogadores com posições
