@@ -15,14 +15,14 @@ const times = [
 
 const potes = {
   2: ["José Macias","Ismael","Isaac Barbosa","Igão","Gabriel Tavares","Davi Pontes","Alcides","Manaus","Mateus Mendonça","Marcos Antonio"],
-  3: ["Pedro Torres","Saulo","Léo Tavares","Delano","Gustavo Doria","Rery","JP Caldas","Ian Veganinho","Anselmo","Anthony Pinheiro"],
+  3: ["Pedro Torres","Saulo","Léo Tavares","Delano","Gustavo Dória","Rery","JP Caldas","Ian Veganinho","Anselmo","Anthony Pinheiro"],
   4: ["Icaro Gabigol","Fernando Ferreira","Keven Teles","Augusto Bahia","Pedim","Filipe Preguiça","Paulo Lyra","Rommel","Cauã Soares","Marcel"],
   5: ["Marqson","Vitor Souza","Vilela","Vitor Mendes","Heitor Santana","Kevin Europa","Eduardo Rouver","Gabriel Xavier","Iago Matheus","Diogo Barbosa"],
   6: ["Douglas França","Edgard","JV","Dr. Tancredo","Matheus Barbosa","Thiago Rouver","Cristiano","Igor Sávio","Deco","Caio Mendes"],
-  7: ["Felipe Fichas","Lucas Tavares","Leitinho","Gabriel Castro","Paulo Sena","Sávio","Joma","L.G","Matheus Rouver","Mago"],
+  7: ["Felipe Feichas","Lucas Tavares","Leitinho","Gabriel Castro","Paulo Sena","Sávio","Joma","L.G","Matheus Rouver","Mago"],
   8: ["JP Xerife","Beto Salada","Italo","JP Machado","Álvaro Xavier","Luan Matos","André CDC","Bahia","Luiz Paulo","José Alberto"],
-  9: ["Antonio Gustavo","Romão","Gabriel Rollemberg","Marcelo Lemos","Flávio Farias","Marcelo Augusto","André Gustavo","JP Sampaio","Jean","Japa"],
-  goleiro: ["Tico","Pedral","João Pedro","Igor","Pedro Vieira","Rodrigo","Diogo","Neymar","Matheus de Melo","Fernando Barbosa"]
+  9: ["Antonio Gustavo","Romão","Gabriel Rolemberg","Marcelo Lemos","Flávio Farias","Marcelo Augusto","André Gustavo","JP Sampaio","Jean","Japa"],
+  goleiro: ["Tico","Pedral","João Pedro","Igor","Pedro Vieira","Rodrigo","Diogo Ribeiro","Neymar","Matheus de Melo","Fernando Barbosa"]
 };
 
 const coresTimes = {
@@ -61,11 +61,11 @@ const dadosJogadores = {
   "Kevin Europa": "ATT", "Eduardo Rouver": "DEF", "Gabriel Xavier": "MID", "Iago Matheus": "ATT", "Diogo Barbosa": "DEF",
   "Douglas França": "MID", "Edgard": "ATT", "JV": "DEF", "Dr. Tancredo": "MID", "Matheus Barbosa": "ATT",
   "Thiago Rouver": "DEF", "Cristiano": "MID", "Igor Sávio": "ATT", "Deco": "DEF", "Caio Mendes": "MID",
-  "Felipe Fichas": "ATT", "Lucas Tavares": "DEF", "Leitinho": "MID", "Gabriel Castro": "ATT", "Paulo Sena": "DEF",
+  "Felipe Feichas": "ATT", "Lucas Tavares": "DEF", "Leitinho": "MID", "Gabriel Castro": "ATT", "Paulo Sena": "DEF",
   "Sávio": "MID", "Joma": "ATT", "L.G": "DEF", "Matheus Rouver": "MID", "Mago": "ATT",
   "JP Xerife": "DEF", "Beto Salada": "MID", "Italo": "ATT", "JP Machado": "DEF", "Álvaro Xavier": "MID",
   "Luan Matos": "ATT", "André CDC": "DEF", "Bahia": "MID", "Luiz Paulo": "ATT", "José Alberto": "DEF",
-  "Antonio Gustavo": "MID", "Romão": "ATT", "Gabriel Rollemberg": "DEF", "Marcelo Lemos": "MID", "Flávio Farias": "ATT",
+  "Antonio Gustavo": "MID", "Romão": "ATT", "Gabriel Rolemberg": "DEF", "Marcelo Lemos": "MID", "Flávio Farias": "ATT",
   "Marcelo Augusto": "DEF", "André Gustavo": "MID", "JP Sampaio": "ATT", "Jean": "DEF", "Japa": "MID",
   "Tico": "GK", "Pedral": "GK", "João Pedro": "GK", "Igor": "GK", "Pedro Vieira": "GK",
   "Rodrigo": "GK", "Diogo": "GK", "Neymar": "GK", "Matheus de Melo": "GK", "Fernando Barbosa": "GK"
@@ -495,27 +495,80 @@ function renderJogadores() {
       `;
 
       const img = document.createElement("img");
-      img.src = `img/jogadores/${jogador}.jpeg`;
       img.style.cssText = `
         width: 100%;
         height: 100%;
         object-fit: cover;
         object-position: center;
       `;
-      img.onerror = function() {
-        // Tenta PNG se JPEG não existir
-        if (!this.src.includes('.png')) {
-          this.src = `img/jogadores/${sanitizedName(jogador)}.png`;
-          this.onerror = function() {
-            // Se nenhuma imagem existir, usa um fundo gradiente
-            imgContainer.style.background = `linear-gradient(135deg, ${corPosicao}88, rgba(0,0,0,0.4))`;
-            img.style.display = 'none';
-          };
-        } else {
+
+      /* ---------- helper: gerador de caminhos possíveis ---------- */
+      function generatePhotoPaths(nome) {
+        const base = `img/jogadores/`;
+        const list = [];
+        if (!nome) return [];
+        const trimmed = nome.trim();
+        const sanitary = sanitizedName(trimmed);
+        const variants = new Set();
+
+        // insere formas básicas
+        [trimmed, sanitary].forEach(n => {
+          if (n) variants.add(n);
+          variants.add(n.replace(/\s+/g, ''));
+          variants.add(n.replace(/\s+/g, '_'));
+          variants.add(n.replace(/\s+/g, '-'));
+          variants.add(n + ' '); // tentativa degrau com espaço final, útil quando o arquivo o contém
+        });
+
+        variants.forEach(n => {
+          if (!n) return;
+          list.push(`${base}${n}.jpeg`);
+          list.push(`${base}${n}.jpg`);
+          list.push(`${base}${n}.png`);
+        });
+
+        return list;
+      }
+      /* ---------------------------------------------------------- */
+
+      const paths = generatePhotoPaths(jogador);
+      let tryIndex = 0;
+
+      const tryNext = () => {
+        if (tryIndex >= paths.length) {
           imgContainer.style.background = `linear-gradient(135deg, ${corPosicao}88, rgba(0,0,0,0.4))`;
           img.style.display = 'none';
+          return;
+        }
+        img.src = paths[tryIndex++];
+      };
+
+      /* --------- redimensionamento de imagens grandes --------- */
+      img.onload = function() {
+        if (img.dataset.resized) return;
+        const maxDim = 400;
+        const w = img.naturalWidth;
+        const h = img.naturalHeight;
+        if (w > maxDim || h > maxDim) {
+          const ratio = Math.min(maxDim / w, maxDim / h);
+          const cw = Math.floor(w * ratio);
+          const ch = Math.floor(h * ratio);
+          const canvas = document.createElement('canvas');
+          canvas.width = cw;
+          canvas.height = ch;
+          const ctx = canvas.getContext('2d');
+          ctx.drawImage(img, 0, 0, cw, ch);
+          img.dataset.resized = 'true';
+          img.src = canvas.toDataURL('image/jpeg', 0.8);
         }
       };
+      /* --------------------------------------------------------- */
+
+      img.onerror = tryNext;
+
+      // inicia a sequência de tentativas ao inserir no container
+      tryNext();
+
       imgContainer.appendChild(img);
       conteudoCard.appendChild(imgContainer);
 
