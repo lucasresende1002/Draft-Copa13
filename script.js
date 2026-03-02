@@ -14,16 +14,15 @@ const times = [
 ];
 
 const potes = {
-  2: ["Jogador 9","Jogador 10","Jogador 11","Jogador 12","Jogador 13","Jogador 14","Jogador 15","Jogador 16","Jogador 81","Jogador 82"],
-  3: ["Jogador 17","Jogador 18","Jogador 19","Jogador 20","Jogador 21","Jogador 22","Jogador 23","Jogador 24","Jogador 83","Jogador 84"],
-  4: ["Jogador 25","Jogador 26","Jogador 27","Jogador 28","Jogador 29","Jogador 30","Jogador 31","Jogador 32","Jogador 85","Jogador 86"],
-  5: ["Jogador 33","Jogador 34","Jogador 35","Jogador 36","Jogador 37","Jogador 38","Jogador 39","Jogador 40","Jogador 87","Jogador 88"],
-  6: ["Jogador 41","Jogador 42","Jogador 43","Jogador 44","Jogador 45","Jogador 46","Jogador 47","Jogador 48","Jogador 89","Jogador 90"],
-  7: ["Jogador 49","Jogador 50","Jogador 51","Jogador 52","Jogador 53","Jogador 54","Jogador 55","Jogador 56","Jogador 91","Jogador 92"],
-  8: ["Jogador 57","Jogador 58","Jogador 59","Jogador 60","Jogador 61","Jogador 62","Jogador 63","Jogador 64","Jogador 93","Jogador 94"],
-  9: ["Jogador 65","Jogador 66","Jogador 67","Jogador 68","Jogador 69","Jogador 70","Jogador 71","Jogador 72","Jogador 95","Jogador 96"],
-  10:["Jogador 73","Jogador 74","Jogador 75","Jogador 76","Jogador 77","Jogador 78","Jogador 79","Jogador 80","Jogador 97","Jogador 98"],
-  goleiro:["Goleiro 1","Goleiro 2","Goleiro 3","Goleiro 4","Goleiro 5","Goleiro 6","Goleiro 7","Goleiro 8","Goleiro 9","Goleiro 10"]
+  2: ["José Macias","Ismael","Isaac Barbosa","Igão","Gabriel Tavares","Davi Pontes","Alcides","Manaus","Mateus Mendonça","Marcos Antonio"],
+  3: ["Pedro Torres","Saulo","Léo Tavares","Delano","Gustavo Doria","Rery","JP Caldas","Ian Veganinho","Anselmo","Anthony Pinheiro"],
+  4: ["Icaro Gabigol","Fernando Ferreira","Keven Teles","Augusto Bahia","Pedim","Filipe Preguiça","Paulo Lyra","Rommel","Cauã Soares","Marcel"],
+  5: ["Marqson","Vitor Souza","Vilela","Vitor Mendes","Heitor Santana","Kevin Europa","Eduardo Rouver","Gabriel Xavier","Iago Matheus","Diogo Barbosa"],
+  6: ["Douglas França","Edgard","JV","Dr. Tancredo","Matheus Barbosa","Thiago Rouver","Cristiano","Igor Sávio","Deco","Caio Mendes"],
+  7: ["Felipe Fichas","Lucas Tavares","Leitinho","Gabriel Castro","Paulo Sena","Sávio","Joma","L.G","Matheus Rouver","Mago"],
+  8: ["JP Xerife","Beto Salada","Italo","JP Machado","Álvaro Xavier","Luan Matos","André CDC","Bahia","Luiz Paulo","José Alberto"],
+  9: ["Antonio Gustavo","Romão","Gabriel Rollemberg","Marcelo Lemos","Flávio Farias","Marcelo Augusto","André Gustavo","JP Sampaio","Jean","Japa"],
+  goleiro: ["Tico","Pedral","João Pedro","Igor","Pedro Vieira","Rodrigo","Diogo","Neymar","Matheus de Melo","Fernando Barbosa"]
 };
 
 const coresTimes = {
@@ -94,10 +93,10 @@ function avancarPote() {
 
   document.getElementById("next-pote-button").disabled = true;
 
-  if (poteNumero < 10) {
+  if (poteNumero < 9) {
     poteNumero++;
     poteAtual = poteNumero;
-  } else if (poteNumero === 10) {
+  } else if (poteNumero === 9) {
     poteNumero++; 
     poteAtual = "goleiro";
   }
@@ -166,7 +165,7 @@ function atualizarTela() {
 
   // Mostra/esconde aviso de potes superiores
   const infoPotesAltos = document.getElementById("info-potes-altos");
-  if (poteAtual && poteAtual !== 1 && poteAtual !== "goleiro" && poteAtual < 10) {
+  if (poteAtual && poteAtual !== 1 && poteAtual !== "goleiro" && poteAtual < 9) {
     infoPotesAltos.style.display = "block";
   } else {
     infoPotesAltos.style.display = "none";
@@ -313,7 +312,8 @@ function renderJogadores() {
   if (!poteAtual || poteAtual === 1) return;
 
   // Se o pote atual não existir ou estiver vazio
-  if (!potes[poteAtual] || potes[poteAtual].length === 0) {
+  const chaveAtual = poteAtual === "goleiro" ? "goleiro" : poteAtual;
+  if (!potes[chaveAtual] || potes[chaveAtual].length === 0) {
     ul.innerHTML = "<p style='opacity:0.6'>Nenhum jogador disponível</p>";
     return;
   }
@@ -325,8 +325,8 @@ function renderJogadores() {
   const potesParaMostrar = [poteAtual];
   
   // Se for um pote de seleção (não goleiro), adiciona potes superiores
-  if (poteAtual !== "goleiro" && poteAtual < 10) {
-    for (let poteSuperior = poteAtual + 1; poteSuperior <= 10; poteSuperior++) {
+  if (poteAtual !== "goleiro" && poteAtual < 9) {
+    for (let poteSuperior = poteAtual + 1; poteSuperior <= 9; poteSuperior++) {
       potesParaMostrar.push(poteSuperior);
     }
   }
@@ -337,7 +337,8 @@ function renderJogadores() {
   const nomeTimeDaVez = timeDaVez ? timeDaVez.nome : null;
 
   potesParaMostrar.forEach((numPote, index) => {
-    if (!potes[numPote] || potes[numPote].length === 0) return;
+    const chavePote = numPote === "goleiro" ? "goleiro" : numPote;
+    if (!potes[chavePote] || potes[chavePote].length === 0) return;
 
     // Adiciona divisor para potes superiores
     if (index > 0) {
@@ -347,11 +348,11 @@ function renderJogadores() {
 
       const label = document.createElement("div");
       label.style.cssText = "grid-column: 1/-1; color: rgba(255,255,255,0.7); font-size: 12px; font-weight: bold; margin-bottom: 10px;";
-      label.textContent = `Pote ${numPote} (Opcional - Selecione se preferir)`;
+      label.textContent = numPote === "goleiro" ? `Pote Goleiro (Selecione o goleiro)` : `Pote ${numPote} (Opcional - Selecione se preferir)`;
       ul.appendChild(label);
     }
 
-    potes[numPote].forEach(jogador => {
+    potes[chavePote].forEach(jogador => {
       const btn = document.createElement("button");
       btn.className = "card-jogador";
 
@@ -410,7 +411,7 @@ function escolherJogador(jogador, poteDe = poteAtual) {
 
   if (indiceVez === ordem.length) {
     // Chegou ao final deste pote, redistribui os não escolhidos
-    if (poteAtual !== "goleiro" && poteAtual < 10) {
+    if (poteAtual !== "goleiro" && poteAtual < 9) {
       redistribuirNaoEscolhidos();
     }
     
@@ -427,7 +428,7 @@ function redistribuirNaoEscolhidos() {
   // Pega os jogadores que restaram no pote atual
   const jogadoresRestantes = potes[poteAtual] || [];
 
-  if (poteAtual !== 1 && poteAtual !== "goleiro" && poteAtual < 10) {
+  if (poteAtual !== 1 && poteAtual !== "goleiro" && poteAtual < 9) {
     // Move jogadores não escolhidos para o próximo pote
     const proximoPote = poteAtual + 1;
     
