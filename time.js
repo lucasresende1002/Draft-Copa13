@@ -3,22 +3,88 @@
 // normaliza texto removendo acentos/diacríticos
 function sanitizedName(str) {
   if (!str) return "";
-  return str.normalize('NFD').replace(/\p{Diacritic}/gu, '');
+  return str.normalize("NFD").replace(/\p{Diacritic}/gu, "");
+}
+
+function normalizeKey(str) {
+  return sanitizedName(str || "")
+    .toLowerCase()
+    .replace(/\s+/g, " ")
+    .trim();
+}
+
+function buildTeamAssets(nomeTime) {
+  const clean = sanitizedName(nomeTime);
+  const slug = clean.toLowerCase();
+
+  return {
+    flag: `img/bandeiras/bandeira-${slug}.png`,
+    logoPng: `img/logos/${clean}.png`,
+    logoJpg: `img/logos/${clean}.jpg`,
+  };
+}
+
+function applyImageFallback(imgEl, candidates, onFail) {
+  let index = 0;
+
+  const tryNext = () => {
+    if (index >= candidates.length) {
+      if (onFail) onFail();
+      return;
+    }
+
+    imgEl.src = candidates[index++];
+  };
+
+  imgEl.onerror = tryNext;
+  tryNext();
+}
+
+function generatePhotoPaths(nomeJogador) {
+  const baseFolders = ["img/Jogadores", "img/jogadores"];
+  const exts = ["jpg", "jpeg", "png"];
+
+  const trimmed = (nomeJogador || "").trim();
+  const sanitary = sanitizedName(trimmed);
+  const variants = new Set([
+    trimmed,
+    sanitary,
+    `${trimmed} `,
+    `${sanitary} `,
+    trimmed.replace(/\s+/g, ""),
+    sanitary.replace(/\s+/g, ""),
+    trimmed.replace(/\s+/g, "_"),
+    sanitary.replace(/\s+/g, "_"),
+    trimmed.replace(/\s+/g, "-"),
+    sanitary.replace(/\s+/g, "-"),
+  ]);
+
+  const paths = [];
+  baseFolders.forEach((folder) => {
+    variants.forEach((nameVariant) => {
+      if (!nameVariant) return;
+      exts.forEach((ext) => {
+        paths.push(`${folder}/${nameVariant}.${ext}`);
+      });
+    });
+  });
+
+  return [...new Set(paths)];
 }
 
 // Mapa de posições
 const coresPosicoes = {
-  "GK": "#15ff00",
-  "DEF": "#0099ff",
-  "MID": "#ffdd00",
-  "ATT": "#ff3333"
+  GOL: "#15ff00",
+  ZAG: "#0099ff",
+  MEI: "#ffdd00",
+  ATA: "#ff3333",
 };
 
 const nomesPosicoes = {
-  "GK": "Goleiro",
-  "DEF": "Defesa",
-  "MID": "Meio-campo",
-  "ATT": "Atacante"
+  GOL: "Goleiro",
+  ZAG: "Defesa",
+  MEI: "Meio-campo",
+  ATA: "Atacante",
 };
 
 // Busca os dados salvos no localStorage
@@ -35,13 +101,24 @@ function getTimeId() {
 // Carrega todos os jogadores do JSON
 async function carregarTodosJogadores() {
   try {
-    const response = await fetch('jogadores.json');
+    const response = await fetch("jogadores.json");
     const data = await response.json();
     return data.jogadores;
   } catch (e) {
-    console.error('Erro ao carregar jogadores:', e);
+    console.error("Erro ao carregar jogadores:", e);
     return [];
   }
+}
+
+function encontrarDadosJogador(todosJogadores, nomeJogador) {
+  const key = normalizeKey(nomeJogador);
+
+  return (
+    todosJogadores.find((j) => normalizeKey(j.nome) === key) ||
+    todosJogadores.find((j) =>
+      normalizeKey(j.nome).includes(key) || key.includes(normalizeKey(j.nome)),
+    )
+  );
 }
 
 /* ================= PRINCIPAL ================= */
@@ -58,6 +135,12 @@ document.addEventListener("DOMContentLoaded", async () => {
 
   const time = times[id];
   const nomeTime = time.nome;
+  const jogadoresMeta = Array.isArray(time.jogadoresMeta) ? time.jogadoresMeta : [];
+  const poteEscolhidoPorJogador = new Map(
+    jogadoresMeta
+      .filter((item) => item && item.nome)
+      .map((item) => [item.nome, item.poteEscolhido]),
+  );
 
   // MAPEAMENTO DE CORES PARA AS BORDAS (Baseado nos escudos oficiais)
   const coresBordas = {
@@ -83,11 +166,11 @@ document.addEventListener("DOMContentLoaded", async () => {
   };
 
   const ext = extensoes[nomeTime] || "png";
-  
-  // NOVOS CAMINHOS DAS PASTAS
-  // As bandeiras agora estão em img/bandeiras/ e as logos em img/logos/
+  const teamAssets = buildTeamAssets(nomeTime);
   const caminhoBandeira = `img/bandeiras/bandeira-${sanitizedName(nomeTime).toLowerCase()}.${ext}`;
-  const caminhoLogo = `img/logos/${sanitizedName(nomeTime)}.${ext}`;
+  const corTime = coresBordas[nomeTime] || "#ddd";
+
+  document.documentElement.style.setProperty("--team-border-color", corTime);
 
   /* ---------- TÍTULO DA PÁGINA ---------- */
   document.title = "Draft - " + nomeTime;
@@ -102,17 +185,21 @@ document.addEventListener("DOMContentLoaded", async () => {
   /* ---------- LOGO CENTRAL COM BORDA COLORIDA ---------- */
   const logo = document.getElementById("logo");
   if (logo) {
-    logo.src = caminhoLogo;
+    logo.src = teamAssets.logoPng;
     logo.alt = `Escudo de ${nomeTime}`;
     
     // Aplica a cor da borda personalizada
-    logo.style.borderColor = coresBordas[nomeTime] || "#ddd";
+    logo.style.borderColor = corTime;
     logo.style.borderStyle = "solid";
     
     // Fallback: se não achar a logo na pasta específica, usa a logo geral
     logo.onerror = () => {
-      logo.src = "img/Logo.jpg"; 
-      logo.style.borderColor = "#ddd";
+      if (logo.src.includes(".png")) {
+        logo.src = teamAssets.logoJpg;
+      } else {
+        logo.src = "img/Logo.jpg";
+        logo.style.borderColor = "#ddd";
+      }
     };
   }
 
@@ -129,96 +216,86 @@ document.addEventListener("DOMContentLoaded", async () => {
   
   if (containerJogadores) {
     containerJogadores.innerHTML = "";
-    
-    // Detecta se o jogador é capitão
-    const isCapitao = (nomeJogador) => {
-      return nomeJogador === time.capitao;
-    };
-    
-    // Função auxiliar para normalizar nomes de arquivo
-    const normalizarNomeArquivo = (nome) => {
-      return nome.replace(/\s+/g, '');
-    };
-    
+
     // Array para renderizar: com capitão no início
     const jogadoresParaRender = [];
-    
+
     // Adiciona capitão no início se existir
     if (time.capitao) {
       jogadoresParaRender.push({ nome: time.capitao, isCaptain: true });
     }
-    
+
     // Adiciona outros jogadores
     if (time.jogadores && time.jogadores.length > 0) {
-      time.jogadores.forEach(jogador => {
-        jogadoresParaRender.push({ nome: jogador, isCaptain: false });
+      time.jogadores.forEach((jogador) => {
+        if (jogador !== time.capitao) {
+          jogadoresParaRender.push({ nome: jogador, isCaptain: false });
+        }
       });
     }
-    
+
+    if (jogadoresParaRender.length === 0) {
+      containerJogadores.innerHTML =
+        "<p style='color:#fff; opacity:0.8'>Nenhum jogador encontrado para este time.</p>";
+      return;
+    }
+
     // Renderiza cada jogador
     jogadoresParaRender.forEach((jogadorObj, index) => {
       const nomeJogador = jogadorObj.nome;
       const isCaptain = jogadorObj.isCaptain;
-      
+
       // Busca dados completos do jogador
-      const dadosJogador = todosJogadores.find(j => j.nome === nomeJogador);
-      
-      if (dadosJogador) {
-        const card = document.createElement("div");
-        card.className = "player-card" + (isCaptain ? " captain" : "");
-        card.style.setProperty('--delay', `${index * 0.05}s`);
-        
-        const posicaoColor = coresPosicoes[dadosJogador.posicao] || "#999";
-        const posicaoNome = nomesPosicoes[dadosJogador.posicao] || "Jogador";
-        
-        // Tenta encontrar a foto do jogador (com ou sem espaços)
-        const nomeNormalizado = normalizarNomeArquivo(nomeJogador);
-        const fotoBuscas = [
-          `img/Jogadores/${nomeJogador}.jpg`,
-          `img/Jogadores/${nomeJogador}.jpeg`,
-          `img/Jogadores/${nomeNormalizado}.jpg`,
-          `img/Jogadores/${nomeNormalizado}.jpeg`
-        ];
-        
-        // Escudo do time (background)
-        const escudoTime = `img/logos/${sanitizedName(nomeTime)}.png`;
-        
-        let badgeCapitao = '';
-        if (isCaptain) {
-          badgeCapitao = '<div class="captain-badge">©️ Capitão</div>';
-        }
-        
-        card.innerHTML = `
-          <div class="player-card-bg" style="background-image: url('${escudoTime}')"></div>
-          <div class="player-image-container">
-            <img src="${fotoBuscas[0]}" alt="${nomeJogador}" class="player-image" onerror="this.src='${fotoBuscas[1]}'; this.onerror=() => this.src=''">
-          </div>
-          <div class="player-card-content">
-            ${badgeCapitao}
-            <div class="player-position" style="background-color: ${posicaoColor}">
-              ${dadosJogador.posicao}
-            </div>
-            <h3 class="player-name">${nomeJogador}</h3>
-            <p class="player-role">${posicaoNome}</p>
-            <div class="player-pote">
-              ${dadosJogador.pote == "goleiro" ? `
-    <div class="player-pote">
-      <span class="pote-label">Goleiro</span>
-    </div>
-  `
-  : `
-    <div class="player-pote">
-      <span class="pote-label">Pote</span>
-      <span class="pote-number">${dadosJogador.pote}</span>
-    </div>
-  `
-}
-            </div>
-          </div>
-        `;
-        
-        containerJogadores.appendChild(card);
-      }
+      const dadosJogador = encontrarDadosJogador(todosJogadores, nomeJogador) || {};
+
+      const posicao = dadosJogador.posicao || "MEI";
+      const posicaoColor = coresPosicoes[posicao] || "#999";
+      const poteEscolhido = isCaptain
+        ? 1
+        : poteEscolhidoPorJogador.get(nomeJogador);
+      const poteExibicao = poteEscolhido ?? dadosJogador.pote;
+
+      const card = document.createElement("div");
+      card.className = "player-card" + (isCaptain ? " captain" : "");
+      card.style.setProperty("--delay", `${index * 0.05}s`);
+      card.style.setProperty("--team-logo", `url('${teamAssets.flag}')`);
+      card.style.setProperty("--team-logo-fallback", `url('${teamAssets.flag}')`);
+
+      const bg = document.createElement("div");
+      bg.className = "player-card-bg";
+      bg.style.backgroundImage = `url('${teamAssets.flag}')`;
+
+      const imageContainer = document.createElement("div");
+      imageContainer.className = "player-image-container";
+
+      const image = document.createElement("img");
+      image.alt = nomeJogador;
+      image.className = "player-image";
+
+      applyImageFallback(image, generatePhotoPaths(nomeJogador), () => {
+        image.style.display = "none";
+        imageContainer.style.background =
+          "linear-gradient(135deg, rgba(25, 25, 35, 0.7), rgba(8, 8, 16, 0.85))";
+      });
+
+      imageContainer.appendChild(image);
+
+      const content = document.createElement("div");
+      content.className = "player-card-content";
+      content.innerHTML = `
+        ${isCaptain ? '<div class="captain-badge">©️ Capitão</div>' : ""}
+        ${isCaptain ? "" : `<div class="player-position" style="background-color: ${posicaoColor}">${posicao}</div>`}
+        <h3 class="player-name">${nomeJogador}</h3>
+        ${poteExibicao === "goleiro"
+          ? '<div class="player-pote"><span class="pote-label">Goleiro</span></div>'
+          : `<div class="player-pote"><span class="pote-label">Pote</span><span class="pote-number">${poteExibicao ?? "-"}</span></div>`}
+      `;
+
+      card.appendChild(bg);
+      card.appendChild(imageContainer);
+      card.appendChild(content);
+
+      containerJogadores.appendChild(card);
     });
   }
 });

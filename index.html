@@ -15,12 +15,25 @@
 
     <div class="content">
       <h1>Bem-vindo ao Draft Copa Treze!</h1>
+      <div id="admin-panel">
+        <div class="admin-header">
+          <h3>🔒 Painel ADMIN</h3>
+          <p>Escolha qual time terá a próxima seleção de jogador.</p>
+        </div>
+
+        <button id="btn-desfazer">↩ Desfazer Última Escolha</button>
+
+        <div class="admin-controls">
+          <div id="admin-indicador">Nenhum time selecionado</div>
+          <div id="admin-times" class="admin-times-container"></div>
+        </div>
+      </div>
       <div class="logo-container">
         <img src="img/Logo.jpg" alt="Logo do Campeonato" />
       </div>
-      <h2 id="status">Sortear Pote 1</h2>
+      <h2 id="status">Clique em Iniciar Draft</h2>
       <div class="controls">
-        <button id="sortear-pote-button">Sortear Pote 1</button>
+        <button id="sortear-pote-button">Iniciar Draft</button>
         <button id="next-pote-button" disabled>Próximo Pote</button>
       </div>
 
@@ -33,8 +46,17 @@
         </div>
         <div class="box-players">
           <h3>Jogadores Disponíveis</h3>
-          <p id="info-potes-altos" style="color: #fffd54; font-size: 12px; margin: 10px 0; display: none;">
-            💡 Você pode selecionar de potes superiores (jogadores restantes serão movidos ao próximo pote)
+          <p
+            id="info-potes-altos"
+            style="
+              color: #fffd54;
+              font-size: 12px;
+              margin: 10px 0;
+              display: none;
+            "
+          >
+            💡 Você pode selecionar de potes superiores (jogadores restantes
+            serão movidos ao próximo pote)
           </p>
           <ul id="jogadores-list"></ul>
         </div>
@@ -51,9 +73,6 @@
       <hr />
 
       <ul id="result"></ul>
-
-
-
     </div>
     <script src="script.js"></script>
   </body>

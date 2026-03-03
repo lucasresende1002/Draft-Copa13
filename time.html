@@ -7,22 +7,20 @@
   <link rel="stylesheet" href="styles.css" />
 </head>
 <body class="time-page">
+  <div class="flag-bg" id="flag-bg"></div>
 
   <div class="team-card">
-    <div class="flag-bg" id="flag-bg"></div>
+    <div class="logo-wrapper">
+      <img id="logo" class="team-logo" />
+    </div>
 
-<div class="team-card">
-  <div class="logo-wrapper">
-    <img id="logo" class="team-logo" />
-  </div>
+    <h1 id="nome-time"></h1>
+    <h2 id="capitão-time"></h2>
 
-  <h1 id="nome-time"></h1>
-  <h2 id="capitão-time"></h2>
+    <h3>Elenco</h3>
+    <div id="lista-jogadores" class="players-grid"></div>
 
-  <h3>Elenco</h3>
-  <div id="lista-jogadores" class="players-grid"></div>
-
-  <button class="btn-pdf" onclick="window.print()">Exportar PDF</button>
+    <button class="btn-pdf" onclick="window.print()">Exportar PDF</button>
   </div>
 
   <script src="time.js"></script>

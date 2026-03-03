@@ -20,7 +20,7 @@ const potes = {
     "Isaac Barbosa",
     "Igão",
     "Gabriel Tavares",
-    "Davi Pontes",
+    "Delano",
     "Alcides",
     "Manaus",
     "Mateus Mendonça",
@@ -28,35 +28,35 @@ const potes = {
   ],
   3: [
     "Pedro Torres",
-    "Saulo",
+    "Augusto Bahia",
     "Léo Tavares",
-    "Delano",
+    "Davi Pontes",
     "Gustavo Dória",
     "Rery",
-    "JP Caldas",
+    "Keven Teles",
     "Ian Veganinho",
     "Anselmo",
     "Anthony Pinheiro",
   ],
   4: [
-    "Icaro Gabigol",
+    "Icaro Azevedo",
     "Fernando Ferreira",
-    "Keven Teles",
-    "Augusto Bahia",
+    "Kevin Ricardo",
+    "Marqson",
     "Pedim",
-    "Filipe Preguiça",
+    "Filipe Rodrigues",
     "Paulo Lyra",
     "Rommel",
     "Cauã Soares",
     "Marcel",
   ],
   5: [
-    "Marqson",
+    "Deco",
     "Vitor Souza",
     "Vilela",
     "Vitor Mendes",
     "Heitor Santana",
-    "Kevin Europa",
+    "Emanuel Freitas",
     "Eduardo Rouver",
     "Gabriel Xavier",
     "Iago Matheus",
@@ -71,13 +71,13 @@ const potes = {
     "Thiago Rouver",
     "Cristiano",
     "Igor Sávio",
-    "Deco",
+    "Jayro",
     "Caio Mendes",
   ],
   7: [
     "Felipe Feichas",
     "Lucas Tavares",
-    "Leitinho",
+    "Jean",
     "Gabriel Castro",
     "Paulo Sena",
     "Sávio",
@@ -87,9 +87,9 @@ const potes = {
     "Mago",
   ],
   8: [
-    "JP Xerife",
+    "JP Felizola",
     "Beto Salada",
-    "Italo",
+    "Itallo",
     "JP Machado",
     "Álvaro Xavier",
     "Luan Matos",
@@ -107,7 +107,7 @@ const potes = {
     "Marcelo Augusto",
     "André Gustavo",
     "JP Sampaio",
-    "Jean",
+    "Marcos Matos",
     "Japa",
   ],
   goleiro: [
@@ -115,10 +115,10 @@ const potes = {
     "Pedral",
     "João Pedro",
     "Igor",
-    "Pedro Vieira",
+    "Paulo Santos",
     "Rodrigo",
     "Diogo Ribeiro",
-    "Neymar",
+    "Menezes",
     "Matheus de Melo",
     "Fernando Barbosa",
   ],
@@ -139,10 +139,10 @@ const coresTimes = {
 
 // Cores das posições
 const coresPosicoes = {
-  GK: "#15ff00", // Azul para goleiro
-  DEF: "#0099ff", // Azul para defesa
-  MID: "#ffdd00", // Amarelo para meio-campo
-  ATT: "#ff3333", // Vermelho para atacante
+  GOL: "#15ff00", // Azul para goleiro
+  ZAG: "#0099ff", // Azul para defesa
+  MEI: "#ffdd00", // Amarelo para meio-campo
+  ATA: "#ff3333", // Vermelho para atacante
 };
 
 // Mapa de jogadores com suas posições
@@ -150,98 +150,105 @@ let jogadoresDB = {};
 
 // Dados dos jogadores embutidos como fallback
 const dadosJogadores = {
-  "José Macias": "DEF",
-  Ismael: "MID",
-  "Isaac Barbosa": "ATT",
-  Igão: "DEF",
-  "Gabriel Tavares": "MID",
-  "Davi Pontes": "ATT",
-  Alcides: "DEF",
-  Manaus: "MID",
-  "Mateus Mendonça": "DEF",
-  "Marcos Antonio": "ATT",
-  "Pedro Torres": "MID",
-  Saulo: "DEF",
-  "Léo Tavares": "ATT",
-  Delano: "MID",
-  "Gustavo Doria": "DEF",
-  Rery: "ATT",
-  "JP Caldas": "DEF",
-  "Ian Veganinho": "MID",
-  Anselmo: "ATT",
-  "Anthony Pinheiro": "DEF",
-  "Icaro Gabigol": "ATT",
-  "Fernando Ferreira": "DEF",
-  "Keven Teles": "MID",
-  "Augusto Bahia": "ATT",
-  Pedim: "DEF",
-  "Filipe Preguiça": "MID",
-  "Paulo Lyra": "ATT",
-  Rommel: "DEF",
-  "Cauã Soares": "MID",
-  Marcel: "ATT",
-  Marqson: "DEF",
-  "Vitor Souza": "MID",
-  Vilela: "ATT",
-  "Vitor Mendes": "DEF",
-  "Heitor Santana": "MID",
-  "Kevin Europa": "ATT",
-  "Eduardo Rouver": "DEF",
-  "Gabriel Xavier": "MID",
-  "Iago Matheus": "ATT",
-  "Diogo Barbosa": "DEF",
-  "Douglas França": "MID",
-  Edgard: "ATT",
-  JV: "DEF",
-  "Dr. Tancredo": "MID",
-  "Matheus Barbosa": "ATT",
-  "Thiago Rouver": "DEF",
-  Cristiano: "MID",
-  "Igor Sávio": "ATT",
-  Deco: "DEF",
-  "Caio Mendes": "MID",
-  "Felipe Feichas": "ATT",
-  "Lucas Tavares": "DEF",
-  Leitinho: "MID",
-  "Gabriel Castro": "ATT",
-  "Paulo Sena": "DEF",
-  Sávio: "MID",
-  Joma: "ATT",
-  "L.G": "DEF",
-  "Matheus Rouver": "MID",
-  Mago: "ATT",
-  "JP Xerife": "DEF",
-  "Beto Salada": "MID",
-  Italo: "ATT",
-  "JP Machado": "DEF",
-  "Álvaro Xavier": "MID",
-  "Luan Matos": "ATT",
-  "André CDC": "DEF",
-  Bahia: "MID",
-  "Luiz Paulo": "ATT",
-  "José Alberto": "DEF",
-  "Antonio Gustavo": "MID",
-  Romão: "ATT",
-  "Gabriel Rolemberg": "DEF",
-  "Marcelo Lemos": "MID",
-  "Flávio Farias": "ATT",
-  "Marcelo Augusto": "DEF",
-  "André Gustavo": "MID",
-  "JP Sampaio": "ATT",
-  Jean: "DEF",
-  Japa: "MID",
-  Tico: "GK",
-  Pedral: "GK",
-  "João Pedro": "GK",
-  Igor: "GK",
-  "Pedro Vieira": "GK",
-  Rodrigo: "GK",
-  "Diogo Ribeiro": "GK",
-  Neymar: "GK",
-  "Matheus de Melo": "GK",
-  "Fernando Barbosa": "GK",
-};
+  "José Macias": "MEI",
+  Ismael: "MEI",
+  "Isaac Barbosa": "ATA",
+  Igão: "ATA",
+  "Gabriel Tavares": "MEI",
+  "Davi Pontes": "MEI",
+  Alcides: "ATA",
+  Manaus: "ATA",
+  "Mateus Mendonça": "MEI",
+  "Marcos Antonio": "ATA",
 
+  "Pedro Torres": "ATA",
+  "Emanuel Freitas": "ATA",
+  "Léo Tavares": "MEI",
+  Delano: "MEI",
+  "Gustavo Doria": "ATA",
+  Rery: "MEI",
+  "Jayro": "ZAG",
+  "Ian Veganinho": "MEI",
+  Anselmo: "MEI",
+  "Anthony Pinheiro": "ZAG",
+
+  "Icaro Azevedo": "ATA",
+  "Fernando Ferreira": "MEI",
+  "Keven Teles": "MEI",
+  "Augusto Bahia": "ATA",
+  Pedim: "MEI",
+  "Filipe Rodrigues": "MEI",
+  "Paulo Lyra": "ZAG",
+  Rommel: "MEI",
+  "Cauã Soares": "MEI",
+  Marcel: "ATA",
+
+  Marqson: "MEI",
+  "Vitor Souza": "MEI",
+  Vilela: "MEI",
+  "Vitor Mendes": "ATA",
+  "Heitor Santana": "ATA",
+  "Kevin Ricardo": "MEI",
+  "Eduardo Rouver": "MEI",
+  "Gabriel Xavier": "ZAG",
+  "Iago Matheus": "ZAG",
+  "Diogo Barbosa": "MEI",
+
+  "Douglas França": "ZAG",
+  Edgard: "MEI",
+  JV: "ATA",
+  "Dr. Tancredo": "MEI",
+  "Matheus Barbosa": "ATA",
+  "Thiago Rouver": "MEI",
+  Cristiano: "ZAG",
+  "Igor Sávio": "MEI",
+  Deco: "ATA",
+  "Caio Mendes": "MEI",
+
+  "Felipe Feichas": "ZAG",
+  "Lucas Tavares": "ZAG",
+  "Marcos Matos": "ZAG",
+  "Gabriel Castro": "ZAG",
+  "Paulo Sena": "MEI",
+  Sávio: "ATA",
+  Joma: "ATA",
+  "L.G": "ZAG",
+  "Matheus Rouver": "MEI",
+  Mago: "ATA",
+
+  "JP Felizola": "ATA",
+  "Beto Salada": "ATA",
+  Itallo: "ATA",
+  "JP Machado": "ZAG",
+  "Álvaro Xavier": "MEI",
+  "Luan Matos": "ATA",
+  "André CDC": "ZAG",
+  Bahia: "ZAG",
+  "Luiz Paulo": "MEI",
+  "José Alberto": "ATA",
+
+  "Antonio Gustavo": "ATA",
+  Romão: "ATA",
+  "Gabriel Rolemberg": "ATA",
+  "Marcelo Lemos": "ATA",
+  "Flávio Farias": "ZAG",
+  "Marcelo Augusto": "ATA",
+  "André Gustavo": "ATA",
+  "JP Sampaio": "ATA",
+  Jean: "MEI",
+  Japa: "ATA",
+
+  Tico: "GOL",
+  Pedral: "GOL",
+  "João Pedro": "GOL",
+  Igor: "GOL",
+  "Paulo Santos": "GOL",
+  Rodrigo: "GOL",
+  "Diogo Ribeiro": "GOL",
+  Menezes: "GOL",
+  "Matheus de Melo": "GOL",
+  "Fernando Barbosa": "GOL",
+};
 // Carrega dados dos jogadores com posições
 async function carregarJogadores() {
   try {
@@ -259,17 +266,17 @@ async function carregarJogadores() {
 
 // Função helper para pegar posição do jogador
 function getPosicaoJogador(nome) {
-  const posicao = jogadoresDB[nome] || dadosJogadores[nome] || "MID"; // Tenta DB, depois fallback, depois MID padrão
+  const posicao = jogadoresDB[nome] || dadosJogadores[nome] || "MEI"; // Tenta DB, depois fallback, depois MEI padrão
   return posicao;
 }
 
 // Função helper para pegar nome da posição
 function getNomePosicao(posicao) {
   const nomes = {
-    GK: "Goleiro",
-    DEF: "Defesa",
-    MID: "Meio-campo",
-    ATT: "Atacante",
+    GOL: "Goleiro",
+    ZAG: "Defesa",
+    MEI: "Meio-campo",
+    ATA: "Atacante",
   };
   return nomes[posicao] || "Jogador";
 }
@@ -279,57 +286,86 @@ function getNomePosicao(posicao) {
 let poteNumero = 0;
 let poteAtual = null;
 let ordem = [];
+let modoAdmin = true;
+let timeDaVezAdmin = null;
+let timesQueJaEscolheramNoPote = new Set();
+let historicoEscolhas = [];
 let indiceVez = 0;
 let modo = "";
 let draftIniciado = false;
 let draftFinalizado = false;
 let potesAltosDisponiveis = {}; // Rastreia quantos jogadores ainda precisam ser escolhidos de potes superiores
 
+function sincronizarJogadoresMeta() {
+  times.forEach((time) => {
+    if (!Array.isArray(time.jogadoresMeta)) {
+      time.jogadoresMeta = [];
+    }
+  });
+
+  historicoEscolhas.forEach((escolha) => {
+    const time = times.find((t) => t.nome === escolha.time);
+    if (!time || !Array.isArray(time.jogadores)) return;
+
+    if (!time.jogadores.includes(escolha.jogador)) return;
+
+    const jaExiste = time.jogadoresMeta.some(
+      (item) =>
+        item?.nome === escolha.jogador &&
+        item?.poteEscolhido === (escolha.poteEscolhido ?? escolha.pote),
+    );
+
+    if (!jaExiste) {
+      time.jogadoresMeta.push({
+        nome: escolha.jogador,
+        poteEscolhido: escolha.poteEscolhido ?? escolha.pote,
+      });
+    }
+  });
+}
+
 /* ================= CONTROLE ================= */
 
-// O botão de sorteio agora lida com o Pote 1, Potes Pares e Goleiro
+// Botão principal: inicia o draft (modo admin)
 document.getElementById("sortear-pote-button").addEventListener("click", () => {
-  if (!draftIniciado) {
-    sortearPote1();
-  } else {
-    iniciarPote(); // Sorteia ordem para potes pares ou goleiro
-  }
+  iniciarDraft();
 });
 
 document
   .getElementById("next-pote-button")
   .addEventListener("click", avancarPote);
-document
-  .getElementById("select-team-button")
-  .addEventListener("click", escolherTime);
+
+const selectTeamButton = document.getElementById("select-team-button");
+if (selectTeamButton) {
+  selectTeamButton.addEventListener("click", escolherTime);
+}
 
 /* ================= FUNÇÕES DE NAVEGAÇÃO ================= */
 
-function sortearPote1() {
+function iniciarDraft() {
   if (draftIniciado) return;
 
-  // Se todos os times já têm capitão, não precisamos do Pote 1
-  // (escolha manual/aleatória de times). Começamos diretamente pelo Pote 2.
-  const todosComCapitao = times.every((t) => t.capitao);
-  if (todosComCapitao) {
-    poteNumero = 2;
-    poteAtual = 2;
-    draftIniciado = true;
-    document.getElementById("sortear-pote-button").disabled = true;
-    iniciarPote();
-    return;
-  }
-
-  poteNumero = 1;
-  poteAtual = 1;
+  poteNumero = 2;
+  poteAtual = 2;
   draftIniciado = true;
   document.getElementById("sortear-pote-button").disabled = true;
+  document.getElementById("sortear-pote-button").innerText =
+    "Draft Iniciado";
 
   iniciarPote();
 }
 
 function avancarPote() {
   if (!draftIniciado || draftFinalizado) return;
+
+  if (modoAdmin && !todosTimesEscolheramNoPote()) {
+    alert("Todos os times precisam escolher neste pote antes de avançar.");
+    return;
+  }
+
+  if (poteAtual !== "goleiro" && typeof poteAtual === "number" && poteAtual < 9) {
+    redistribuirNaoEscolhidos();
+  }
 
   document.getElementById("next-pote-button").disabled = true;
 
@@ -339,60 +375,26 @@ function avancarPote() {
   } else if (poteNumero === 9) {
     poteNumero++;
     poteAtual = "goleiro";
+  } else {
+    finalizarDraft();
+    return;
   }
 
-  // REGRA: Potes ímpares espelham. Pares e Goleiro sorteiam.
-  if (poteAtual !== "goleiro" && poteAtual % 2 !== 0) {
-    iniciarPote(); // Inicia automático para ímpares (3, 5, 7, 9)
-  } else {
-    // Para e pede sorteio manual
-    document.getElementById("status").innerText =
-      `Aguardando sorteio do Pote ${poteAtual === "goleiro" ? "Goleiro" : poteAtual}`;
-    document.getElementById("sortear-pote-button").disabled = false;
-    document.getElementById("sortear-pote-button").innerText = "Sortear Ordem";
-  }
+  iniciarPote();
 }
 
 function iniciarPote() {
   indiceVez = 0;
+  if (modoAdmin) {
+    timeDaVezAdmin = null;
+    timesQueJaEscolheramNoPote = new Set();
+    atualizarBotoesAdminNoPote();
+  }
   document.getElementById("sortear-pote-button").disabled = true;
-  document.getElementById("sortear-pote-button").innerText =
-    "Sorteio Realizado";
+  document.getElementById("sortear-pote-button").innerText = "Draft Iniciado";
+  document.getElementById("next-pote-button").disabled = true;
 
-  if (poteAtual === 1) {
-    // Se todos os times já têm capitão, respeitamos essa ordem definida.
-    const todosComCapitao = times.every((t) => t.capitao);
-    if (todosComCapitao) {
-      modo = "predefinido";
-      ordem = times.map((t) => t.capitao);
-    } else if (potes[1] && potes[1].length) {
-      modo = "sorteio";
-      ordem = [...potes[1]].sort(() => Math.random() - 0.5);
-    } else {
-      // Fallback: usar os capitães já definidos onde existirem,
-      // e embaralhar entre os demais nomes/time como último recurso.
-      modo = "sorteio";
-      ordem = times
-        .map((t) => t.capitao || t.nome)
-        .sort(() => Math.random() - 0.5);
-    }
-  } else if (poteAtual === "goleiro") {
-    modo = "sorteio";
-    ordem = times.map((t) => t.capitao).sort(() => Math.random() - 0.5);
-  } else {
-    if (poteAtual % 2 === 0) {
-      modo = "sorteio";
-      ordem = times.map((t) => t.capitao).sort(() => Math.random() - 0.5);
-    } else {
-      modo = "espelhamento";
-      ordem = [...ordem].reverse();
-    }
-  }
-
-  // Inicializa o contador de jogadores que precisam ser escolhidos neste pote
-  if (poteAtual !== 1) {
-    potesAltosDisponiveis = {};
-  }
+  potesAltosDisponiveis = {};
 
   document.getElementById("status").innerText =
     poteAtual === "goleiro" ? "Goleiro" : `Pote ${poteAtual}`;
@@ -402,12 +404,22 @@ function iniciarPote() {
 
 function atualizarTela() {
   const vezDe = ordem[indiceVez];
-  document.getElementById("vez").innerText = vezDe
-    ? `⏳ Hora do capitão: ${vezDe}`
-    : "";
-  document.getElementById("current-player").innerText = vezDe
-    ? `Jogador: ${vezDe}`
-    : "Pote finalizado";
+  const textoVez = modoAdmin
+    ? timeDaVezAdmin
+      ? `🧠 ADMIN escolheu: ${timeDaVezAdmin}`
+      : "🧠 ADMIN: selecione um time no painel para escolher o jogador"
+    : vezDe
+      ? `⏳ Hora do capitão: ${vezDe}`
+      : "";
+
+  document.getElementById("vez").innerText = textoVez;
+  document.getElementById("current-player").innerText = modoAdmin
+    ? timeDaVezAdmin
+      ? `Escolha ativa: ${timeDaVezAdmin}`
+      : "Aguardando seleção do ADMIN"
+    : vezDe
+      ? `Jogador: ${vezDe}`
+      : "Pote finalizado";
 
   // Mostra/esconde aviso de potes superiores
   const infoPotesAltos = document.getElementById("info-potes-altos");
@@ -425,11 +437,28 @@ function atualizarTela() {
   renderTimes();
   renderTimesSelect();
   renderJogadores();
+
+  if (modoAdmin) {
+    document.getElementById("next-pote-button").disabled =
+      !todosTimesEscolheramNoPote();
+  }
+
+  if (modoAdmin) {
+    atualizarIndicadorAdmin();
+  }
 }
 
 /* ================= RENDERIZAÇÃO ================= */
 
 function corDoTimeDaVez() {
+  if (modoAdmin && timeDaVezAdmin) {
+    return coresTimes[timeDaVezAdmin] || "#444";
+  }
+
+  if (modoAdmin) {
+    return "#444";
+  }
+
   const donoAtual = ordem[indiceVez];
   if (!donoAtual) return "#444";
 
@@ -569,7 +598,10 @@ function renderJogadores() {
   const corFundo = corDoTimeDaVez();
 
   // Pega o time da vez para mostrar o escudo
-  const timeDaVez = times.find((t) => t.capitao === ordem[indiceVez]);
+  const timeDaVez =
+    modoAdmin && timeDaVezAdmin
+      ? times.find((t) => t.nome === timeDaVezAdmin)
+      : times.find((t) => t.capitao === ordem[indiceVez]);
   const nomeTimeDaVez = timeDaVez ? timeDaVez.nome : null;
 
   // Primeiro renderiza jogadores do pote atual
@@ -609,50 +641,33 @@ function renderJogadores() {
       const corPosicao = coresPosicoes[posicao];
       const nomePosicao = getNomePosicao(posicao);
 
-      // Caminho do logo do time (para usar no background do card)
-      const caminhoLogo = nomeTimeDaVez
-        ? `img/logos/${sanitizedName(nomeTimeDaVez)}.png`
+      // Caminho da bandeira do time da vez
+      const caminhoBandeira = nomeTimeDaVez
+        ? `img/bandeiras/bandeira-${sanitizedName(nomeTimeDaVez).toLowerCase()}.png`
         : "";
 
       // Criar container do card
       const card = document.createElement("div");
+      card.className = "card-jogador-draft";
       card.style.cssText = `
         display: flex;
         flex-direction: column;
         align-items: center;
         justify-content: flex-end;
-        background: rgba(30, 30, 30, 0.6);
-        border-radius: 12px;
         padding: 12px;
-        cursor: pointer;
-        transition: all 0.3s ease;
         min-height: 200px;
-        border: 2px solid rgba(255,255,255,0.2);
-        opacity: ${numPote !== poteAtual ? 0.6 : 1};
         position: relative;
         overflow: hidden;
       `;
+      card.style.opacity = numPote !== poteAtual ? "0.6" : "1";
 
-      card.onmouseover = () => {
-        if (caminhoLogo) {
-          card.style.backgroundImage = `url('${caminhoLogo}')`;
-          card.style.backgroundSize = "auto 180%";
-          card.style.backgroundPosition = "center";
-          card.style.backgroundBlendMode = "overlay";
-        }
-        card.style.backgroundColor = `${corFundo}88`;
-        card.style.border = `2px solid ${corFundo}`;
-        card.style.transform = "scale(1.05)";
-        card.style.boxShadow = `0 8px 20px ${corFundo}66`;
-      };
-
-      card.onmouseout = () => {
-        card.style.backgroundImage = "none";
-        card.style.backgroundColor = "rgba(30, 30, 30, 0.6)";
-        card.style.border = "2px solid rgba(255,255,255,0.2)";
-        card.style.transform = "scale(1)";
-        card.style.boxShadow = "none";
-      };
+      if (modoAdmin && nomeTimeDaVez) {
+        card.classList.add("admin-bg");
+        card.style.setProperty("--cor-time", corFundo);
+        card.style.setProperty("--team-logo", `url('${caminhoBandeira}')`);
+      } else {
+        card.classList.remove("admin-bg");
+      }
 
       // Container para conteúdo do card (para ficar acima do background da imagem)
       const conteudoCard = document.createElement("div");
@@ -669,6 +684,7 @@ function renderJogadores() {
 
       // Container da foto (com fallback caso não exista)
       const imgContainer = document.createElement("div");
+      imgContainer.className = "card-player-photo";
       imgContainer.style.cssText = `
         width: 120px;
         height: 120px;
@@ -682,6 +698,10 @@ function renderJogadores() {
         border: 3px solid rgba(255,255,255,0.3);
         flex-shrink: 0;
       `;
+
+      if (modoAdmin && nomeTimeDaVez) {
+        imgContainer.style.background = "rgba(0,0,0,0.2)";
+      }
 
       const img = document.createElement("img");
       img.style.cssText = `
@@ -816,24 +836,80 @@ function escolherTime() {
 }
 
 function escolherJogador(jogador, poteDe = poteAtual) {
-  const capitaoAtual = ordem[indiceVez];
-  const time = times.find((t) => t.capitao === capitaoAtual);
-  time.jogadores.push(jogador);
-  potes[poteDe] = potes[poteDe].filter((j) => j !== jogador);
-  indiceVez++;
+  sincronizarJogadoresMeta();
+  const poteOrigem = poteDe;
+  const poteEscolhido = poteAtual;
+  let time;
 
-  if (indiceVez === ordem.length) {
-    // Chegou ao final deste pote, redistribui os não escolhidos
-    if (poteAtual !== "goleiro" && poteAtual < 9) {
-      redistribuirNaoEscolhidos();
+  if (modoAdmin) {
+    if (!timeDaVezAdmin) {
+      alert("Selecione o time no painel ADMIN antes de escolher.");
+      return;
     }
 
-    if (poteAtual === "goleiro") {
-      finalizarDraft();
-    } else {
-      document.getElementById("next-pote-button").disabled = false;
+    time = times.find((t) => t.nome === timeDaVezAdmin);
+
+    if (!time) {
+      alert("Time inválido.");
+      return;
+    }
+
+  } else {
+    const capitaoAtual = ordem[indiceVez];
+    time = times.find((t) => t.capitao === capitaoAtual);
+  }
+
+  // Registrar histórico
+  historicoEscolhas.push({
+    time: time.nome,
+    jogador,
+    poteOrigem,
+    poteEscolhido,
+  });
+
+  // Adiciona jogador
+  time.jogadores.push(jogador);
+
+  if (!Array.isArray(time.jogadoresMeta)) {
+    time.jogadoresMeta = [];
+  }
+
+  time.jogadoresMeta.push({
+    nome: jogador,
+    poteEscolhido,
+  });
+
+  // Remove do pote
+  potes[poteOrigem] = potes[poteOrigem].filter((j) => j !== jogador);
+
+  if (modoAdmin) {
+    timesQueJaEscolheramNoPote.add(time.nome);
+    timeDaVezAdmin = null;
+    atualizarBotoesAdminNoPote();
+
+    if (todosTimesEscolheramNoPote()) {
+      if (poteAtual === "goleiro") {
+        finalizarDraft();
+      } else {
+        document.getElementById("next-pote-button").disabled = false;
+      }
+    }
+  } else {
+    indiceVez++;
+
+    if (indiceVez === ordem.length) {
+      if (poteAtual !== "goleiro" && poteAtual < 9) {
+        redistribuirNaoEscolhidos();
+      }
+
+      if (poteAtual === "goleiro") {
+        finalizarDraft();
+      } else {
+        document.getElementById("next-pote-button").disabled = false;
+      }
     }
   }
+
   atualizarTela();
 }
 
@@ -867,6 +943,7 @@ function redistribuirNaoEscolhidos() {
 function finalizarDraft() {
   draftFinalizado = true;
   document.getElementById("status").innerText = "DRAFT FINALIZADO!";
+  sincronizarJogadoresMeta();
   localStorage.setItem("times", JSON.stringify(times));
 
   const contentDiv = document.querySelector(".content");
@@ -929,4 +1006,131 @@ function exportarTimesParaCsv() {
 // Inicializa a página carregando dados
 carregarJogadores().then(() => {
   renderTimes();
+
+  if (modoAdmin) {
+    criarPainelAdmin();
+  }
+});
+
+function criarPainelAdmin() {
+  const container = document.getElementById("admin-times");
+  if (!container) return;
+
+  container.innerHTML = "";
+
+  times.forEach((time) => {
+    const btn = document.createElement("button");
+    btn.className = "admin-time-btn";
+    btn.dataset.time = time.nome;
+    btn.style.setProperty("--cor-time", coresTimes[time.nome] || "#64748b");
+
+    btn.innerHTML = `
+      <span class="admin-team-dot"></span>
+      <span>${time.nome}</span>
+    `;
+
+    btn.onclick = () => {
+      if (timesQueJaEscolheramNoPote.has(time.nome)) return;
+
+      timeDaVezAdmin = time.nome;
+
+      document
+        .querySelectorAll(".admin-time-btn")
+        .forEach((b) => b.classList.remove("active"));
+
+      btn.classList.add("active");
+      atualizarTela();
+    };
+
+    container.appendChild(btn);
+  });
+
+  atualizarBotoesAdminNoPote();
+  atualizarIndicadorAdmin();
+}
+
+function atualizarBotoesAdminNoPote() {
+  const botoes = document.querySelectorAll(".admin-time-btn");
+  botoes.forEach((btn) => {
+    const nomeTime = btn.dataset.time;
+    const jaEscolheu = timesQueJaEscolheramNoPote.has(nomeTime);
+    btn.style.display = jaEscolheu ? "none" : "inline-flex";
+  });
+}
+
+function atualizarIndicadorAdmin() {
+  const indicador = document.getElementById("admin-indicador");
+  if (!indicador) return;
+
+  if (timeDaVezAdmin) {
+    indicador.textContent = `Time da vez: ${timeDaVezAdmin}`;
+    indicador.classList.add("active");
+  } else if (modoAdmin && todosTimesEscolheramNoPote()) {
+    indicador.textContent =
+      "✅ Todos os times escolheram neste pote. Pode avançar.";
+    indicador.classList.add("active");
+  } else {
+    indicador.textContent = "Selecione um time para iniciar a escolha";
+    indicador.classList.remove("active");
+  }
+}
+
+function todosTimesEscolheramNoPote() {
+  return timesQueJaEscolheramNoPote.size >= times.length;
+}
+
+function desfazerUltimaEscolha() {
+  if (historicoEscolhas.length === 0) {
+    alert("Nenhuma escolha para desfazer.");
+    return;
+  }
+
+  const ultima = historicoEscolhas.pop();
+
+  const time = times.find((t) => t.nome === ultima.time);
+
+  if (!time) return;
+
+  // Remove último jogador do time
+  time.jogadores = time.jogadores.filter((j) => j !== ultima.jogador);
+
+  if (Array.isArray(time.jogadoresMeta)) {
+    const idxMeta = time.jogadoresMeta.findIndex(
+      (j) =>
+        j?.nome === ultima.jogador &&
+        j?.poteEscolhido === (ultima.poteEscolhido ?? ultima.pote),
+    );
+
+    if (idxMeta >= 0) {
+      time.jogadoresMeta.splice(idxMeta, 1);
+    } else {
+      const idxFallback = time.jogadoresMeta.findIndex(
+        (j) => j?.nome === ultima.jogador,
+      );
+      if (idxFallback >= 0) {
+        time.jogadoresMeta.splice(idxFallback, 1);
+      }
+    }
+  }
+
+  // Devolve ao pote
+  const poteRetorno = ultima.poteOrigem ?? ultima.pote;
+
+  if (!potes[poteRetorno]) {
+    potes[poteRetorno] = [];
+  }
+
+  potes[poteRetorno].unshift(ultima.jogador);
+
+  if (modoAdmin) {
+    timesQueJaEscolheramNoPote.delete(ultima.time);
+    atualizarBotoesAdminNoPote();
+  }
+
+  atualizarTela();
+}
+
+// Botão desfazer
+document.getElementById("btn-desfazer")?.addEventListener("click", () => {
+  desfazerUltimaEscolha();
 });
