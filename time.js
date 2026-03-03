@@ -41,7 +41,7 @@ function applyImageFallback(imgEl, candidates, onFail) {
 }
 
 function generatePhotoPaths(nomeJogador) {
-  const baseFolders = ["img/jogadores", "img/jogadores"];
+  const baseFolders = ["img/Jogadores", "img/jogadores"];
   const exts = ["jpg", "jpeg", "png"];
 
   const trimmed = (nomeJogador || "").trim();

@@ -713,7 +713,7 @@ function renderJogadores() {
 
       /* ---------- helper: gerador de caminhos possíveis ---------- */
       function generatePhotoPaths(nome) {
-        const base = `img/jogadores/`;
+        const baseFolders = ["img/Jogadores", "img/jogadores"];
         const list = [];
         if (!nome) return [];
         const trimmed = nome.trim();
@@ -729,11 +729,13 @@ function renderJogadores() {
           variants.add(n + " "); // tentativa degrau com espaço final, útil quando o arquivo o contém
         });
 
-        variants.forEach((n) => {
-          if (!n) return;
-          list.push(`${base}${n}.jpeg`);
-          list.push(`${base}${n}.jpg`);
-          list.push(`${base}${n}.png`);
+        baseFolders.forEach((base) => {
+          variants.forEach((n) => {
+            if (!n) return;
+            list.push(`${base}/${n}.jpeg`);
+            list.push(`${base}/${n}.jpg`);
+            list.push(`${base}/${n}.png`);
+          });
         });
 
         return list;
