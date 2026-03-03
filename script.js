@@ -2,15 +2,15 @@
 
 const times = [
   { nome: "Brasil", capitao: "Júlio Feitosa", jogadores: [] },
-  { nome: "Argentina", capitao: "GH", jogadores: [] },
-  { nome: "Estados Unidos", capitao: "Magno", jogadores: [] },
+  { nome: "Argentina", capitao: "Alcides", jogadores: [] },
+  { nome: "Estados Unidos", capitao: "GH", jogadores: [] },
   { nome: "Portugal", capitao: "Eng. Juan", jogadores: [] },
   { nome: "Espanha", capitao: "Kayam", jogadores: [] },
   { nome: "Austrália", capitao: "Jopa", jogadores: [] },
   { nome: "Japão", capitao: "PPMIX", jogadores: [] },
-  { nome: "Senegal", capitao: "Alexandre", jogadores: [] },
+  { nome: "França", capitao: "Alexandre", jogadores: [] },
   { nome: "Marrocos", capitao: "PH", jogadores: [] },
-  { nome: "Panamá", capitao: "Enrico", jogadores: [] },
+  { nome: "Costa do Marfim", capitao: "Enrico", jogadores: [] },
 ];
 
 const potes = {
@@ -21,7 +21,7 @@ const potes = {
     "Igão",
     "Gabriel Tavares",
     "Delano",
-    "Alcides",
+    "Magno",
     "Manaus",
     "Mateus Mendonça",
     "Marcos Antonio",
@@ -34,14 +34,14 @@ const potes = {
     "Gustavo Dória",
     "Rery",
     "Keven Teles",
-    "Ian Veganinho",
+    "Ian Carvalho",
     "Anselmo",
     "Anthony Pinheiro",
   ],
   4: [
     "Icaro Azevedo",
     "Fernando Ferreira",
-    "Kevin Ricardo",
+    "Vilela",
     "Marqson",
     "Pedim",
     "Filipe Rodrigues",
@@ -53,7 +53,7 @@ const potes = {
   5: [
     "Deco",
     "Vitor Souza",
-    "Vilela",
+    "Kevin Ricardo",
     "Vitor Mendes",
     "Heitor Santana",
     "Emanuel Freitas",
@@ -76,7 +76,7 @@ const potes = {
   ],
   7: [
     "Felipe Feichas",
-    "Lucas Tavares",
+    "Luan Matos",
     "Jean",
     "Gabriel Castro",
     "Paulo Sena",
@@ -92,7 +92,7 @@ const potes = {
     "Itallo",
     "JP Machado",
     "Álvaro Xavier",
-    "Luan Matos",
+    "Lucas Tavares",
     "André CDC",
     "Bahia",
     "Luiz Paulo",
@@ -135,6 +135,8 @@ const coresTimes = {
   Senegal: "#00853f",
   Marrocos: "#c1272d",
   Panamá: "#006d5b",
+  "Costa do Marfim": "#f77f00",
+  França: "#004c92",
 };
 
 // Cores das posições
@@ -156,7 +158,7 @@ const dadosJogadores = {
   Igão: "ATA",
   "Gabriel Tavares": "MEI",
   "Davi Pontes": "MEI",
-  Alcides: "ATA",
+  "Alcides": "MEI",
   Manaus: "ATA",
   "Mateus Mendonça": "MEI",
   "Marcos Antonio": "ATA",
@@ -168,7 +170,7 @@ const dadosJogadores = {
   "Gustavo Doria": "ATA",
   Rery: "MEI",
   "Jayro": "ZAG",
-  "Ian Veganinho": "MEI",
+  "Ian Carvalho": "MEI",
   Anselmo: "MEI",
   "Anthony Pinheiro": "ZAG",
 
