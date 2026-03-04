@@ -147,6 +147,10 @@ document.addEventListener("DOMContentLoaded", async () => {
     "Brasil": "#009c3b",
     "Argentina": "#74acdf",
     "Estados Unidos": "#bf0a30",
+    "Costa do Marfim": "#f77f00",
+    "Marrocos": "#c1272d",
+    "França": "#002395",
+    
     "USA": "#bf0a30",
     "EUA": "#bf0a30",
     "Portugal": "#ff0000",
