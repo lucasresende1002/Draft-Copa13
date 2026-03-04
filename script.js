@@ -118,7 +118,7 @@ const potes = {
     "Paulo Santos",
     "Rodrigo César",
     "Diogo Ribeiro",
-    "Arthur Menezes",
+    "Caio Guilherme",
     "Matheus de Melo",
     "Fernando Barbosa",
   ],
@@ -247,7 +247,7 @@ const dadosJogadores = {
   "Paulo Santos": "GOL",
   "Rodrigo César": "GOL",
   "Diogo Ribeiro": "GOL",
-  "Arthur Menezes": "GOL",
+  "Caio Guilherme": "GOL",
   "Matheus de Melo": "GOL",
   "Fernando Barbosa": "GOL",
 };
