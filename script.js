@@ -2,7 +2,7 @@
 
 const times = [
   { nome: "Brasil", capitao: "Júlio Feitosa", jogadores: [] },
-  { nome: "Argentina", capitao: "Alcides", jogadores: [] },
+  { nome: "Argentina", capitao: "Enrico", jogadores: [] },
   { nome: "Estados Unidos", capitao: "GH", jogadores: [] },
   { nome: "Portugal", capitao: "Eng. Juan", jogadores: [] },
   { nome: "Espanha", capitao: "Kayam", jogadores: [] },
@@ -10,7 +10,7 @@ const times = [
   { nome: "Japão", capitao: "PPMIX", jogadores: [] },
   { nome: "França", capitao: "Alexandre", jogadores: [] },
   { nome: "Marrocos", capitao: "PH", jogadores: [] },
-  { nome: "Costa do Marfim", capitao: "Enrico", jogadores: [] },
+  { nome: "Costa do Marfim", capitao: "Alcides", jogadores: [] },
 ];
 
 const potes = {
