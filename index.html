@@ -3,7 +3,9 @@
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Draft Copa 13</title>
+    <title>Draft Copa Treze</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
     <link rel="stylesheet" href="styles.css" />
   </head>
   <body>
@@ -14,7 +16,11 @@
     </div>
 
     <div class="content">
-      <h1>Bem-vindo ao Draft Copa Treze!</h1>
+      <header class="site-header">
+        <div class="site-eyebrow">Copa Treze · Sorteio Oficial</div>
+        <h1>Draft Copa Treze</h1>
+      </header>
+
       <div id="admin-panel">
         <div class="admin-header">
           <h3>🔒 Painel ADMIN</h3>
@@ -28,10 +34,15 @@
           <div id="admin-times" class="admin-times-container"></div>
         </div>
       </div>
+
       <div class="logo-container">
         <img src="img/Logo.jpg" alt="Logo do Campeonato" />
       </div>
-      <h2 id="status">Clique em Iniciar Draft</h2>
+
+      <div class="scoreboard">
+        <h2 id="status">Clique em Iniciar Draft</h2>
+      </div>
+
       <div class="controls">
         <button id="sortear-pote-button">Iniciar Draft</button>
         <button id="next-pote-button" disabled>Próximo Pote</button>
@@ -61,16 +72,15 @@
           <ul id="jogadores-list"></ul>
         </div>
       </div>
+
       <div id="team-selection" style="display: none">
         <h3 id="current-player">Aguardando sorteio...</h3>
-        <p style="color: #fffdfd; margin-bottom: 30px">
-          Clique na seleção para escolher:
-        </p>
+        <p class="team-selection-hint">Clique na seleção para escolher:</p>
 
         <div id="team-select-buttons" class="grid-escolha"></div>
       </div>
 
-      <hr />
+      <div class="section-divider"></div>
 
       <ul id="result"></ul>
     </div>

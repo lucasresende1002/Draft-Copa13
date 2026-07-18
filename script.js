@@ -697,7 +697,7 @@ function renderJogadores() {
         display: flex;
         align-items: center;
         justify-content: center;
-        border: 3px solid rgba(255,255,255,0.3);
+        border: 3px solid rgba(231,183,64,0.35);
         flex-shrink: 0;
       `;
 
@@ -789,14 +789,15 @@ function renderJogadores() {
       const badge = document.createElement("div");
       badge.style.cssText = `
         background-color: ${corPosicao};
-        color: white;
-        padding: 4px 8px;
-        border-radius: 4px;
+        color: #0a130e;
+        padding: 4px 9px;
+        border-radius: 5px;
+        font-family: 'Oswald', sans-serif;
         font-size: 11px;
-        font-weight: bold;
+        font-weight: 600;
         margin-bottom: 6px;
         text-transform: uppercase;
-        letter-spacing: 0.5px;
+        letter-spacing: 0.6px;
         box-shadow: 0 2px 8px rgba(0,0,0,0.3);
       `;
       badge.textContent = posicao;
@@ -805,8 +806,9 @@ function renderJogadores() {
       // Nome do jogador
       const nome = document.createElement("span");
       nome.style.cssText = `
-        color: white;
-        font-weight: bold;
+        color: #f4f7f1;
+        font-family: 'Manrope', sans-serif;
+        font-weight: 700;
         text-align: center;
         font-size: 13px;
         text-shadow: 1px 1px 2px rgba(0,0,0,0.5);

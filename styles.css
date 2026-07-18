@@ -1,36 +1,88 @@
+/* =========================================================================
+   DRAFT COPA TREZE — identidade "Transmissão de Estádio Noturno"
+   Paleta: preto-verde de gramado à noite + dourado de troféu como aceite
+   estrutural. Tipografia: Oswald (condensada, placar) + Manrope (leitura).
+   ========================================================================= */
+
+@import url("https://fonts.googleapis.com/css2?family=Oswald:wght@400;500;600;700&family=Manrope:wght@400;500;600;700;800&display=swap");
+
+:root {
+  --bg-void: #050906;
+  --bg-deep: #0a130e;
+  --bg-panel: #0f1c15;
+  --bg-panel-alt: #16261b;
+  --bg-panel-soft: rgba(16, 28, 21, 0.88);
+
+  --line: rgba(244, 247, 241, 0.09);
+  --line-strong: rgba(244, 247, 241, 0.2);
+
+  --chalk: #f4f7f1;
+  --chalk-dim: #c9d4c9;
+  --muted: #869c8c;
+  --muted-dim: #5c7166;
+
+  --gold: #e7b740;
+  --gold-bright: #ffd866;
+  --gold-dim: rgba(231, 183, 64, 0.16);
+  --gold-line: rgba(231, 183, 64, 0.35);
+
+  --pitch: #1f7a44;
+  --pitch-bright: #2fa15c;
+  --pitch-dim: rgba(31, 122, 68, 0.22);
+
+  --danger: #e11d48;
+  --danger-dim: #be123c;
+
+  --radius-lg: 22px;
+  --radius-md: 14px;
+  --radius-sm: 9px;
+  --radius-pill: 999px;
+
+  --shadow-deep: 0 24px 60px rgba(0, 0, 0, 0.55);
+  --shadow-panel: 0 16px 40px rgba(0, 0, 0, 0.45);
+  --shadow-gold: 0 0 0 1px var(--gold-line), 0 10px 30px rgba(231, 183, 64, 0.18);
+
+  --font-display: "Oswald", "Arial Narrow", sans-serif;
+  --font-body: "Manrope", "Segoe UI", sans-serif;
+}
+
+/* ================= RESET / BASE ================= */
+
+* {
+  box-sizing: border-box;
+}
+
 body {
   margin: 0;
-  font-family: Arial, sans-serif;
+  font-family: var(--font-body);
+  background: var(--bg-void);
+  color: var(--chalk);
   overflow-x: hidden;
 }
+
+::selection {
+  background: var(--gold);
+  color: #0a130e;
+}
+
+/* ================= CENA DE FUNDO (ESTÁDIO) ================= */
 
 .background {
   position: fixed;
   inset: 0;
-  z-index: -1;
+  z-index: -2;
   display: flex;
-
-  background-image:
-    url("img/EUA.jpg"),
-    url("img/México.jpg"),
-    url("img/Canadá.png");
-
-  background-size: 33.333% 100%;
-  background-position:
-    0% 50%,
-    33.333% 50%,
-    66.666% 50%;
-
-  background-repeat: repeat-x;
-  animation: moveFlags 30s linear infinite;
+  overflow: hidden;
+  background: var(--bg-void);
 }
-
 
 .flag {
   flex: 1;
   background-size: cover;
   background-position: center;
-  animation: moveFlag 20s linear infinite;
+  animation: moveFlag 26s linear infinite;
+  filter: grayscale(55%) brightness(0.4) contrast(1.05) saturate(1.1);
+  opacity: 0.9;
 }
 
 .usa {
@@ -39,14 +91,13 @@ body {
 
 .mexico {
   background-image: url("img/México.jpg");
-  animation-delay: -5s;
+  animation-delay: -7s;
 }
 
 .canada {
   background-image: url("img/Canadá.png");
-  animation-delay: -10s;
+  animation-delay: -14s;
 }
-
 
 @keyframes moveFlag {
   0% {
@@ -56,67 +107,488 @@ body {
     background-position: 100% center;
   }
 }
-@keyframes moveFlags {
-  0% {
-    background-position:
-      0% 50%,
-      33.333% 50%,
-        66.666% 50%;
-    }
-    100% {
-      background-position:
-        -100% 50%,
-        -66.666% 50%,
-        -33.333% 50%;
-    }
-}
 
-
+/* véu escuro + vinheta de holofote sobre as bandeiras */
 .background::after {
   content: "";
   position: absolute;
   inset: 0;
-  background: rgba(0, 0, 0, 0.45);
+  background:
+    radial-gradient(ellipse 70% 55% at 50% 8%, rgba(231, 183, 64, 0.10), transparent 60%),
+    radial-gradient(ellipse 120% 90% at 50% 100%, rgba(5, 9, 6, 0.96) 10%, rgba(5, 9, 6, 0.75) 45%, rgba(5, 9, 6, 0.94) 100%),
+    linear-gradient(180deg, rgba(5, 9, 6, 0.88) 0%, rgba(5, 9, 6, 0.8) 40%, rgba(5, 9, 6, 0.95) 100%);
+}
+
+/* textura sutil de grão, como transmissão de TV */
+.background::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  z-index: 1;
+  opacity: 0.05;
+  mix-blend-mode: overlay;
+  background-image: repeating-linear-gradient(
+    0deg,
+    rgba(255, 255, 255, 0.6) 0px,
+    transparent 1px,
+    transparent 2px
+  );
 }
 
 .content {
   position: relative;
-  padding: 20px;
+  padding: 28px 20px 60px;
   min-height: 100vh;
+  max-width: 1180px;
+  margin: 0 auto;
 }
 
-h1, h2 {
+/* ================= CABEÇALHO ================= */
+
+.site-header {
   text-align: center;
+  margin-bottom: 8px;
+}
+
+.site-eyebrow {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  font-family: var(--font-display);
+  font-size: 12px;
+  font-weight: 600;
+  letter-spacing: 3px;
+  text-transform: uppercase;
+  color: var(--gold);
+  padding: 6px 16px;
+  border: 1px solid var(--gold-line);
+  border-radius: var(--radius-pill);
+  background: var(--gold-dim);
+  margin-bottom: 14px;
+}
+
+.site-eyebrow::before {
+  content: "";
+  width: 6px;
+  height: 6px;
+  border-radius: 50%;
+  background: var(--gold-bright);
+  box-shadow: 0 0 8px var(--gold-bright);
+}
+
+h1,
+h2 {
+  text-align: center;
+  color: var(--chalk);
+  text-shadow: 0 2px 10px rgba(0, 0, 0, 0.6);
+  font-family: var(--font-display);
+}
+
+h1 {
+  font-size: clamp(28px, 5vw, 44px);
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 1.5px;
+  margin: 0 0 6px;
+}
+
+h3 {
+  font-family: var(--font-display);
+  letter-spacing: 0.5px;
+}
+
+hr {
+  border: none;
+  border-top: 1px solid var(--line-strong);
+  margin: 34px 0;
+}
+
+.section-divider {
+  height: 1px;
+  margin: 34px 0;
+  background: linear-gradient(90deg, transparent, var(--line-strong) 20%, var(--line-strong) 80%, transparent);
+}
+
+/* ================= LOGO ================= */
+
+.logo-container {
+  display: flex;
+  justify-content: center;
+  margin: 18px 0 20px;
+  position: relative;
+}
+
+.logo-container img {
+  width: 150px;
+  height: 150px;
+  object-fit: cover;
+  border-radius: 50%;
+  border: 3px solid var(--gold);
+  box-shadow: 0 0 0 6px rgba(231, 183, 64, 0.08), 0 12px 34px rgba(0, 0, 0, 0.55);
+  background: var(--bg-panel);
+}
+
+/* ================= SCOREBOARD (status do sorteio) ================= */
+
+.scoreboard {
+  display: flex;
+  justify-content: center;
+  margin: 10px 0 24px;
+}
+
+.scoreboard h2,
+#status {
+  display: inline-flex;
+  align-items: center;
+  gap: 12px;
+  background: var(--bg-panel-soft);
+  border: 1px solid var(--line-strong);
+  border-left: 4px solid var(--gold);
+  padding: 14px 28px;
+  border-radius: var(--radius-md);
+  font-size: clamp(16px, 2.6vw, 22px);
+  text-transform: uppercase;
+  letter-spacing: 1.5px;
+  font-weight: 600;
+  box-shadow: var(--shadow-panel);
+  margin: 0;
+}
+
+/* ================= PAINEL ADMIN ================= */
+
+#admin-panel {
+  background: linear-gradient(160deg, rgba(15, 28, 21, 0.95), rgba(6, 11, 8, 0.95));
+  border: 1px solid var(--line-strong);
+  border-radius: var(--radius-lg);
+  padding: 20px;
+  margin-bottom: 22px;
+  box-shadow: var(--shadow-panel);
+  backdrop-filter: blur(6px);
+}
+
+.admin-header {
+  margin-bottom: 14px;
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+}
+
+#admin-panel h3 {
+  margin: 0;
+  color: var(--gold);
+  font-size: 15px;
+  letter-spacing: 1.5px;
+  text-transform: uppercase;
+}
+
+.admin-header p {
+  margin: 0;
+  color: var(--chalk-dim);
+  font-size: 13px;
+}
+
+.admin-controls {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+
+#admin-indicador {
+  background: rgba(255, 255, 255, 0.04);
+  border: 1px solid var(--line-strong);
+  border-radius: var(--radius-sm);
+  color: var(--chalk-dim);
+  font-family: var(--font-display);
+  font-weight: 600;
+  letter-spacing: 0.4px;
+  padding: 12px 14px;
+  transition: all 0.25s ease;
+}
+
+#admin-indicador.active {
+  border-color: var(--gold);
+  color: var(--gold-bright);
+  background: var(--gold-dim);
+  box-shadow: inset 0 0 0 1px var(--gold-line);
+}
+
+#btn-desfazer {
+  align-self: flex-start;
+  background: linear-gradient(135deg, var(--danger), var(--danger-dim));
   color: #fff;
-  text-shadow: 0 2px 6px rgba(0,0,0,0.7);
+  border: 0;
+  padding: 10px 16px;
+  border-radius: var(--radius-sm);
+  font-family: var(--font-display);
+  font-weight: 600;
+  letter-spacing: 0.5px;
+  text-transform: uppercase;
+  font-size: 13px;
+  cursor: pointer;
+  transition: transform 0.2s ease, box-shadow 0.2s ease;
+}
+
+#btn-desfazer:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 10px 22px rgba(225, 29, 72, 0.35);
+}
+
+.admin-times-container {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(160px, 1fr));
+  gap: 10px;
+}
+
+.admin-time-btn {
+  display: inline-flex;
+  align-items: center;
+  gap: 9px;
+  border: 1px solid var(--line-strong);
+  background: rgba(255, 255, 255, 0.03);
+  color: var(--chalk);
+  border-radius: var(--radius-sm);
+  padding: 11px 13px;
+  font-family: var(--font-body);
+  font-weight: 700;
+  font-size: 13.5px;
+  cursor: pointer;
+  transition: transform 0.2s ease, border-color 0.2s ease, background 0.2s ease;
+}
+
+.admin-time-btn:hover {
+  transform: translateY(-2px);
+  border-color: var(--cor-time);
+  background: rgba(255, 255, 255, 0.06);
+}
+
+.admin-time-btn.active {
+  background: var(--gold-dim);
+  border-color: var(--gold);
+  box-shadow: inset 0 0 0 1px var(--gold-line);
+  color: var(--gold-bright);
+}
+
+.admin-team-dot {
+  width: 10px;
+  height: 10px;
+  border-radius: 999px;
+  background: var(--cor-time, #64748b);
+  box-shadow: 0 0 8px var(--cor-time, transparent);
+  flex-shrink: 0;
+}
+
+/* ================= BOTÕES PRINCIPAIS ================= */
+
+#sortear-pote-button,
+#next-pote-button,
+#select-team-button {
+  background: linear-gradient(135deg, var(--gold-bright) 0%, var(--gold) 55%, #a97f1f 100%);
+  color: #16110a;
+  padding: 15px 34px;
+  font-family: var(--font-display);
+  font-size: 1.05rem;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 1.5px;
+  border: none;
+  border-radius: var(--radius-pill);
+  cursor: pointer;
+  box-shadow: 0 10px 26px rgba(231, 183, 64, 0.3);
+  transition: all 0.25s ease;
+  outline: none;
+  margin: 8px;
+}
+
+#sortear-pote-button:hover:not(:disabled),
+#next-pote-button:hover:not(:disabled),
+#select-team-button:hover:not(:disabled) {
+  transform: translateY(-3px) scale(1.03);
+  box-shadow: 0 14px 34px rgba(231, 183, 64, 0.45);
+  filter: brightness(1.05);
+}
+
+#sortear-pote-button:active:not(:disabled),
+#next-pote-button:active:not(:disabled),
+#select-team-button:active:not(:disabled) {
+  transform: translateY(1px);
+}
+
+#sortear-pote-button:disabled,
+#next-pote-button:disabled,
+#select-team-button:disabled,
+#reset-draft {
+  background: rgba(255, 255, 255, 0.06);
+  color: var(--muted-dim);
+  border: 1px solid var(--line);
+  cursor: not-allowed;
+  box-shadow: none;
+  transform: none;
+}
+
+.controls {
+  display: flex;
+  justify-content: center;
+  flex-wrap: wrap;
+  gap: 12px;
+  margin: 22px 0;
+}
+
+/* ================= GRID DE ESCOLHA DE TIME ================= */
+
+.grid-escolha {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(220px, 1fr));
+  gap: 14px;
+  justify-content: center;
+  margin-top: 20px;
+}
+
+.btn-escolha-time {
+  background: var(--bg-panel);
+  color: var(--chalk);
+  border: 1px solid var(--line-strong);
+  border-left: 5px solid var(--cor-selecao);
+  padding: 15px 20px;
+  border-radius: var(--radius-md);
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  cursor: pointer;
+  transition: all 0.25s ease;
+  font-family: var(--font-body);
+  font-size: 0.92rem;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.4px;
+  width: 100%;
+}
+
+.btn-escolha-time:hover {
+  background: var(--cor-selecao);
+  border-color: var(--cor-selecao);
+  transform: translateY(-4px);
+  box-shadow: 0 12px 26px rgba(0, 0, 0, 0.45);
+  color: #fff;
+}
+
+.btn-escolha-time img {
+  width: 26px;
+  height: 26px;
+  object-fit: contain;
+  background: #fff;
+  padding: 2px;
+  border-radius: 4px;
+  flex-shrink: 0;
+}
+
+/* ================= PAINÉIS (SELEÇÕES / JOGADORES) ================= */
+
+.container {
+  display: flex;
+  gap: 20px;
+  flex-wrap: wrap;
+}
+
+.box {
+  background: var(--bg-panel-soft);
+  border: 1px solid var(--line-strong);
+  padding: 18px;
+  border-radius: var(--radius-lg);
+  box-shadow: var(--shadow-panel);
+  flex: 1;
+  min-width: 280px;
+}
+
+.box h3,
+.box-players h3 {
+  margin: 0 0 14px;
+  color: var(--gold);
+  text-transform: uppercase;
+  font-size: 1rem;
+  letter-spacing: 1.5px;
+}
+
+#vez {
+  color: var(--chalk-dim);
+  font-weight: 600;
+  font-size: 13.5px;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+  margin: -2px 0 14px;
+}
+
+.box-players {
+  background: var(--bg-panel-soft) !important;
+  border: 1px solid var(--line-strong);
+  border-radius: var(--radius-lg);
+  padding: 20px;
+  box-shadow: var(--shadow-panel);
+  flex: 1;
+  min-width: 280px;
+}
+
+.box-players h3 {
+  color: var(--gold) !important;
+  margin-bottom: 15px;
+  text-transform: uppercase;
+  font-size: 1rem;
+  letter-spacing: 1.5px;
+}
+
+/* ================= LISTA DE TIMES ================= */
+
+#times-list {
+  list-style: none;
+  margin: 0;
+  padding: 0;
 }
 
 #times-list li {
   list-style: none;
-  background-color: #2a2a2a; /* Fundo padrão escuro */
+  background-color: var(--bg-panel-alt);
   margin-bottom: 10px;
-  padding: 12px;
-  border-radius: 8px;
-  border-left: 5px solid var(--cor-selecao); /* Borda lateral com a cor do time */
-  transition: all 0.3s ease;
+  padding: 14px;
+  border-radius: var(--radius-md);
+  border: 1px solid var(--line);
+  border-left: 4px solid var(--cor-selecao);
+  transition: all 0.25s ease;
   cursor: pointer;
   display: flex;
   flex-direction: column;
-  color: white;
+  color: var(--chalk);
 }
 
 #times-list li:hover {
-  background-color: var(--cor-selecao); /* O fundo vira a cor da seleção */
-  transform: scale(1.02); /* Dá um leve aumento */
-  box-shadow: 0 4px 15px rgba(0, 0, 0, 0.5);
+  background-color: var(--cor-selecao);
+  border-color: var(--cor-selecao);
+  transform: translateX(3px) scale(1.01);
+  box-shadow: 0 10px 26px rgba(0, 0, 0, 0.5);
 }
 
-/* Garante que o texto continue legível no hover */
-#times-list li:hover strong, 
+#times-list li:hover strong,
 #times-list li:hover small,
 #times-list li:hover .jogadores-time {
   color: #fff;
-  text-shadow: 1px 1px 2px rgba(0,0,0,0.8);
+  text-shadow: 1px 1px 3px rgba(0, 0, 0, 0.8);
+}
+
+.time-header {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+
+.time-header strong {
+  font-family: var(--font-display);
+  letter-spacing: 0.4px;
+  text-transform: uppercase;
+  font-size: 15px;
+}
+
+#times-list li small {
+  color: var(--muted);
+  font-size: 12.5px;
+  margin-top: 4px;
 }
 
 .time-info {
@@ -129,9 +601,10 @@ h1, h2 {
   width: 30px;
   height: 30px;
   object-fit: contain;
-  border-radius: 4px;
-  background: white;
+  border-radius: 6px;
+  background: #fff;
   padding: 2px;
+  flex-shrink: 0;
 }
 
 .jogadores-time {
@@ -140,115 +613,115 @@ h1, h2 {
   opacity: 0.9;
 }
 
-#sortear-pote-button, #next-pote-button, #select-team-button {
-  background: linear-gradient(135deg, #1e90ff 0%, #1c1c1c 100%); /* Degradê azul para preto */
-  color: white;
-  padding: 16px 32px;
-  font-size: 1.2rem;
-  font-weight: bold;
-  text-transform: uppercase;
-  letter-spacing: 1px;
-  border: 2px solid #3a3a3a;
-  border-radius: 50px; /* Estilo pílula */
-  cursor: pointer;
-  box-shadow: 0 4px 15px rgba(0, 0, 0, 0.4);
-  transition: all 0.3s ease;
-  outline: none;
-  margin: 10px;
-}
-
-/* Efeito de brilho e aumento ao passar o mouse */
-#sortear-pote-button:hover:not(:disabled), #next-pote-button:hover:not(:disabled), #select-team-button:hover:not(:disabled) {
-  background: linear-gradient(135deg, #00bfff 0%, #333333 100%);
-  transform: translateY(-3px) scale(1.05);
-  box-shadow: 0 6px 20px rgba(30, 144, 255, 0.5);
-  border-color: #00bfff;
-}
-
-/* Efeito de clique */
-#sortear-pote-button:active:not(:disabled), #next-pote-button:active:not(:disabled), #select-team-button:active:not(:disabled) {
-  transform: translateY(1px);
-}
-
-/* Estilo para quando o botão estiver desativado (após o sorteio) */
-#sortear-pote-button:disabled, #next-pote-button:disabled, #select-team-button:disabled, #reset-draft {
-  background: #444;
-  color: #888;
-  border-color: #555;
-  cursor: not-allowed;
-  box-shadow: none;
-  transform: none;
-}
-
-/* Container que organiza os botões de escolha */
-.grid-escolha {
-  display: grid;
-  grid-template-columns: repeat(auto-fill, minmax(220px, 1fr));
-  gap: 15px;
-  justify-content: center;
-  margin-top: 20px;
-}
-
-/* Estilo do botão que substitui o SELECT */
-.btn-escolha-time {
-  background: #222;
-  color: white;
-  border: none;
-  border-left: 6px solid var(--cor-selecao);
-  padding: 15px 20px;
-  border-radius: 10px;
-  display: flex;
-  align-items: center;
-  gap: 12px;
-  cursor: pointer;
-  transition: all 0.3s ease;
-  font-size: 1rem;
-  font-weight: bold;
-  text-transform: uppercase;
-  width: 100%; /* Para preencher o grid corretamente */
-}
-
-.btn-escolha-time:hover {
-  background: var(--cor-selecao);
-  transform: translateY(-5px);
-  box-shadow: 0 5px 15px rgba(0, 0, 0, 0.4);
-  color: white;
-}
-
-.btn-escolha-time img {
-  width: 25px;
-  height: 25px;
-  object-fit: contain;
-  background: white;
-  padding: 2px;
-  border-radius: 4px;
-}
-
 .jogadores-container {
   display: flex;
   flex-wrap: wrap;
-  gap: 5px;
+  gap: 6px;
   margin-top: 10px;
 }
 
 .badge-jogador {
   font-size: 0.7rem;
-  padding: 2px 8px;
-  border-radius: 4px;
-  color: white; /* Cor do texto dentro da etiqueta */
-  font-weight: bold;
-  text-shadow: 1px 1px 1px rgba(0,0,0,0.5);
-  border: 1px solid rgba(255,255,255,0.2);
+  padding: 3px 9px;
+  border-radius: var(--radius-sm);
+  color: white;
+  font-weight: 700;
+  letter-spacing: 0.2px;
+  text-shadow: 1px 1px 1px rgba(0, 0, 0, 0.5);
+  border: 1px solid rgba(255, 255, 255, 0.2);
 }
 
-/* Quando passar o mouse no card, as etiquetas podem brilhar */
 #times-list li:hover .badge-jogador {
   background-color: white !important;
   color: var(--cor-selecao);
   text-shadow: none;
 }
 
-/* estilo para bandeira dentro do botão de jogador */
+/* ================= JOGADORES DISPONÍVEIS ================= */
+
+#info-potes-altos {
+  color: var(--gold) !important;
+  background: var(--gold-dim);
+  border: 1px solid var(--gold-line);
+  border-radius: var(--radius-sm);
+  padding: 8px 12px !important;
+  font-size: 12px !important;
+  margin: 0 0 14px !important;
+}
+
+#jogadores-list {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(140px, 1fr));
+  gap: 14px;
+  padding: 4px 0;
+  list-style: none;
+  margin: 0;
+}
+
+.card-jogador-draft {
+  background: var(--bg-panel-alt);
+  border: 2px solid var(--line-strong);
+  border-radius: var(--radius-md);
+  cursor: pointer;
+  transition: transform 0.25s ease, box-shadow 0.25s ease, border-color 0.25s ease, background-color 0.25s ease;
+}
+
+.card-jogador-draft:hover {
+  transform: translateY(-4px) scale(1.03);
+  border-color: var(--gold);
+  box-shadow: 0 14px 30px rgba(0, 0, 0, 0.5), 0 0 0 1px var(--gold-line);
+}
+
+.card-jogador-draft.admin-bg {
+  background-color: rgba(10, 14, 24, 0.2);
+  border-color: var(--cor-time);
+  background-image:
+    linear-gradient(180deg, rgba(0, 0, 0, 0.1), rgba(0, 0, 0, 0.2)),
+    var(--team-logo);
+  background-repeat: no-repeat, no-repeat;
+  background-position: center, center;
+  background-size: cover, cover;
+  box-shadow: inset 0 -18px 24px rgba(0, 0, 0, 0.2);
+}
+
+.card-jogador-draft.admin-bg:hover {
+  background-color: rgba(10, 14, 24, 0.28);
+  border-color: var(--gold);
+  box-shadow:
+    inset 0 -24px 36px rgba(0, 0, 0, 0.25),
+    0 12px 26px rgba(0, 0, 0, 0.5),
+    0 0 0 1px var(--gold) inset;
+}
+
+.card-jogador-draft.admin-bg .card-player-photo {
+  border-color: rgba(255, 255, 255, 0.9) !important;
+  box-shadow:
+    0 0 0 2px rgba(0, 0, 0, 0.35),
+    0 8px 18px rgba(0, 0, 0, 0.45);
+}
+
+/* jogador legado (não usado atualmente, mantido por compatibilidade) */
+.card-jogador {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  position: relative;
+  background-color: var(--bg-panel-alt);
+  color: var(--chalk);
+  border: none;
+  border-radius: var(--radius-md);
+  padding: 12px;
+  cursor: pointer;
+  transition: background-color 0.25s ease, transform 0.15s ease, box-shadow 0.15s ease, color 0.2s ease;
+}
+
+.card-jogador:hover {
+  background-color: var(--cor-time);
+  color: #fff;
+  transform: scale(1.04);
+  box-shadow: 0 10px 24px rgba(0, 0, 0, 0.4);
+}
+
 .card-jogador .card-flag {
   width: 24px;
   height: 24px;
@@ -261,76 +734,59 @@ h1, h2 {
   transition: opacity 0.25s ease, transform 0.25s ease;
 }
 
-.card-jogador {
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  position: relative;
-
-  background-color: #f3f3f3;
-  color: #111;
-  border: none;
-  border-radius: 12px;
-  padding: 12px;
-  cursor: pointer;
-
-  transition: 
-    background-color 0.25s ease,
-    transform 0.15s ease,
-    box-shadow 0.15s ease,
-    color 0.2s ease;
-
-}
-
 .card-jogador:hover .card-flag {
   opacity: 1;
   transform: translateY(-2px) scale(1.1);
 }
 
-.logo-container {
-  display: flex;
-  justify-content: center;
-  margin: 15px 0 25px 0;
+/* ================= SELEÇÃO DE TIME (POTE 1) ================= */
+
+#team-selection h3 {
+  color: var(--chalk);
+  text-align: center;
+  font-size: 1.3rem;
+  text-transform: uppercase;
+  letter-spacing: 1px;
 }
 
-.logo-container img {
-  width: 160px;
-  height: 160px;
-  object-fit: cover;
-  border-radius: 50%;
-  border: 4px solid #fff;
-  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.3);
+.team-selection-hint {
+  color: var(--chalk-dim) !important;
+  text-align: center;
+  margin-bottom: 26px !important;
+  font-size: 14px;
 }
 
+/* ================= RESULTADO ================= */
 
-.controls {
-  display: flex;
-  justify-content: center;
-  gap: 20px; /* Espaço entre os botões */
-  margin: 20px 0;
+#result {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+  color: var(--chalk-dim);
 }
 
-.container {
-  display: flex;
-  gap: 20px;
+/* ================= MODO TELÃO ================= */
+
+body.modo-telao {
+  font-size: 1.5em;
 }
 
-
-.box {
-  background: rgba(255, 255, 255, 0.92);
-  padding: 15px;
-  border-radius: 10px;
-  flex: 1;
+.modo-telao button {
+  font-size: 1.2em;
 }
+
+/* ================= BOTÕES GENÉRICOS ================= */
 
 button {
   padding: 8px 12px;
   margin: 5px;
   cursor: pointer;
+  font-family: var(--font-body);
 }
 
 button:disabled {
-  background: #ccc;
+  background: #333;
+  color: #777;
   cursor: not-allowed;
 }
 
@@ -340,78 +796,28 @@ button:disabled {
   }
 }
 
-
-@media print {
-  button {
-    display: none;
-  }
-}
-body.modo-telao {
-  font-size: 1.5em;
-}
-
-.modo-telao button {
-  font-size: 1.2em;
-}
-
-/* ================= PÁGINA DO TIME ================= */
+/* =========================================================================
+   PÁGINA DO TIME (time.html)
+   ========================================================================= */
 
 .time-page {
   min-height: 100vh;
-  background: linear-gradient(135deg, #0a0a0a, #1e1e1e);
+  background:
+    radial-gradient(ellipse 80% 60% at 50% 0%, rgba(231, 183, 64, 0.08), transparent 60%),
+    linear-gradient(160deg, var(--bg-void) 0%, #0c1610 55%, #070c09 100%);
   display: flex;
   justify-content: center;
   align-items: center;
-  font-family: Arial, sans-serif;
+  font-family: var(--font-body);
+  padding: 60px 16px;
 }
 
 .team-card {
   position: relative;
   z-index: 2;
-}
-
-.team-logo {
-  width: 180px;         /* Aumentado de 120px para 180px */
-  height: 180px;        /* Aumentado de 120px para 180px */
-  object-fit: contain;
-  background: white;
-  border-radius: 50%;
-  padding: 10px;        /* Reduzi um pouco o padding para a logo aparecer maior */
-  border: 8px solid #ddd; /* Aumentei a espessura da borda */
-  box-shadow: 0 6px 18px rgba(0,0,0,0.35);
-  transition: border-color 0.3s ease; /* Transição suave para a cor */
-}
-
-.logo-wrapper {
-  display: flex;
-  justify-content: center;
-  margin-top: -100px;   /* Ajustado para compensar o tamanho maior da logo */
-  margin-bottom: 15px;
-}
-.team-flag {
-  width: 120px;
-  height: auto;
-  margin-bottom: 12px;
-}
-
-.team-card h1 {
-  margin: 10px 0 4px;
-  font-size: 28px;
-}
-
-.team-card h2 {
-  margin: 0 0 16px;
-  font-size: 18px;
-  color: #ffffff;
-}
-
-.team-card h3 {
-  margin-top: 20px;
-  margin-bottom: 10px;
-  text-transform: uppercase;
-  letter-spacing: 1px;
-  font-size: 14px;
-  color: #ffffff;
+  width: 100%;
+  max-width: 1040px;
+  text-align: center;
 }
 
 .flag-bg {
@@ -420,12 +826,13 @@ body.modo-telao {
   background-size: cover;
   background-repeat: repeat-x;
   background-position: 0 center;
-  opacity: 0.12;
-  animation: moveFlag 40s linear infinite;
+  opacity: 0.1;
+  filter: grayscale(40%) brightness(0.5);
+  animation: moveFlagBg 40s linear infinite;
   z-index: 0;
 }
 
-@keyframes moveFlag {
+@keyframes moveFlagBg {
   from {
     background-position: 0 center;
   }
@@ -434,199 +841,113 @@ body.modo-telao {
   }
 }
 
-.players-list {
-  list-style: none;
-  padding: 0;
-  margin: 0 0 20px;
+.logo-wrapper {
+  display: flex;
+  justify-content: center;
+  margin-bottom: 15px;
 }
 
-.players-list li {
-  background: #f2f2f2;
-  margin: 6px 0;
-  padding: 8px 12px;
-  border-radius: 8px;
-  font-size: 14px;
+.team-logo {
+  width: 168px;
+  height: 168px;
+  object-fit: contain;
+  background: #fff;
+  border-radius: 50%;
+  padding: 12px;
+  border: 6px solid var(--team-border-color, var(--gold));
+  box-shadow: 0 0 0 8px rgba(231, 183, 64, 0.08), 0 14px 36px rgba(0, 0, 0, 0.5);
+  transition: border-color 0.3s ease;
+}
+
+.team-flag {
+  width: 120px;
+  height: auto;
+  margin-bottom: 12px;
+  border-radius: 4px;
+  box-shadow: 0 6px 16px rgba(0, 0, 0, 0.4);
+}
+
+.team-card h1 {
+  margin: 10px 0 6px;
+  font-size: clamp(28px, 4.5vw, 40px);
+  text-transform: uppercase;
+  letter-spacing: 1.5px;
+}
+
+.team-card h2 {
+  margin: 0 0 22px;
+  font-size: 16px;
+  font-weight: 600;
+  color: var(--gold);
+  text-transform: uppercase;
+  letter-spacing: 1.5px;
+  font-family: var(--font-body);
+}
+
+.team-card h3 {
+  margin-top: 8px;
+  margin-bottom: 18px;
+  text-transform: uppercase;
+  letter-spacing: 2px;
+  font-size: 13px;
+  color: var(--muted);
+  position: relative;
+  display: inline-block;
+  padding: 0 18px;
+}
+
+.team-card h3::before,
+.team-card h3::after {
+  content: "";
+  position: absolute;
+  top: 50%;
+  width: 34px;
+  height: 1px;
+  background: var(--line-strong);
+}
+
+.team-card h3::before {
+  right: 100%;
+}
+
+.team-card h3::after {
+  left: 100%;
 }
 
 .btn-pdf {
-  background: #0066cc;
-  color: white;
+  background: linear-gradient(135deg, var(--gold-bright), var(--gold));
+  color: #16110a;
   border: none;
-  padding: 10px 18px;
-  border-radius: 8px;
+  padding: 13px 26px;
+  border-radius: var(--radius-pill);
   cursor: pointer;
-  font-size: 14px;
+  font-family: var(--font-display);
+  font-weight: 600;
+  letter-spacing: 1px;
+  text-transform: uppercase;
+  font-size: 13.5px;
+  margin-top: 20px;
+  box-shadow: 0 10px 24px rgba(231, 183, 64, 0.28);
+  transition: all 0.25s ease;
 }
 
 .btn-pdf:hover {
-  background: #004999;
+  transform: translateY(-2px);
+  box-shadow: 0 14px 30px rgba(231, 183, 64, 0.4);
 }
 
-
-/* ================= IMPRESSÃO ================= */
-
-@media print {
-  body {
-    background: white;
-  }
-
-  .btn-pdf {
-    display: none;
-  }
-
-  .team-card {
-    box-shadow: none;
-    width: 100%;
-  }
-}
-
-/* Container da lista */
-#lista-jogadores {
-  padding: 0;
-  list-style: none;
-  perspective: 1000px; /* Para um efeito leve 3D na animação */
-}
-
-#lista-jogadores li {
-    display: block;
-    margin-bottom: 8px;
-    box-shadow: 2px 2px 5px rgba(0,0,0,0.2); /* Dá um leve relevo */
-}
-
-.jogador-item {
-  background-color: white;
-  color: var(--cor-time);
-  font-weight: bold;
-  margin-bottom: 10px;
-  padding: 12px 20px;
-  border-radius: 6px;
-  border-left: 6px solid var(--cor-time);
-  box-shadow: 0 4px 6px rgba(0,0,0,0.1);
-  
-  /* Configuração da Animação */
-  opacity: 0;
-  transform: translateY(20px);
-  animation: entradaJogador 0.5s ease forwards;
-  animation-delay: var(--delay); /* Usa o tempo calculado no JS */
-}
-
-/* Container dos jogadores para ficarem organizados em grelha ou lista */
-/* Container da lista de jogadores */
-/* ================= BOTÕES DE JOGADORES ================= */
-
-#jogadores-list {
-  display: grid;
-  grid-template-columns: repeat(auto-fill, minmax(140px, 1fr));
-  gap: 16px;
-  padding: 10px 0;
-}
-
-.btn-jogador {
-  padding: 14px;
-  border: none;
-  border-radius: 12px;
-  background: #f1f1f1;
-  font-weight: 600;
-  font-size: 14px;
-  cursor: pointer;
-  transition: all 0.25s ease;
-  box-shadow: 0 4px 10px rgba(0,0,0,0.15);
-}
-
-.btn-jogador:hover {
-  background: var(--hover-color);
-  color: #fff;
-  transform: translateY(-3px) scale(1.02);
-  box-shadow: 0 10px 25px rgba(0,0,0,0.35);
-}
-
-.btn-jogador:active {
-  transform: scale(0.98);
-}
-
-/* Estilo da "Box" que envolve as listas no HTML */
-.box-players {
-  background: rgba(30, 30, 30, 0.8) !important;
-  border-radius: 15px;
-  padding: 20px;
-  border: 1px solid rgba(255, 255, 255, 0.1);
-}
-
-.box-players h3 {
-  color: white !important;
-  margin-bottom: 15px;
-  text-transform: uppercase;
-  font-size: 1.1rem;
-}
-
-.card-jogador:hover {
-  background-color: var(--cor-time);
-  color: #fff;
-  transform: scale(1.05);
-  box-shadow: 0 8px 20px rgba(0,0,0,0.35);
-}
-
-.card-jogador-draft {
-  background: rgba(30, 30, 30, 0.6);
-  border: 2px solid rgba(255, 255, 255, 0.2);
-  border-radius: 12px;
-  cursor: pointer;
-  transition: transform 0.25s ease, box-shadow 0.25s ease, border-color 0.25s ease, background-color 0.25s ease;
-}
-
-.card-jogador-draft:hover {
-  transform: scale(1.05);
-  box-shadow: 0 8px 20px rgba(0, 0, 0, 0.35);
-}
-
-.card-jogador-draft.admin-bg {
-  background-color: rgba(10, 14, 24, 0.2);
-  border-color: var(--cor-time);
-  background-image:
-    linear-gradient(180deg, rgba(0, 0, 0, 0.08), rgba(0, 0, 0, 0.18)),
-    var(--team-logo);
-  background-repeat: no-repeat, no-repeat;
-  background-position: center, center;
-  background-size: cover, cover;
-  background-blend-mode: normal, normal;
-  box-shadow: inset 0 -18px 24px rgba(0, 0, 0, 0.18);
-}
-
-.card-jogador-draft.admin-bg:hover {
-  background-color: rgba(10, 14, 24, 0.28);
-  border-color: var(--cor-time);
-  box-shadow:
-    inset 0 -24px 36px rgba(0, 0, 0, 0.22),
-    0 10px 22px rgba(0, 0, 0, 0.42),
-    0 0 0 1px var(--cor-time) inset;
-}
-
-.card-jogador-draft.admin-bg .card-player-photo {
-  border-color: rgba(255, 255, 255, 0.88) !important;
-  box-shadow:
-    0 0 0 2px rgba(0, 0, 0, 0.35),
-    0 8px 18px rgba(0, 0, 0, 0.45);
-}
-
-/* Keyframes da Animação */
-@keyframes entradaJogador {
-  to {
-    opacity: 1;
-    transform: translateY(0);
-  }
-}
-
-/* ================= CARDS DE JOGADORES NA PÁGINA DE TIME ================= */
+/* ================= CARDS DE JOGADORES (TIME) ================= */
 
 .players-grid {
   display: grid;
   grid-template-columns: 1fr;
-  gap: 20px;
+  gap: 18px;
   padding: 20px 0;
   list-style: none;
   margin: 0;
   align-items: center;
   max-width: 100%;
+  perspective: 1000px;
 }
 
 .player-card {
@@ -634,11 +955,11 @@ body.modo-telao {
   width: 100%;
   max-width: 1000px;
   height: 240px;
-  border: 3px solid transparent;
-  border-radius: 16px;
+  border: 2px solid var(--line-strong);
+  border-radius: var(--radius-lg);
   overflow: hidden;
-  cursor: pointer;
-  box-shadow: 0 8px 20px rgba(0, 0, 0, 0.4);
+  cursor: default;
+  box-shadow: 0 10px 26px rgba(0, 0, 0, 0.45);
   transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
   animation: slideInUp 0.5s ease forwards;
   animation-delay: var(--delay, 0s);
@@ -646,23 +967,24 @@ body.modo-telao {
   display: grid;
   grid-template-columns: 200px 1fr;
   margin: 0 auto;
+  background: var(--bg-panel);
 }
 
 .player-card:hover {
-  transform: scale(1.03);
-  border-color: var(--team-border-color, rgba(255, 255, 255, 0.7));
-  box-shadow: 0 0 24px var(--team-border-color, rgba(255, 255, 255, 0.7)), 0 16px 35px rgba(0, 0, 0, 0.6);
+  transform: scale(1.02);
+  border-color: var(--team-border-color, var(--gold-line));
+  box-shadow: 0 0 24px var(--team-border-color, rgba(231, 183, 64, 0.25)), 0 16px 36px rgba(0, 0, 0, 0.55);
 }
 
 .player-card.captain {
-  border: 3px solid #ffd700;
-  box-shadow: 0 0 25px rgba(255, 215, 0, 0.5), 0 8px 20px rgba(0, 0, 0, 0.4);
-  background: linear-gradient(90deg, rgba(255, 215, 0, 0.08), rgba(10, 10, 20, 0.7)) !important;
+  border: 2px solid var(--gold);
+  box-shadow: 0 0 28px rgba(231, 183, 64, 0.4), 0 10px 24px rgba(0, 0, 0, 0.45);
+  background: linear-gradient(90deg, rgba(231, 183, 64, 0.08), rgba(10, 19, 14, 0.85)) !important;
 }
 
 .player-card.captain:hover {
-  box-shadow: 0 0 40px rgba(255, 215, 0, 0.8), 0 12px 30px rgba(0, 0, 0, 0.6);
-  transform: scale(1.05);
+  box-shadow: 0 0 42px rgba(231, 183, 64, 0.55), 0 14px 32px rgba(0, 0, 0, 0.6);
+  transform: scale(1.03);
 }
 
 @keyframes slideInUp {
@@ -698,7 +1020,7 @@ body.modo-telao {
   content: "";
   position: absolute;
   inset: 0;
-  background: radial-gradient(circle at center, rgba(255,255,255,0.04), transparent 70%);
+  background: radial-gradient(circle at center, rgba(255, 255, 255, 0.03), transparent 70%);
   z-index: 1;
   pointer-events: none;
 }
@@ -709,7 +1031,7 @@ body.modo-telao {
   height: 240px;
   overflow: hidden;
   z-index: 1;
-  background: linear-gradient(135deg, rgba(30, 30, 40, 0.3) 0%, rgba(20, 20, 30, 0.5) 100%);
+  background: linear-gradient(135deg, rgba(20, 32, 24, 0.4) 0%, rgba(10, 18, 13, 0.6) 100%);
   grid-column: 1;
   grid-row: 1;
 }
@@ -724,13 +1046,13 @@ body.modo-telao {
 .player-card-content {
   position: relative;
   z-index: 2;
-  background: linear-gradient(90deg, rgba(10, 10, 20, 0.7) 0%, rgba(5, 5, 15, 0.95) 100%);
+  background: linear-gradient(90deg, rgba(10, 19, 14, 0.75) 0%, rgba(5, 9, 6, 0.96) 100%);
   display: flex;
   flex-direction: column;
   justify-content: space-around;
-  padding: 15px 20px;
+  padding: 15px 22px;
   box-sizing: border-box;
-  border-left: 1px solid rgba(255, 255, 255, 0.1);
+  border-left: 1px solid var(--line);
   grid-column: 2;
   grid-row: 1;
 }
@@ -740,14 +1062,14 @@ body.modo-telao {
   position: absolute;
   inset: 0;
   background-image:
-    radial-gradient(circle at 80% 50%, rgba(255, 255, 255, 0.08), transparent 56%),
+    radial-gradient(circle at 80% 50%, rgba(255, 255, 255, 0.06), transparent 56%),
     var(--team-logo),
     var(--team-logo-fallback);
   background-repeat: no-repeat, no-repeat, no-repeat;
   background-position: center, center, center;
   background-size: 100% 100%, cover, cover;
-  opacity: 0.28;
-  filter: saturate(1.2) contrast(1.08);
+  opacity: 0.22;
+  filter: saturate(1.1) contrast(1.05);
   pointer-events: none;
   z-index: 0;
 }
@@ -759,36 +1081,39 @@ body.modo-telao {
 
 .captain-badge {
   align-self: center;
-  padding: 6px 12px;
-  background: linear-gradient(135deg, #ffd700, #ffed4e);
-  color: #000;
-  border-radius: 4px;
-  font-size: 13px;
-  font-weight: bold;
+  padding: 6px 14px;
+  background: linear-gradient(135deg, var(--gold-bright), var(--gold));
+  color: #16110a;
+  border-radius: var(--radius-sm);
+  font-family: var(--font-display);
+  font-size: 12.5px;
+  font-weight: 600;
   text-transform: uppercase;
-  letter-spacing: 0.8px;
-  box-shadow: 0 2px 8px rgba(255, 215, 0, 0.4);
+  letter-spacing: 1px;
+  box-shadow: 0 4px 14px rgba(231, 183, 64, 0.35);
   margin-bottom: 6px;
 }
 
 .player-position {
   align-self: flex-start;
   padding: 6px 12px;
-  border-radius: 6px;
-  font-size: 13px;
-  font-weight: bold;
+  border-radius: var(--radius-sm);
+  font-family: var(--font-display);
+  font-size: 12.5px;
+  font-weight: 600;
   text-transform: uppercase;
-  color: #000;
-  box-shadow: 0 2px 6px rgba(0, 0, 0, 0.3);
+  color: #10140f;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.35);
   margin-bottom: 0;
-  letter-spacing: 0.5px;
+  letter-spacing: 0.8px;
 }
 
 .player-name {
   margin: 0;
+  font-family: var(--font-display);
   font-size: 24px;
-  font-weight: bold;
-  color: #fff;
+  font-weight: 600;
+  color: var(--chalk);
   text-align: left;
   line-height: 1.2;
   word-wrap: break-word;
@@ -796,17 +1121,18 @@ body.modo-telao {
   display: flex;
   align-items: center;
   min-height: 28px;
-  text-shadow: 1px 1px 3px rgba(0,0,0,0.5);
+  text-shadow: 1px 1px 4px rgba(0, 0, 0, 0.5);
+  letter-spacing: 0.3px;
 }
 
 .player-role {
   margin: 0;
-  font-size: 14px;
-  color: #bbb;
+  font-size: 13px;
+  color: var(--muted);
   text-align: left;
   text-transform: uppercase;
-  letter-spacing: 0.5px;
-  font-weight: 600;
+  letter-spacing: 0.6px;
+  font-weight: 700;
 }
 
 .player-pote {
@@ -814,35 +1140,38 @@ body.modo-telao {
   align-items: center;
   justify-content: center;
   gap: 8px;
-  background: rgba(255, 215, 0, 0.2);
+  background: var(--gold-dim);
   padding: 8px 12px;
-  border-radius: 6px;
-  border: 1px solid rgba(255, 215, 0, 0.3);
+  border-radius: var(--radius-sm);
+  border: 1px solid var(--gold-line);
 }
 
 .pote-label {
-  font-size: 13px;
-  color: #ffd700;
+  font-family: var(--font-display);
+  font-size: 12.5px;
+  color: var(--gold);
   text-transform: uppercase;
-  font-weight: bold;
-  letter-spacing: 0.5px;
+  font-weight: 600;
+  letter-spacing: 0.6px;
 }
 
 .pote-number {
-  font-size: 20px;
-  color: #ffd700;
-  font-weight: bold;
+  font-family: var(--font-display);
+  font-size: 19px;
+  color: var(--gold);
+  font-weight: 600;
   display: flex;
   align-items: center;
   justify-content: center;
-  width: 36px;
-  height: 36px;
-  background: rgba(0, 0, 0, 0.3);
-  border-radius: 4px;
-  box-shadow: 0 2px 8px rgba(255, 215, 0, 0.2);
+  width: 34px;
+  height: 34px;
+  background: rgba(0, 0, 0, 0.35);
+  border-radius: var(--radius-sm);
+  box-shadow: 0 2px 8px rgba(231, 183, 64, 0.2);
 }
 
-/* Responsivo para telas pequenas */
+/* ================= RESPONSIVO — CARDS DE JOGADOR ================= */
+
 @media (max-width: 1024px) {
   .player-card {
     grid-template-columns: 150px 1fr;
@@ -881,6 +1210,10 @@ body.modo-telao {
   .player-role {
     font-size: 12px;
   }
+
+  .container {
+    flex-direction: column;
+  }
 }
 
 @media (max-width: 480px) {
@@ -891,16 +1224,16 @@ body.modo-telao {
 
   .player-card {
     grid-template-columns: 100px 1fr;
-    height: 140px;
+    height: 150px;
   }
 
   .player-image-container {
     width: 100px;
-    height: 140px;
+    height: 150px;
   }
 
   .player-card-content {
-    padding: 10px 15px;
+    padding: 10px 14px;
   }
 
   .player-position {
@@ -928,110 +1261,104 @@ body.modo-telao {
   }
 
   .captain-badge {
-    font-size: 8px;
-    padding: 2px 6px;
+    font-size: 9px;
+    padding: 3px 8px;
+  }
+
+  .logo-container img {
+    width: 110px;
+    height: 110px;
+  }
+
+  .team-logo {
+    width: 130px;
+    height: 130px;
   }
 }
-#admin-panel {
-  background: linear-gradient(145deg, rgba(12, 18, 32, 0.92), rgba(8, 10, 18, 0.9));
-  border: 1px solid rgba(255, 255, 255, 0.15);
-  border-radius: 14px;
-  padding: 18px;
-  margin-bottom: 20px;
-  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.35);
-  backdrop-filter: blur(4px);
+
+/* =========================================================================
+   PÁGINA DE RESUMO (resumo.html)
+   ========================================================================= */
+
+body:has(#resumo) {
+  background:
+    radial-gradient(ellipse 70% 50% at 50% 0%, rgba(231, 183, 64, 0.08), transparent 60%),
+    var(--bg-void);
+  min-height: 100vh;
+  padding: 40px 20px 70px;
 }
 
-.admin-header {
-  margin-bottom: 12px;
+body:has(#resumo) h1 {
+  margin-bottom: 32px;
 }
 
-#admin-panel h3 {
-  margin: 0;
-  color: #fffd54;
+#resumo {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(260px, 1fr));
+  gap: 18px;
+  max-width: 1100px;
+  margin: 0 auto;
+}
+
+#resumo .box {
+  background: var(--bg-panel-soft);
+  border: 1px solid var(--line-strong);
+  color: var(--chalk);
+}
+
+#resumo .box h2 {
+  text-align: left;
+  font-size: 19px;
+  margin: 0 0 8px;
+  color: var(--gold);
+  text-transform: uppercase;
+  letter-spacing: 0.6px;
+}
+
+#resumo .box strong {
+  color: var(--chalk-dim);
+  font-size: 13px;
+  text-transform: uppercase;
   letter-spacing: 0.4px;
 }
 
-.admin-header p {
-  margin: 6px 0 0;
-  color: rgba(255, 255, 255, 0.8);
-  font-size: 13px;
-}
-
-.admin-controls {
+#resumo .box ul {
+  list-style: none;
+  padding: 0;
+  margin: 12px 0 0;
   display: flex;
   flex-direction: column;
-  gap: 12px;
+  gap: 6px;
 }
 
-#admin-indicador {
-  background: rgba(255, 255, 255, 0.08);
-  border: 1px solid rgba(255, 255, 255, 0.18);
-  border-radius: 10px;
-  color: rgba(255, 255, 255, 0.95);
-  font-weight: 700;
-  padding: 10px 12px;
+#resumo .box li {
+  background: rgba(255, 255, 255, 0.04);
+  border-left: 3px solid var(--gold-line);
+  padding: 7px 10px;
+  border-radius: 6px;
+  font-size: 13.5px;
+  color: var(--chalk-dim);
 }
 
-#admin-indicador.active {
-  border-color: #fffd54;
-  color: #fffd54;
-  box-shadow: 0 0 0 2px rgba(255, 253, 84, 0.18);
-}
+/* ================= IMPRESSÃO ================= */
 
-#btn-desfazer {
-  align-self: flex-start;
-  background: linear-gradient(135deg, #e11d48, #be123c);
-  color: #fff;
-  border: 0;
-  padding: 10px 14px;
-  border-radius: 10px;
-  font-weight: 700;
-  letter-spacing: 0.2px;
-  cursor: pointer;
-  transition: transform 0.2s ease, box-shadow 0.2s ease;
-}
+@media print {
+  body {
+    background: white;
+    color: #111;
+  }
 
-#btn-desfazer:hover {
-  transform: translateY(-1px);
-  box-shadow: 0 6px 16px rgba(225, 29, 72, 0.35);
-}
+  .btn-pdf {
+    display: none;
+  }
 
-.admin-times-container {
-  display: grid;
-  grid-template-columns: repeat(auto-fill, minmax(160px, 1fr));
-  gap: 10px;
-}
+  .team-card {
+    box-shadow: none;
+    width: 100%;
+  }
 
-.admin-time-btn {
-  display: inline-flex;
-  align-items: center;
-  gap: 8px;
-  border: 1px solid rgba(255, 255, 255, 0.2);
-  background: rgba(255, 255, 255, 0.08);
-  color: #fff;
-  border-radius: 10px;
-  padding: 10px 12px;
-  font-weight: 700;
-  cursor: pointer;
-  transition: transform 0.2s ease, border-color 0.2s ease, background 0.2s ease;
-}
-
-.admin-time-btn:hover {
-  transform: translateY(-1px);
-  border-color: var(--cor-time);
-}
-
-.admin-time-btn.active {
-  background: rgba(255, 253, 84, 0.2);
-  border-color: var(--cor-time);
-  box-shadow: 0 0 0 2px rgba(255, 253, 84, 0.2);
-}
-
-.admin-team-dot {
-  width: 10px;
-  height: 10px;
-  border-radius: 999px;
-  background: var(--cor-time, #64748b);
-  flex-shrink: 0;
+  .flag-bg,
+  .background {
+    display: none;
+  }
 }
