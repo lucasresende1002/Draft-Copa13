@@ -8,7 +8,7 @@ Este projeto foi criado para facilitar a distribuição de jogadores entre amigo
 ## ✨ Funcionalidades
 - **Sorteio por Potes:** Lógica para sorteio do Pote 1 (donos) e potes subsequentes (jogadores).
 - **Lógica de Draft Inteligente:** Alternância entre sorteio aleatório e sistema de espelhamento (Snake Draft) para maior equilíbrio.
-- **Páginas de Time Dinâmicas:** Exibição de escudo, bandeira animada no fundo e cores de borda personalizadas para cada país.
+- **Páginas de Time Dinâmicas:** Exibição de escudo, escudos animada no fundo e cores de borda personalizadas para cada país.
 - **Exportação para PDF:** Função integrada para salvar o resumo do elenco em formato PDF.
 - **Persistência de Dados:** Uso de `localStorage` para manter o draft salvo mesmo após fechar o navegador.
 
@@ -17,8 +17,8 @@ Este projeto foi criado para facilitar a distribuição de jogadores entre amigo
 - `time.html`: Template da página individual da seleção.
 - `resumo.html`: Página com a visão geral de todos os times.
 - `img/`: Pasta raiz de imagens.
-  - `bandeiras/`: Bandeiras de fundo (ex: `bandeira-brasil.png`).
-  - `logos/`: Escudos das seleções (ex: `Brasil.png`).
+  - `escudos/`: escudos de fundo (ex: `escudos-CT América de Propriá.png`).
+  - `escudos/`: Escudos das seleções (ex: `CT América de Propriá.png`).
 - `script.js`: Toda a lógica do motor de sorteio.
 - `time.js`: Script de renderização dinâmica das páginas dos times.
 
@@ -29,10 +29,10 @@ Este projeto foi criado para facilitar a distribuição de jogadores entre amigo
 
 ## 📸 Demonstração
 A página do time inclui:
-- **Logo centralizada** com borda na cor do país.
+- **escudos centralizada** com borda na cor do país.
 - **Dono do time** identificado como `dono-time`.
 - **Elenco** com fundo branco para facilitar a leitura.
-- **Bandeira animada** movendo-se suavemente ao fundo.
+- **escudos animada** movendo-se suavemente ao fundo.
 
 ## ✒️ Autor
 Desenvolvido como parte do projeto de organização da **Copa 13**.

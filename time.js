@@ -18,9 +18,9 @@ function buildTeamAssets(nomeTime) {
   const slug = clean.toLowerCase();
 
   return {
-    flag: `img/bandeiras/bandeira-${slug}.png`,
-    logoPng: `img/logos/${clean}.png`,
-    logoJpg: `img/logos/${clean}.jpg`,
+    flag: `img/escudos/escudos-${slug}.png`,
+    escudosPng: `img/escudos/${clean}.png`,
+    escudosJpg: `img/escudos/${clean}.jpg`,
   };
 }
 
@@ -144,34 +144,30 @@ document.addEventListener("DOMContentLoaded", async () => {
 
   // MAPEAMENTO DE CORES PARA AS BORDAS (Baseado nos escudos oficiais)
   const coresBordas = {
-    "Brasil": "#009c3b",
-    "Argentina": "#74acdf",
-    "Estados Unidos": "#bf0a30",
-    "Costa do Marfim": "#f77f00",
-    "Marrocos": "#c1272d",
-    "França": "#002395",
-    
-    "USA": "#bf0a30",
-    "EUA": "#bf0a30",
-    "Portugal": "#ff0000",
-    "Espanha": "#f1bf00",
-    "Austrália": "#000031",
-    "Japão": "#bc002d",
-    "Senegal": "#00853f",
-    "México": "#006847",
-    "Canadá": "#ff0000"
+    "CT América de Propriá": "#00843D",
+    "CT Atlético Gloriense": "#F9A825",
+    "CT Lagarto": "#2E7D32",
+    "CT Itabaiana": "#c1272d",
+    "CT Guarany": "#006400",
+    "CT Sergipe": "#C62828",
+    "CT Socorrense": "#1E88E5",
+    "CT Confiança": "#0057B8",
+    "CT Desportiva Aracaju": "#28c662",
+    "CT Dorense": "#8B0000",
+    "CT Estanciano": "#c7d412",
+    "CT Falcon": "#5E35B1",
   };
 
   // MAPEAMENTO DE EXTENSÕES (Conforme a organização das suas pastas)
   const extensoes = {
-    "Argentina": "png", "Austrália": "png", "Brasil": "png", "Canadá": "png",
-    "Espanha": "png", "EUA": "jpg", "Japão": "png", "México": "jpg",
-    "Portugal": "png", "Senegal": "png", "USA": "png", "Estados Unidos": "png"
+    "CT Atlético Gloriense": "png", "CT Estanciano": "png", "CT América de Propriá": "png", "Canadá": "png",
+    "CT Dorense": "png", "CT Confiança": "jpg", "CT Falcon": "png", "México": "jpg",
+    "CT Desportiva Aracaju": "png", "CT Socorrense": "png", "USA": "png", "Estados Unidos": "png"
   };
 
   const ext = extensoes[nomeTime] || "png";
   const teamAssets = buildTeamAssets(nomeTime);
-  const caminhoBandeira = `img/bandeiras/bandeira-${sanitizedName(nomeTime).toLowerCase()}.${ext}`;
+  const caminhoescudos = `img/escudos/escudos-${sanitizedName(nomeTime).toLowerCase()}.${ext}`;
   const corTime = coresBordas[nomeTime] || "#ddd";
 
   document.documentElement.style.setProperty("--team-border-color", corTime);
@@ -179,30 +175,30 @@ document.addEventListener("DOMContentLoaded", async () => {
   /* ---------- TÍTULO DA PÁGINA ---------- */
   document.title = "Draft - " + nomeTime;
 
-  /* ---------- FUNDO (BANDEIRA COM MOVIMENTO) ---------- */
+  /* ---------- FUNDO (escudos COM MOVIMENTO) ---------- */
   const flagBg = document.getElementById("flag-bg");
   if (flagBg) {
-    flagBg.style.backgroundImage = `url("${caminhoBandeira}")`;
+    flagBg.style.backgroundImage = `url("${caminhoescudos}")`;
     flagBg.style.display = "block"; 
   }
 
-  /* ---------- LOGO CENTRAL COM BORDA COLORIDA ---------- */
-  const logo = document.getElementById("logo");
-  if (logo) {
-    logo.src = teamAssets.logoPng;
-    logo.alt = `Escudo de ${nomeTime}`;
+  /* ---------- escudos CENTRAL COM BORDA COLORIDA ---------- */
+  const escudos = document.getElementById("escudos");
+  if (escudos) {
+    escudos.src = teamAssets.escudosPng;
+    escudos.alt = `Escudo de ${nomeTime}`;
     
     // Aplica a cor da borda personalizada
-    logo.style.borderColor = corTime;
-    logo.style.borderStyle = "solid";
+    escudos.style.borderColor = corTime;
+    escudos.style.borderStyle = "solid";
     
-    // Fallback: se não achar a logo na pasta específica, usa a logo geral
-    logo.onerror = () => {
-      if (logo.src.includes(".png")) {
-        logo.src = teamAssets.logoJpg;
+    // Fallback: se não achar a escudos na pasta específica, usa a escudos geral
+    escudos.onerror = () => {
+      if (escudos.src.includes(".png")) {
+        escudos.src = teamAssets.escudosJpg;
       } else {
-        logo.src = "img/Logo.jpg";
-        logo.style.borderColor = "#ddd";
+        escudos.src = "img/escudos.jpg";
+        escudos.style.borderColor = "#ddd";
       }
     };
   }
@@ -262,8 +258,8 @@ document.addEventListener("DOMContentLoaded", async () => {
       const card = document.createElement("div");
       card.className = "player-card" + (isCaptain ? " captain" : "");
       card.style.setProperty("--delay", `${index * 0.05}s`);
-      card.style.setProperty("--team-logo", `url('${teamAssets.flag}')`);
-      card.style.setProperty("--team-logo-fallback", `url('${teamAssets.flag}')`);
+      card.style.setProperty("--team-escudos", `url('${teamAssets.flag}')`);
+      card.style.setProperty("--team-escudos-fallback", `url('${teamAssets.flag}')`);
 
       const bg = document.createElement("div");
       bg.className = "player-card-bg";

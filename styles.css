@@ -86,7 +86,7 @@ body {
 }
 
 .usa {
-  background-image: url("img/EUA.jpg");
+  background-image: url("img/CT Confiança.jpg");
 }
 
 .mexico {
@@ -108,7 +108,7 @@ body {
   }
 }
 
-/* véu escuro + vinheta de holofote sobre as bandeiras */
+/* véu escuro + vinheta de holofote sobre as escudos */
 .background::after {
   content: "";
   position: absolute;
@@ -209,7 +209,7 @@ hr {
   background: linear-gradient(90deg, transparent, var(--line-strong) 20%, var(--line-strong) 80%, transparent);
 }
 
-/* ================= LOGO ================= */
+/* ================= escudos ================= */
 
 .logo-container {
   display: flex;
@@ -597,7 +597,7 @@ hr {
   gap: 12px;
 }
 
-.mini-logo {
+.mini-escudos {
   width: 30px;
   height: 30px;
   object-fit: contain;
@@ -677,7 +677,7 @@ hr {
   border-color: var(--cor-time);
   background-image:
     linear-gradient(180deg, rgba(0, 0, 0, 0.1), rgba(0, 0, 0, 0.2)),
-    var(--team-logo);
+    var(--team-escudos);
   background-repeat: no-repeat, no-repeat;
   background-position: center, center;
   background-size: cover, cover;
@@ -841,13 +841,13 @@ button:disabled {
   }
 }
 
-.logo-wrapper {
+.escudos-wrapper {
   display: flex;
   justify-content: center;
   margin-bottom: 15px;
 }
 
-.team-logo {
+.team-escudos {
   width: 168px;
   height: 168px;
   object-fit: contain;
@@ -1063,8 +1063,8 @@ button:disabled {
   inset: 0;
   background-image:
     radial-gradient(circle at 80% 50%, rgba(255, 255, 255, 0.06), transparent 56%),
-    var(--team-logo),
-    var(--team-logo-fallback);
+    var(--team-escudos),
+    var(--team-escudos-fallback);
   background-repeat: no-repeat, no-repeat, no-repeat;
   background-position: center, center, center;
   background-size: 100% 100%, cover, cover;
@@ -1270,7 +1270,7 @@ button:disabled {
     height: 110px;
   }
 
-  .team-logo {
+  .team-escudos {
     width: 130px;
     height: 130px;
   }

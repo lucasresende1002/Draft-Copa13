@@ -1,16 +1,18 @@
 /* ================= DADOS ================= */
 
 const times = [
-  { nome: "Brasil", capitao: "Júlio Feitosa", jogadores: [] },
-  { nome: "Argentina", capitao: "Enrico", jogadores: [] },
-  { nome: "Estados Unidos", capitao: "GH", jogadores: [] },
-  { nome: "Portugal", capitao: "Eng. Juan", jogadores: [] },
-  { nome: "Espanha", capitao: "Phelipe Kayan", jogadores: [] },
-  { nome: "Austrália", capitao: "Jopa", jogadores: [] },
-  { nome: "Japão", capitao: "PPMIX", jogadores: [] },
-  { nome: "França", capitao: "Alexandre", jogadores: [] },
-  { nome: "Marrocos", capitao: "Paulo Henrique", jogadores: [] },
-  { nome: "Costa do Marfim", capitao: "Alcides", jogadores: [] },
+  { nome: "CT América de Propriá", capitao: "Júlio Feitosa", jogadores: [] },
+  { nome: "CT Atlético Gloriense", capitao: "Enrico", jogadores: [] },
+  { nome: "CT Confiança", capitao: "GH", jogadores: [] },
+  { nome: "CT Desportiva Aracaju", capitao: "Eng. Juan", jogadores: [] },
+  { nome: "CT Dorense", capitao: "Phelipe Kayan", jogadores: [] },
+  { nome: "CT Estanciano", capitao: "Jopa", jogadores: [] },
+  { nome: "CT Falcon", capitao: "PPMIX", jogadores: [] },
+  { nome: "CT Guarany", capitao: "Alexandre", jogadores: [] },
+  { nome: "CT Itabaiana", capitao: "Paulo Henrique", jogadores: [] },
+  { nome: "CT Lagarto", capitao: "Alcides", jogadores: [] },
+  { nome: "CT Sergipe", capitao: "Jogador 11", jogadores: [] },
+  { nome: "CT Socorrense", capitao: "Jogador 12", jogadores: [] },
 ];
 
 const potes = {
@@ -125,18 +127,18 @@ const potes = {
 };
 
 const coresTimes = {
-  Brasil: "#009c3b",
-  Argentina: "#74acdf",
-  "Estados Unidos": "#bf0a30",
-  Portugal: "#ff0000",
-  Espanha: "#f1bf00",
-  Austrália: "#000031",
-  Japão: "#bc002d",
-  Senegal: "#00853f",
-  Marrocos: "#c1272d",
-  Panamá: "#006d5b",
-  "Costa do Marfim": "#f77f00",
-  França: "#004c92",
+  "CT América de Propriá": "#00843D",
+  "CT Atlético Gloriense": "#F9A825",
+  "CT Confiança": "#0057B8",
+  "CT Desportiva Aracaju": "#28c662",
+  "CT Dorense": "#8B0000",
+  "CT Estanciano": "#c7d412",
+  "CT Falcon": "#5E35B1",
+  "CT Socorrense": "#1E88E5",
+  "CT Itabaiana": "#c1272d",
+  "CT Sergipe": "#C62828",
+  "CT Lagarto": "#2E7D32",
+  "CT Guarany": "#006400",
 };
 
 // Cores das posições
@@ -505,9 +507,9 @@ function renderTimes() {
     li.innerHTML = `
       <div class="time-header">
         <img 
-          src="img/logos/${sanitizedName(time.nome)}.png"
-          class="mini-logo"
-          onerror="this.src='img/logos/${sanitizedName(time.nome)}.jpg'; this.onerror=null;"
+          src="img/escudos/${sanitizedName(time.nome)}.png"
+          class="mini-escudos"
+          onerror="this.src='img/escudos/${sanitizedName(time.nome)}.jpg'; this.onerror=null;"
         >
         <strong>${time.nome}</strong>
       </div>
@@ -553,9 +555,9 @@ function renderTimesSelect() {
 
     // Lógica idêntica de recuperação de imagem
     btn.innerHTML = `
-      <img src="img/logos/${sanitizedName(time.nome)}.png" 
-           class="mini-logo" 
-           onerror="this.src='img/logos/${sanitizedName(time.nome)}.jpg'; this.onerror=null;">
+      <img src="img/escudos/${sanitizedName(time.nome)}.png" 
+           class="mini-escudos" 
+           onerror="this.src='img/escudos/${sanitizedName(time.nome)}.jpg'; this.onerror=null;">
       <span>${time.nome}</span>
     `;
 
@@ -643,9 +645,9 @@ function renderJogadores() {
       const corPosicao = coresPosicoes[posicao];
       const nomePosicao = getNomePosicao(posicao);
 
-      // Caminho da bandeira do time da vez
-      const caminhoBandeira = nomeTimeDaVez
-        ? `img/bandeiras/bandeira-${sanitizedName(nomeTimeDaVez).toLowerCase()}.png`
+      // Caminho da escudos do time da vez
+      const caminhoescudos = nomeTimeDaVez
+        ? `img/escudos/escudos-${sanitizedName(nomeTimeDaVez).toLowerCase()}.png`
         : "";
 
       // Criar container do card
@@ -666,7 +668,7 @@ function renderJogadores() {
       if (modoAdmin && nomeTimeDaVez) {
         card.classList.add("admin-bg");
         card.style.setProperty("--cor-time", corFundo);
-        card.style.setProperty("--team-logo", `url('${caminhoBandeira}')`);
+        card.style.setProperty("--team-escudos", `url('${caminhoescudos}')`);
       } else {
         card.classList.remove("admin-bg");
       }
@@ -971,7 +973,7 @@ function finalizarDraft() {
     const ext = time.nome === "Estados Unidos" ? "jpg" : "png";
 
     btn.innerHTML = `
-      <img src="img/logos/${sanitizedName(time.nome)}.${ext}" class="mini-logo" onerror="this.style.opacity='0'">
+      <img src="img/escudos/${sanitizedName(time.nome)}.${ext}" class="mini-escudos" onerror="this.style.opacity='0'">
       <span>Ver ${time.nome}</span>
     `;
 
