@@ -27,6 +27,8 @@ const potes = {
     "Manaus",
     "Mateus Mendonça",
     "Marcos Antonio",
+    "Jogador 13",
+    "Jogador 14",
   ],
   3: [
     "Pedro Torres",
@@ -39,6 +41,8 @@ const potes = {
     "Ian Carvalho",
     "Anselmo",
     "Anthony Pinheiro",
+    "Jogador 15",
+    "Jogador 16",
   ],
   4: [
     "Ícaro Azevedo",
@@ -51,6 +55,8 @@ const potes = {
     "Rommel",
     "Cauã Soares",
     "Marcel",
+    "Jogador 17",
+    "Jogador 18",
   ],
   5: [
     "Deco",
@@ -63,6 +69,8 @@ const potes = {
     "Gabriel Xavier",
     "Iago Matheus",
     "Diogo Barbosa",
+    "Jogador 19",
+    "Jogador 20",
   ],
   6: [
     "Douglas França",
@@ -75,6 +83,8 @@ const potes = {
     "Igor Sávio",
     "Jayro",
     "Caio Mendes",
+    "Jogador 21",
+    "Jogador 22",
   ],
   7: [
     "Felipe Feichas",
@@ -87,6 +97,8 @@ const potes = {
     "L.G",
     "Matheus Rouver",
     "Mago",
+    "Jogador 23",
+    "Jogador 24",
   ],
   8: [
     "JP Felizola",
@@ -99,6 +111,8 @@ const potes = {
     "Jeferson Bahia",
     "Luiz Paulo",
     "José Alberto",
+    "Jogador 25",
+    "Jogador 26",
   ],
   9: [
     "Antonio Gustavo",
@@ -111,6 +125,22 @@ const potes = {
     "JP Sampaio",
     "Marcos Matos",
     "Japa",
+    "Jogador 27",
+    "Jogador 28",
+  ],
+  10: [
+    "Jogador 29",
+    "Jogador 30",
+    "Jogador 31",
+    "Jogador 32",
+    "Jogador 33",
+    "Jogador 34",
+    "Jogador 35",
+    "Jogador 36",
+    "Jogador 37",
+    "Jogador 38",
+    "Jogador 39",
+    "Jogador 40",
   ],
   goleiro: [
     "Tico",
@@ -123,6 +153,8 @@ const potes = {
     "Caio Guilherme",
     "Matheus de Melo",
     "Fernando Barbosa",
+    "Goleiro 1",
+    "Goleiro 2",
   ],
 };
 
@@ -164,7 +196,9 @@ const dadosJogadores = {
   "Manaus": "ATA",
   "Mateus Mendonça": "MEI",
   "Marcos Antonio": "ATA",
-
+  "Jogador 12": "MEI",
+  "Jogador 13": "MEI",
+  "Jogador 14": "MEI",
   "Pedro Torres": "ATA",
   "Emanuel Freitas": "ATA",
   "Léo Tavares": "MEI",
