@@ -148,7 +148,7 @@ const potes = {
     "Davi Coutinho",
     "Arthur Belém",
     "Pablo Barber",
-    "Gabriel Lyrio",
+    "Gabriel Lirio",
     "Gabriel Rollemberg",
     "Empada",
     "Rodrigo Santiago",
@@ -415,13 +415,13 @@ function avancarPote() {
     return;
   }
 
-  if (poteAtual !== "goleiro" && typeof poteAtual === "number" && poteAtual < 9) {
+  if (poteAtual !== "goleiro" && typeof poteAtual === "number" && poteAtual < 10) {
     redistribuirNaoEscolhidos();
   }
 
   document.getElementById("next-pote-button").disabled = true;
 
-  if (poteNumero < 9) {
+  if (poteNumero < 10) {
     poteNumero++;
     poteAtual = poteNumero;
   } else if (poteNumero === 9) {
@@ -479,7 +479,7 @@ function atualizarTela() {
     poteAtual &&
     poteAtual !== 1 &&
     poteAtual !== "goleiro" &&
-    poteAtual < 9
+    poteAtual < 10
   ) {
     infoPotesAltos.style.display = "block";
   } else {
@@ -660,8 +660,8 @@ function renderJogadores() {
   const potesParaMostrar = [poteAtual];
 
   // Se for um pote de seleção (não goleiro), adiciona potes superiores
-  if (poteAtual !== "goleiro" && poteAtual < 9) {
-    for (let poteSuperior = poteAtual + 1; poteSuperior <= 9; poteSuperior++) {
+  if (poteAtual !== "goleiro" && poteAtual < 10) {
+    for (let poteSuperior = poteAtual + 1; poteSuperior <=10; poteSuperior++) {
       potesParaMostrar.push(poteSuperior);
     }
   }
@@ -954,7 +954,7 @@ function escolherJogador(jogador, poteDe = poteAtual) {
     indiceVez++;
 
     if (indiceVez === ordem.length) {
-      if (poteAtual !== "goleiro" && poteAtual < 9) {
+      if (poteAtual !== "goleiro" && poteAtual < 10) {
         redistribuirNaoEscolhidos();
       }
 
@@ -973,7 +973,7 @@ function redistribuirNaoEscolhidos() {
   // Pega os jogadores que restaram no pote atual
   const jogadoresRestantes = potes[poteAtual] || [];
 
-  if (poteAtual !== 1 && poteAtual !== "goleiro" && poteAtual < 9) {
+  if (poteAtual !== 1 && poteAtual !== "goleiro" && poteAtual < 10) {
     // Move jogadores não escolhidos para o próximo pote
     const proximoPote = poteAtual + 1;
 
