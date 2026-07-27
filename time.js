@@ -145,14 +145,14 @@ document.addEventListener("DOMContentLoaded", async () => {
   // MAPEAMENTO DE CORES PARA AS BORDAS (Baseado nos escudos oficiais)
   const coresBordas = {
     "CT América de Propriá": "#00843D",
-    "CT Atlético Gloriense": "#F9A825",
+    "CT Barra": "#F9A825",
     "CT Lagarto": "#2E7D32",
     "CT Itabaiana": "#c1272d",
     "CT Guarany": "#006400",
     "CT Sergipe": "#C62828",
     "CT Socorrense": "#1E88E5",
     "CT Confiança": "#0057B8",
-    "CT Desportiva Aracaju": "#28c662",
+    "CT Frei Paulistano": "#28c662",
     "CT Dorense": "#8B0000",
     "CT Estanciano": "#c7d412",
     "CT Falcon": "#5E35B1",
@@ -160,9 +160,9 @@ document.addEventListener("DOMContentLoaded", async () => {
 
   // MAPEAMENTO DE EXTENSÕES (Conforme a organização das suas pastas)
   const extensoes = {
-    "CT Atlético Gloriense": "png", "CT Estanciano": "png", "CT América de Propriá": "png", "Canadá": "png",
+    "CT Barra": "png", "CT Estanciano": "png", "CT América de Propriá": "png", "Canadá": "png",
     "CT Dorense": "png", "CT Confiança": "jpg", "CT Falcon": "png", "México": "jpg",
-    "CT Desportiva Aracaju": "png", "CT Socorrense": "png", "USA": "png", "Estados Unidos": "png"
+    "CT Frei Paulistano": "png", "CT Socorrense": "png", "USA": "png", "Estados Unidos": "png"
   };
 
   const ext = extensoes[nomeTime] || "png";
