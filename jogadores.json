@@ -22,7 +22,7 @@
   { "nome": "Fábio Doria", "posicao": "MEI", "pote": 2 },
   { "nome": "Maneiro", "posicao": "MEI", "pote": 2 },
   { "nome": "Pedro Torres", "posicao": "ATA", "pote": 2 },
-  { "nome": "Marcos André", "posicao": "MEI", "pote": 2 },
+  { "nome": "João Gabriel", "posicao": "MEI", "pote": 2 },
   { "nome": "Marquinhos", "posicao": "MEI", "pote": 2 },
   { "nome": "Gustavo Miguel", "posicao": "MEI", "pote": 2 },
 
@@ -48,12 +48,12 @@
   { "nome": "Juan Carlos", "posicao": "MEI", "pote": 4 },
   { "nome": "Ian Carvalho", "posicao": "MEI", "pote": 4 },
   { "nome": "Felipe Mota", "posicao": "MEI", "pote": 4 },
-  { "nome": "Gustavo Dionizio", "posicao": "MEI", "pote": 4 },
+  { "nome": "Paulo Lyra", "posicao": "MEI", "pote": 4 },
   { "nome": "Pedro Matos", "posicao": "MEI", "pote": 4 },
   { "nome": "Souza", "posicao": "MEI", "pote": 4 },
 
   { "nome": "Lucas Borges", "posicao": "MEI", "pote": 5 },
-  { "nome": "Vinicius Costa", "posicao": "MEI", "pote": 5 },
+  { "nome": "Gustavo Dionizio", "posicao": "MEI", "pote": 5 },
   { "nome": "Pedim", "posicao": "MEI", "pote": 5 },
   { "nome": "Vitor Mendes", "posicao": "ATA", "pote": 5 },
   { "nome": "Cristiano", "posicao": "ZAG", "pote": 5 },
@@ -74,7 +74,7 @@
   { "nome": "Allan Douglas", "posicao": "MEI", "pote": 6 },
   { "nome": "Roger Barros", "posicao": "MEI", "pote": 6 },
   { "nome": "Guilherme Menezes", "posicao": "MEI", "pote": 6 },
-  { "nome": "Vinicius Silva", "posicao": "MEI", "pote": 6 },
+  { "nome": "Vinicius Costa", "posicao": "MEI", "pote": 6 },
   { "nome": "Bruno Emanuel", "posicao": "MEI", "pote": 6 },
   { "nome": "Tancredo", "posicao": "MEI", "pote": 6 },
 
@@ -141,6 +141,6 @@
   { "nome": "Toco", "posicao": "GOL", "pote": "goleiros" },
   { "nome": "Breno", "posicao": "GOL", "pote": "goleiros" },
   { "nome": "Paulinho", "posicao": "GOL", "pote": "goleiros" },
-  { "nome": "Robson", "posicao": "GOL", "pote": "goleiros" }
+  { "nome": "Menezes", "posicao": "GOL", "pote": "goleiros" }
 ]
 }

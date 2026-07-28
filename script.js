@@ -40,7 +40,7 @@ const potes = {
     "Fábio Doria",
     "Maneiro",
     "Pedro Torres",
-    "Marcos André",
+    "João Gabriel",
     "Marquinhos",
     "Gustavo Miguel",
   ],
@@ -68,13 +68,13 @@ const potes = {
     "Juan Carlos",
     "Ian Carvalho",
     "Felipe Mota",
-    "Gustavo Dionizio",
+    "Paulo Lyra",
     "Pedro Matos",
     "Souza",
   ],
   5: [
     "Lucas Borges",
-    "Vinicius Costa",
+    "Gustavo Dionizio",
     "Pedim",
     "Vitor Mendes",
     "Cristiano",
@@ -96,7 +96,7 @@ const potes = {
     "Allan Douglas",
     "Roger Barros",
     "Guilherme Menezes",
-    "Vinicius Silva",
+    "Vinicius Costa",
     "Bruno Emanuel",
     "Tancredo",
   ],
@@ -168,7 +168,7 @@ const potes = {
     "Toco",
     "Breno",
     "Paulinho",
-    "Robson",
+    "Menezes",
   ],
 };
 
@@ -197,6 +197,100 @@ const coresPosicoes = {
 
 // Mapa de jogadores com suas posições
 let jogadoresDB = {};
+
+/* =========================================================================
+   CACHE DE FOTOS DOS JOGADORES
+   Evita reprocessar (tentar dezenas de caminhos + redimensionar) toda vez
+   que o grid de jogadores é recriado, por exemplo ao trocar o time da vez.
+   Uma vez resolvida, a foto do jogador fica pronta instantaneamente.
+   ========================================================================= */
+const fotoResolvidaCache = {};
+
+// Gera a lista de caminhos possíveis para a foto de um jogador.
+// Baseado no padrão real dos arquivos: pasta única "img/jogadores",
+// nome exato (com acento) e extensão .jpeg ou .jpg — apenas uma minoria
+// tem um espaço sobrando antes da extensão. Lista enxuta = menos requisições
+// e resolução muito mais rápida.
+function generatePhotoPaths(nome) {
+  if (!nome) return [];
+  const trimmed = nome.trim();
+  const base = "img/jogadores";
+
+  return [
+    `${base}/${trimmed}.jpeg`,
+    `${base}/${trimmed}.jpg`,
+    `${base}/${trimmed} .jpeg`, // alguns arquivos têm espaço extra antes da extensão
+    `${base}/${trimmed} .jpg`,
+    `${base}/${sanitizedName(trimmed)}.jpeg`, // fallback sem acentuação, por segurança
+    `${base}/${sanitizedName(trimmed)}.jpg`,
+  ];
+}
+
+// Carrega a foto de um jogador dentro do container informado, usando o
+// cache sempre que possível para evitar refazer o trabalho a cada render.
+function carregarFotoJogador(jogador, imgContainer, cardEl) {
+  const cacheado = fotoResolvidaCache[jogador];
+
+  const img = document.createElement("img");
+  imgContainer.appendChild(img);
+
+  if (cacheado) {
+    if (cacheado.semFoto) {
+      cardEl.classList.add("sem-foto");
+      img.style.display = "none";
+    } else {
+      img.src = cacheado.src;
+    }
+    return;
+  }
+
+  const paths = generatePhotoPaths(jogador);
+  let tryIndex = 0;
+
+  const tryNext = () => {
+    if (tryIndex >= paths.length) {
+      cardEl.classList.add("sem-foto");
+      img.style.display = "none";
+      fotoResolvidaCache[jogador] = { semFoto: true };
+      return;
+    }
+    img.src = paths[tryIndex++];
+  };
+
+  img.onload = function () {
+    if (img.dataset.resized) {
+      fotoResolvidaCache[jogador] = { src: img.src, semFoto: false };
+      return;
+    }
+    const maxDim = 500;
+    const w = img.naturalWidth;
+    const h = img.naturalHeight;
+    if (w > maxDim || h > maxDim) {
+      const ratio = Math.min(maxDim / w, maxDim / h);
+      const cw = Math.floor(w * ratio);
+      const ch = Math.floor(h * ratio);
+      const canvas = document.createElement("canvas");
+      canvas.width = cw;
+      canvas.height = ch;
+      const ctx = canvas.getContext("2d");
+      ctx.drawImage(img, 0, 0, cw, ch);
+      img.dataset.resized = "true";
+      try {
+        img.src = canvas.toDataURL("image/jpeg", 0.85);
+      } catch (e) {
+        // canvas "tainted" (ex.: ambiente local sem servidor http) —
+        // mantém a imagem original sem redimensionar
+        fotoResolvidaCache[jogador] = { src: img.src, semFoto: false };
+      }
+    } else {
+      fotoResolvidaCache[jogador] = { src: img.src, semFoto: false };
+    }
+  };
+
+  img.onerror = tryNext;
+
+  tryNext();
+}
 
 // Dados dos jogadores embutidos como fallback
 const dadosJogadores = {
@@ -711,80 +805,9 @@ function renderJogadores() {
       // Container da foto — ocupa o card inteiro, jogador em destaque
       const imgContainer = document.createElement("div");
       imgContainer.className = "card-player-photo";
-
-      const img = document.createElement("img");
-
-      /* ---------- helper: gerador de caminhos possíveis ---------- */
-      function generatePhotoPaths(nome) {
-        const baseFolders = ["img/Jogadores", "img/jogadores"];
-        const list = [];
-        if (!nome) return [];
-        const trimmed = nome.trim();
-        const sanitary = sanitizedName(trimmed);
-        const variants = new Set();
-
-        // insere formas básicas
-        [trimmed, sanitary].forEach((n) => {
-          if (n) variants.add(n);
-          variants.add(n.replace(/\s+/g, ""));
-          variants.add(n.replace(/\s+/g, "_"));
-          variants.add(n.replace(/\s+/g, "-"));
-          variants.add(n + " "); // tentativa degrau com espaço final, útil quando o arquivo o contém
-        });
-
-        baseFolders.forEach((base) => {
-          variants.forEach((n) => {
-            if (!n) return;
-            list.push(`${base}/${n}.jpeg`);
-            list.push(`${base}/${n}.jpg`);
-            list.push(`${base}/${n}.png`);
-          });
-        });
-
-        return list;
-      }
-      /* ---------------------------------------------------------- */
-
-      const paths = generatePhotoPaths(jogador);
-      let tryIndex = 0;
-
-      const tryNext = () => {
-        if (tryIndex >= paths.length) {
-          card.classList.add("sem-foto");
-          img.style.display = "none";
-          return;
-        }
-        img.src = paths[tryIndex++];
-      };
-
-      /* --------- redimensionamento de imagens grandes --------- */
-      img.onload = function () {
-        if (img.dataset.resized) return;
-        const maxDim = 500;
-        const w = img.naturalWidth;
-        const h = img.naturalHeight;
-        if (w > maxDim || h > maxDim) {
-          const ratio = Math.min(maxDim / w, maxDim / h);
-          const cw = Math.floor(w * ratio);
-          const ch = Math.floor(h * ratio);
-          const canvas = document.createElement("canvas");
-          canvas.width = cw;
-          canvas.height = ch;
-          const ctx = canvas.getContext("2d");
-          ctx.drawImage(img, 0, 0, cw, ch);
-          img.dataset.resized = "true";
-          img.src = canvas.toDataURL("image/jpeg", 0.85);
-        }
-      };
-      /* --------------------------------------------------------- */
-
-      img.onerror = tryNext;
-
-      // inicia a sequência de tentativas ao inserir no container
-      tryNext();
-
-      imgContainer.appendChild(img);
       card.appendChild(imgContainer);
+
+      carregarFotoJogador(jogador, imgContainer, card);
 
       // Badge de posição — canto superior esquerdo
       const badge = document.createElement("div");
