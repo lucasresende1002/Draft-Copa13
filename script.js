@@ -424,7 +424,7 @@ function avancarPote() {
   if (poteNumero < 10) {
     poteNumero++;
     poteAtual = poteNumero;
-  } else if (poteNumero === 9) {
+  } else if (poteNumero === 10) {
     poteNumero++;
     poteAtual = "goleiro";
   } else {
@@ -661,7 +661,7 @@ function renderJogadores() {
 
   // Se for um pote de seleção (não goleiro), adiciona potes superiores
   if (poteAtual !== "goleiro" && poteAtual < 10) {
-    for (let poteSuperior = poteAtual + 1; poteSuperior <=10; poteSuperior++) {
+    for (let poteSuperior = poteAtual + 1; poteSuperior <= 10; poteSuperior++) {
       potesParaMostrar.push(poteSuperior);
     }
   }
@@ -691,77 +691,28 @@ function renderJogadores() {
     potes[chavePote].forEach((jogador) => {
       const posicao = getPosicaoJogador(jogador);
       const corPosicao = coresPosicoes[posicao];
-      const nomePosicao = getNomePosicao(posicao);
 
-      // Caminho da escudos do time da vez
-      const caminhoescudos = nomeTimeDaVez
-        ? `img/escudos/escudos-${sanitizedName(nomeTimeDaVez).toLowerCase()}.png`
+      // Caminho do escudo do time da vez (mesmo padrão usado em renderTimes)
+      const caminhoEscudo = nomeTimeDaVez
+        ? `img/escudos/${sanitizedName(nomeTimeDaVez)}.png`
         : "";
 
       // Criar container do card
       const card = document.createElement("div");
       card.className = "card-jogador-draft";
-      card.style.cssText = `
-        display: flex;
-        flex-direction: column;
-        align-items: center;
-        justify-content: flex-end;
-        padding: 12px;
-        min-height: 200px;
-        position: relative;
-        overflow: hidden;
-      `;
-      card.style.opacity = numPote !== poteAtual ? "0.6" : "1";
+      card.style.setProperty("--cor-posicao", corPosicao);
+      card.style.opacity = numPote !== poteAtual ? "0.55" : "1";
 
       if (modoAdmin && nomeTimeDaVez) {
         card.classList.add("admin-bg");
         card.style.setProperty("--cor-time", corFundo);
-        card.style.setProperty("--team-escudos", `url('${caminhoescudos}')`);
-      } else {
-        card.classList.remove("admin-bg");
       }
 
-      // Container para conteúdo do card (para ficar acima do background da imagem)
-      const conteudoCard = document.createElement("div");
-      conteudoCard.style.cssText = `
-        display: flex;
-        flex-direction: column;
-        align-items: center;
-        justify-content: flex-end;
-        width: 100%;
-        height: 100%;
-        position: relative;
-        z-index: 1;
-      `;
-
-      // Container da foto (com fallback caso não exista)
+      // Container da foto — ocupa o card inteiro, jogador em destaque
       const imgContainer = document.createElement("div");
       imgContainer.className = "card-player-photo";
-      imgContainer.style.cssText = `
-        width: 120px;
-        height: 120px;
-        border-radius: 50%;
-        overflow: hidden;
-        margin-bottom: 12px;
-        background: rgba(0,0,0,0.3);
-        display: flex;
-        align-items: center;
-        justify-content: center;
-        border: 3px solid rgba(231,183,64,0.35);
-        flex-shrink: 0;
-      `;
-
-      if (modoAdmin && nomeTimeDaVez) {
-        imgContainer.style.background = "rgba(0,0,0,0.2)";
-      }
 
       const img = document.createElement("img");
-      img.style.cssText = `
-        width: 100%;
-        height: 100%;
-        object-fit: cover;
-        object-position: center;
-      `;
 
       /* ---------- helper: gerador de caminhos possíveis ---------- */
       function generatePhotoPaths(nome) {
@@ -799,7 +750,7 @@ function renderJogadores() {
 
       const tryNext = () => {
         if (tryIndex >= paths.length) {
-          imgContainer.style.background = `linear-gradient(135deg, ${corPosicao}88, rgba(0,0,0,0.4))`;
+          card.classList.add("sem-foto");
           img.style.display = "none";
           return;
         }
@@ -809,7 +760,7 @@ function renderJogadores() {
       /* --------- redimensionamento de imagens grandes --------- */
       img.onload = function () {
         if (img.dataset.resized) return;
-        const maxDim = 400;
+        const maxDim = 500;
         const w = img.naturalWidth;
         const h = img.naturalHeight;
         if (w > maxDim || h > maxDim) {
@@ -822,7 +773,7 @@ function renderJogadores() {
           const ctx = canvas.getContext("2d");
           ctx.drawImage(img, 0, 0, cw, ch);
           img.dataset.resized = "true";
-          img.src = canvas.toDataURL("image/jpeg", 0.8);
+          img.src = canvas.toDataURL("image/jpeg", 0.85);
         }
       };
       /* --------------------------------------------------------- */
@@ -833,41 +784,41 @@ function renderJogadores() {
       tryNext();
 
       imgContainer.appendChild(img);
-      conteudoCard.appendChild(imgContainer);
+      card.appendChild(imgContainer);
 
-      // Badge de posição
+      // Badge de posição — canto superior esquerdo
       const badge = document.createElement("div");
-      badge.style.cssText = `
-        background-color: ${corPosicao};
-        color: #0a130e;
-        padding: 4px 9px;
-        border-radius: 5px;
-        font-family: 'Oswald', sans-serif;
-        font-size: 11px;
-        font-weight: 600;
-        margin-bottom: 6px;
-        text-transform: uppercase;
-        letter-spacing: 0.6px;
-        box-shadow: 0 2px 8px rgba(0,0,0,0.3);
-      `;
+      badge.className = "card-posicao-badge";
+      badge.style.backgroundColor = corPosicao;
       badge.textContent = posicao;
-      conteudoCard.appendChild(badge);
+      card.appendChild(badge);
 
-      // Nome do jogador
+      // Escudo do time da vez — canto superior direito
+      if (nomeTimeDaVez) {
+        const escudoWrap = document.createElement("div");
+        escudoWrap.className = "card-time-escudo";
+        escudoWrap.title = nomeTimeDaVez;
+
+        const escudoImg = document.createElement("img");
+        escudoImg.src = caminhoEscudo;
+        escudoImg.alt = nomeTimeDaVez;
+        escudoImg.onerror = function () {
+          this.onerror = null;
+          this.src = `img/escudos/${sanitizedName(nomeTimeDaVez)}.jpg`;
+        };
+
+        escudoWrap.appendChild(escudoImg);
+        card.appendChild(escudoWrap);
+      }
+
+      // Nome do jogador — faixa inferior sobre gradiente
+      const nomeWrap = document.createElement("div");
+      nomeWrap.className = "card-player-nome";
       const nome = document.createElement("span");
-      nome.style.cssText = `
-        color: #f4f7f1;
-        font-family: 'Manrope', sans-serif;
-        font-weight: 700;
-        text-align: center;
-        font-size: 13px;
-        text-shadow: 1px 1px 2px rgba(0,0,0,0.5);
-        word-break: break-word;
-      `;
       nome.textContent = jogador;
-      conteudoCard.appendChild(nome);
+      nomeWrap.appendChild(nome);
+      card.appendChild(nomeWrap);
 
-      card.appendChild(conteudoCard);
       card.addEventListener("click", () => escolherJogador(jogador, numPote));
       ul.appendChild(card);
     });
