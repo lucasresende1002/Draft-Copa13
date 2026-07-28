@@ -71,44 +71,90 @@ body {
   position: fixed;
   inset: 0;
   z-index: -2;
-  display: flex;
   overflow: hidden;
   background: var(--bg-void);
 }
 
-.flag {
-  flex: 1;
-  background-size: cover;
-  background-position: center;
-  animation: moveFlag 26s linear infinite;
-  filter: grayscale(55%) brightness(0.4) contrast(1.05) saturate(1.1);
-  opacity: 0.9;
+/* manchas de luz fluidas — substituem as bandeiras por algo mais limpo
+   e atemporal, mantendo a paleta de gramado à noite + dourado */
+.aurora {
+  position: absolute;
+  border-radius: 50%;
+  filter: blur(90px);
+  will-change: transform;
 }
 
-.usa {
-  background-image: url("img/CT Confiança.jpg");
+.aurora-1 {
+  width: 62vw;
+  height: 62vw;
+  top: -18%;
+  left: -14%;
+  background: radial-gradient(circle, var(--pitch-bright) 0%, transparent 70%);
+  opacity: 0.4;
+  animation: driftA 28s ease-in-out infinite;
 }
 
-.mexico {
-  background-image: url("img/México.jpg");
-  animation-delay: -7s;
+.aurora-2 {
+  width: 50vw;
+  height: 50vw;
+  bottom: -18%;
+  right: -10%;
+  background: radial-gradient(circle, var(--gold) 0%, transparent 70%);
+  opacity: 0.22;
+  animation: driftB 34s ease-in-out infinite;
 }
 
-.canada {
-  background-image: url("img/Canadá.png");
-  animation-delay: -14s;
+.aurora-3 {
+  width: 44vw;
+  height: 44vw;
+  top: 32%;
+  right: 18%;
+  background: radial-gradient(circle, #143d24 0%, transparent 72%);
+  opacity: 0.5;
+  animation: driftC 24s ease-in-out infinite;
 }
 
-@keyframes moveFlag {
-  0% {
-    background-position: 0% center;
-  }
+.aurora-4 {
+  width: 36vw;
+  height: 36vw;
+  bottom: 8%;
+  left: 8%;
+  background: radial-gradient(circle, var(--pitch) 0%, transparent 70%);
+  opacity: 0.25;
+  animation: driftA 30s ease-in-out infinite reverse;
+}
+
+@keyframes driftA {
+  0%,
   100% {
-    background-position: 100% center;
+    transform: translate(0, 0) scale(1);
+  }
+  50% {
+    transform: translate(8%, 10%) scale(1.12);
   }
 }
 
-/* véu escuro + vinheta de holofote sobre as escudos */
+@keyframes driftB {
+  0%,
+  100% {
+    transform: translate(0, 0) scale(1);
+  }
+  50% {
+    transform: translate(-10%, -8%) scale(1.08);
+  }
+}
+
+@keyframes driftC {
+  0%,
+  100% {
+    transform: translate(0, 0) scale(1);
+  }
+  50% {
+    transform: translate(-6%, 9%) scale(0.92);
+  }
+}
+
+/* véu escuro + vinheta de holofote sobre as manchas de luz */
 .background::after {
   content: "";
   position: absolute;
@@ -135,11 +181,17 @@ body {
   );
 }
 
+@media (prefers-reduced-motion: reduce) {
+  .aurora {
+    animation: none !important;
+  }
+}
+
 .content {
   position: relative;
   padding: 28px 20px 60px;
   min-height: 100vh;
-  max-width: 1180px;
+  max-width: 1320px;
   margin: 0 auto;
 }
 
@@ -226,6 +278,21 @@ hr {
   border: 3px solid var(--gold);
   box-shadow: 0 0 0 6px rgba(231, 183, 64, 0.08), 0 12px 34px rgba(0, 0, 0, 0.55);
   background: var(--bg-panel);
+  cursor: pointer;
+  transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+  position: relative;
+}
+
+/* ao passar o mouse, a logo cresce e mostra a arte completa sem corte */
+.logo-container:hover img {
+  width: 240px;
+  height: 240px;
+  object-fit: contain;
+  border-radius: 24px;
+  background: #fff;
+  padding: 14px;
+  box-shadow: 0 0 0 4px var(--gold), 0 24px 60px rgba(0, 0, 0, 0.65);
+  z-index: 30;
 }
 
 /* ================= SCOREBOARD (status do sorteio) ================= */
@@ -495,6 +562,7 @@ hr {
   padding: 18px;
   border-radius: var(--radius-lg);
   box-shadow: var(--shadow-panel);
+  backdrop-filter: blur(8px);
   flex: 1;
   min-width: 280px;
 }
@@ -523,6 +591,7 @@ hr {
   border-radius: var(--radius-lg);
   padding: 20px;
   box-shadow: var(--shadow-panel);
+  backdrop-filter: blur(8px);
   flex: 1;
   min-width: 280px;
 }
@@ -541,6 +610,20 @@ hr {
   list-style: none;
   margin: 0;
   padding: 0;
+}
+
+/* com 12 times, uma coluna única deixa a página excessivamente longa —
+   em telas largas, organiza em 2 colunas */
+@media (min-width: 980px) {
+  #times-list {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 10px;
+  }
+
+  #times-list li {
+    margin-bottom: 0;
+  }
 }
 
 #times-list li {
